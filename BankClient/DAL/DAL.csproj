@@ -91,9 +91,9 @@
     <Compile Include="Entities\PersonCredit.cs" />
     <Compile Include="Entities\PersonDeposit.cs" />
     <Compile Include="Entities\AppUser.cs" />
-    <Compile Include="Migrations\201510042212163_Initial.cs" />
-    <Compile Include="Migrations\201510042212163_Initial.Designer.cs">
-      <DependentUpon>201510042212163_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201510052150469_Initial.cs" />
+    <Compile Include="Migrations\201510052150469_Initial.Designer.cs">
+      <DependentUpon>201510052150469_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,8 +103,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201510042212163_Initial.resx">
-      <DependentUpon>201510042212163_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201510052150469_Initial.resx">
+      <DependentUpon>201510052150469_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

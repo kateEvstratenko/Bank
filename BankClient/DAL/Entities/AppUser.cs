@@ -10,7 +10,7 @@ namespace DAL.Entities
 {
     public class AppUser : IdentityUser
     {
-        [Key, ForeignKey("Person")]
+        [ForeignKey("Person")]
         public int PersonId { get; set; }
         //public string Email { get; set; }
         public string Password { get; set; }

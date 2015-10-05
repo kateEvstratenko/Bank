@@ -1,5 +1,3 @@
-using DAL.Entities;
-
 namespace DAL.Migrations
 {
     using System;
@@ -28,11 +26,6 @@ namespace DAL.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            context.PaymentTypes.AddOrUpdate(
-                pt => pt.Name,
-                new PaymentType { Name = "Cash" },
-                new PaymentType() { Name = "Card" }
-                );
         }
     }
 }

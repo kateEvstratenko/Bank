@@ -19,6 +19,6 @@ namespace DAL
         public DbSet<Person> Persons { get; set; }
         public DbSet<PersonCredit> PersonCredits { get; set; }
         public DbSet<PersonDeposit> PersonDeposits { get; set; }
-        public DbSet<AppUser> AppUsers { get; set; }     
+        //public DbSet<AppUser> AppUsers { get; set; }     
     }
 }
