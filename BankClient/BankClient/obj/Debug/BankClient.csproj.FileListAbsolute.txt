@@ -1,0 +1,1 @@
+D:\МОЯ УЧЕБА\9 сем\Курсовая\BankClient\BankClient\bin\EntityFramework.SqlServer.dll
