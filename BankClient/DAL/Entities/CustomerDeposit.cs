@@ -17,6 +17,7 @@ namespace DAL.Entities
 
         public int CustomerId { get; set; }
         public int DepositId { get; set; }
+        public int BillId { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual Deposit Deposit { get; set; }
         public virtual Bill Bill { get; set; }

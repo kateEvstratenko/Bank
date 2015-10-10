@@ -5,10 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities
 {
-    public class CustomerCredit
+    public class CustomerCredit : BaseEntity
     {
-        [Key, ForeignKey("Customer")]
-        public int BillId { get; set; }
         public string ContractNumber { get; set; }
         public double CreditSum { get; set; }
         public Currency Currency { get; set; }
@@ -17,9 +15,10 @@ namespace DAL.Entities
 
         public int CustomerId { get; set; }
         public int CreditId { get; set; }
+        public int? BillId { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual Credit Credit { get; set; }
         public virtual Bill Bill { get; set; }
-        public ICollection<CreditPayment> Payments { get; set; } 
+        public virtual ICollection<CreditPayment> Payments { get; set; } 
     }
 }

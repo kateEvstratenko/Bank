@@ -11,9 +11,11 @@ namespace DAL.Entities
         public string Number { get; set; }
         public int CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
-        public ICollection<CreditPayment> SourceCreditPayments { get; set; } 
-        public ICollection<CreditPayment> DestinationCreditPayments { get; set; }
-        public ICollection<DepositPayment> SourceDepositPayments { get; set; }
-        public ICollection<DepositPayment> DestinationDepositPayments { get; set; } 
+        public virtual ICollection<CustomerCredit> CustomerCredits { get; set; }
+        public virtual ICollection<CustomerDeposit> CustomerDeposits { get; set; }
+        public virtual ICollection<CreditPayment> SourceCreditPayments { get; set; }
+        public virtual ICollection<CreditPayment> DestinationCreditPayments { get; set; }
+        public virtual ICollection<DepositPayment> SourceDepositPayments { get; set; }
+        public virtual ICollection<DepositPayment> DestinationDepositPayments { get; set; } 
     }
 }
