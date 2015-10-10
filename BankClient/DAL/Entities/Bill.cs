@@ -9,8 +9,8 @@ namespace DAL.Entities
         [Index]
         [StringLength(200)]
         public string Number { get; set; }
-        public int PersonId { get; set; }
-        public virtual Person Person { get; set; }
+        public int CustomerId { get; set; }
+        public virtual Customer Customer { get; set; }
         public ICollection<CreditPayment> SourceCreditPayments { get; set; } 
         public ICollection<CreditPayment> DestinationCreditPayments { get; set; }
         public ICollection<DepositPayment> SourceDepositPayments { get; set; }

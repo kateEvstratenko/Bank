@@ -5,12 +5,13 @@ namespace DAL.Entities
 {
     public class Address
     {
-        [Key, ForeignKey("Person")]
-        public int PersonId { get; set; }
+        [Key, ForeignKey("Customer")]
+        public int CustomerId { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
+        public string Street { get; set; }
         public string House { get; set; }
-        public int Flat { get; set; }
-        public virtual Person Person { get; set; }
+        public int? Flat { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

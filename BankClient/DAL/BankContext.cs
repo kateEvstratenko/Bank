@@ -16,9 +16,9 @@ namespace DAL
         public DbSet<DepositRequest> DepositRequests { get; set; }
         public DbSet<CreditPayment> Payments { get; set; }
         public DbSet<PaymentType> PaymentTypes { get; set; }
-        public DbSet<Person> Persons { get; set; }
-        public DbSet<PersonCredit> PersonCredits { get; set; }
-        public DbSet<PersonDeposit> PersonDeposits { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<CustomerCredit> CustomerCredits { get; set; }
+        public DbSet<CustomerDeposit> CustomerDeposits { get; set; }
         //public DbSet<AppUser> AppUsers { get; set; }     
     }
 }

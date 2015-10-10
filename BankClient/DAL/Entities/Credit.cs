@@ -16,6 +16,6 @@ namespace DAL.Entities
         public int PaymentTypeId { get; set; }
         public virtual PaymentType PaymentType { get; set; }
         public ICollection<CreditRequest> CreditRequests { get; set; }
-        public ICollection<PersonCredit> PersonCredits { get; set; }
+        public ICollection<CustomerCredit> CustomerCredits { get; set; }
     }
 }

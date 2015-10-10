@@ -10,13 +10,13 @@ namespace DAL.Entities
 {
     public class AppUser : IdentityUser
     {
-        [ForeignKey("Person")]
-        public int PersonId { get; set; }
+        [ForeignKey("Customer")]
+        public int CustomerId { get; set; }
         //public string Email { get; set; }
         public string Password { get; set; }
         public int WrongPasswordCount { get; set; }
-        public DateTime? StartBlockDateTime { get; set; }
-        public virtual Person Person { get; set; }
+        public DateTime? EndBlockDateTime { get; set; }
+        public virtual Customer Customer { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<AppUser> manager, string authenticationType)
         {

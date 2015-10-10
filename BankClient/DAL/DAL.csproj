@@ -86,10 +86,10 @@
     <Compile Include="Entities\DocumentType.cs" />
     <Compile Include="Entities\CreditPayment.cs" />
     <Compile Include="Entities\PaymentType.cs" />
-    <Compile Include="Entities\Person.cs" />
+    <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
-    <Compile Include="Entities\PersonCredit.cs" />
-    <Compile Include="Entities\PersonDeposit.cs" />
+    <Compile Include="Entities\CustomerCredit.cs" />
+    <Compile Include="Entities\CustomerDeposit.cs" />
     <Compile Include="Entities\AppUser.cs" />
     <Compile Include="Migrations\201510052150469_Initial.cs" />
     <Compile Include="Migrations\201510052150469_Initial.Designer.cs">

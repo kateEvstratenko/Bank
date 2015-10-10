@@ -10,10 +10,10 @@ namespace DAL.Entities
         public double DelaySum { get; set; }
         public Currency Currency { get; set; }
         public DateTime DateTime { get; set; }
-        public int PersonCreditId { get; set; }
+        public int CustomerCreditId { get; set; }
         public int? SourceBillId { get; set; }
         public int DestinationBillId { get; set; }
-        public virtual PersonCredit PersonCredit { get; set; }
+        public virtual CustomerCredit CustomerCredit { get; set; }
         [InverseProperty("SourceCreditPayments")]
         public virtual Bill SourceBill { get; set; }
         [InverseProperty("DestinationCreditPayments")]
