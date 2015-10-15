@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Core.Enums;
 
 namespace DAL.Entities
 {
-    public class CustomerDeposit
+    public class CustomerDeposit: BaseEntity
     {
-        [Key, ForeignKey("Customer")]
-        public int BillId { get; set; }
         public string ContractNumber { get; set; }
         public double InitialSum { get; set; }
         public Currency Currency { get; set; }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -14,8 +12,8 @@ namespace DAL.Entities
         public int CustomerId { get; set; }
         //public string Email { get; set; }
         public string Password { get; set; }
-        public int WrongPasswordCount { get; set; }
-        public DateTime? EndBlockDateTime { get; set; }
+//        public int WrongPasswordCount { get; set; }
+//        public DateTime? EndBlockDateTime { get; set; }
         public virtual Customer Customer { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<AppUser> manager, string authenticationType)

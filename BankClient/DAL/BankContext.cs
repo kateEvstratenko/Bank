@@ -19,6 +19,7 @@ namespace DAL
         public DbSet<Customer> Customers { get; set; }
         public DbSet<CustomerCredit> CustomerCredits { get; set; }
         public DbSet<CustomerDeposit> CustomerDeposits { get; set; }
+        public DbSet<Token> Tokens { get; set; }
         //public DbSet<AppUser> AppUsers { get; set; }     
     }
 }

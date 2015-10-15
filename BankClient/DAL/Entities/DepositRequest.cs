@@ -1,3 +1,5 @@
+using Core.Enums;
+
 namespace DAL.Entities
 {
     public class DepositRequest: BaseEntity

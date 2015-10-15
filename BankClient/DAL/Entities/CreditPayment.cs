@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Core.Enums;
 
 namespace DAL.Entities
 {
