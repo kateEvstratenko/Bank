@@ -2,8 +2,9 @@ using System;
 
 namespace DAL.Entities
 {
-    public class Token: BaseEntity
+    public class Token: IBaseEntity
     {
+        public int Id { get; set; }
         public int UserId { get; set; }
         public string Login { get; set; }
         public Guid Guid { get; set; }

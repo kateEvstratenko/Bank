@@ -6,7 +6,7 @@ namespace DAL
     public class UnitOfWork: IUnitOfWork
     {
         private readonly BankContext _context;
-        private IPersonRepository _iPersonRepository;
+        private IAppUserRepository _iAppUserRepository;
         private ITokenRepository _iTokenRepository;
 
         public UnitOfWork(BankContext context)
@@ -14,9 +14,9 @@ namespace DAL
             _context = context;
         }
 
-        public IPersonRepository PersonRepository
+        public IAppUserRepository AppUserRepository
         {
-            get { return (_iPersonRepository ?? (_iPersonRepository = new PersonRepository(_context))); }
+            get { return (_iAppUserRepository ?? (_iAppUserRepository = new AppUserRepository(_context))); }
         }
 
         public ITokenRepository TokenRepository

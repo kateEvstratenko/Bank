@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace DAL.Entities
 {
-    public class Credit : BaseEntity
+    public class Credit : IBaseEntity
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int PercentRate { get; set; }

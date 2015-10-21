@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities
 {
-    public class BankClient
+    public class BankClient: IBaseEntity
     {
         [Key, ForeignKey("Customer")]
-        public int CustomerId { get; set; }
+        public int Id { get; set; }
         public string Phone { get; set; }
         public string MilitaryIdPath { get; set; }
         public string IncomeCertificatePath { get; set; }

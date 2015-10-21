@@ -1,4 +1,3 @@
-D:\9 сем\Курсовая\BankClient\ClientApi\obj\Debug\ClientApi.csprojResolveAssemblyReference.cache
 D:\9 сем\Курсовая\BankClient\ClientApi\bin\ClientApi.dll.config
 D:\9 сем\Курсовая\BankClient\ClientApi\bin\ClientApi.dll
 D:\9 сем\Курсовая\BankClient\ClientApi\bin\ClientApi.pdb
@@ -30,6 +29,8 @@ D:\9 сем\Курсовая\BankClient\ClientApi\bin\System.Web.Http.Owin.dll
 D:\9 сем\Курсовая\BankClient\ClientApi\bin\System.Web.Http.WebHost.dll
 D:\9 сем\Курсовая\BankClient\ClientApi\bin\System.Web.Optimization.dll
 D:\9 сем\Курсовая\BankClient\ClientApi\bin\WebGrease.dll
+D:\9 сем\Курсовая\BankClient\ClientApi\bin\DAL.dll
+D:\9 сем\Курсовая\BankClient\ClientApi\bin\AutoMapper.dll
 D:\9 сем\Курсовая\BankClient\ClientApi\bin\BLL.pdb
 D:\9 сем\Курсовая\BankClient\ClientApi\bin\Core.pdb
 D:\9 сем\Курсовая\BankClient\ClientApi\bin\Antlr3.Runtime.pdb
@@ -55,9 +56,8 @@ D:\9 сем\Курсовая\BankClient\ClientApi\bin\System.Web.Http.xml
 D:\9 сем\Курсовая\BankClient\ClientApi\bin\System.Web.Http.Owin.xml
 D:\9 сем\Курсовая\BankClient\ClientApi\bin\System.Web.Http.WebHost.xml
 D:\9 сем\Курсовая\BankClient\ClientApi\bin\System.Web.Optimization.xml
-D:\9 сем\Курсовая\BankClient\ClientApi\obj\Debug\ClientApi.dll
-D:\9 сем\Курсовая\BankClient\ClientApi\obj\Debug\ClientApi.pdb
-D:\9 сем\Курсовая\BankClient\ClientApi\bin\DAL.dll
-D:\9 сем\Курсовая\BankClient\ClientApi\bin\AutoMapper.dll
 D:\9 сем\Курсовая\BankClient\ClientApi\bin\DAL.pdb
 D:\9 сем\Курсовая\BankClient\ClientApi\bin\AutoMapper.xml
+D:\9 сем\Курсовая\BankClient\ClientApi\obj\Debug\ClientApi.csprojResolveAssemblyReference.cache
+D:\9 сем\Курсовая\BankClient\ClientApi\obj\Debug\ClientApi.dll
+D:\9 сем\Курсовая\BankClient\ClientApi\obj\Debug\ClientApi.pdb

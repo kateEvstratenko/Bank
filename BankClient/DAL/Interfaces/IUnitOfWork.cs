@@ -2,7 +2,7 @@ namespace DAL.Interfaces
 {
     public interface IUnitOfWork
     {
-        IPersonRepository PersonRepository { get; }
+        IAppUserRepository AppUserRepository { get; }
         ITokenRepository TokenRepository { get; }
         void SaveChanges();
     }

@@ -5,7 +5,7 @@ using DAL.Interfaces;
 
 namespace DAL.Repositories
 {
-    public class BaseRepository<T>: IRepository<T> where T: BaseEntity
+    public class BaseRepository<T>: IRepository<T> where T: class, IBaseEntity
     {
         protected readonly BankContext Context;
         public BaseRepository(BankContext context)

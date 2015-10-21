@@ -31,3 +31,4 @@ D:\9 сем\Курсовая\BankClient\DAL\obj\Debug\DAL.Migrations.Identicatio
 D:\9 сем\Курсовая\BankClient\DAL\obj\Debug\DAL.csproj.GenerateResource.Cache
 D:\9 сем\Курсовая\BankClient\DAL\obj\Debug\DAL.dll
 D:\9 сем\Курсовая\BankClient\DAL\obj\Debug\DAL.pdb
+D:\9 сем\Курсовая\BankClient\DAL\obj\Debug\DAL.Migrations.IdRenamed.resources

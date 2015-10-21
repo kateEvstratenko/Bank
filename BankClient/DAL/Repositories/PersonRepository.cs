@@ -1,12 +1,18 @@
-﻿using DAL.Entities;
+﻿using System.Linq;
+using DAL.Entities;
 using DAL.Interfaces;
 
 namespace DAL.Repositories
 {
-    public class PersonRepository: BaseRepository<Customer>, IPersonRepository
+    public class AppUserRepository: BaseRepository<AppUser>, IAppUserRepository
     {
-        public PersonRepository(BankContext context) : base(context)
+        public AppUserRepository(BankContext context) : base(context)
         {
+        }
+
+        public AppUser GetByEmail(string email)
+        {
+            return Context.Users.FirstOrDefault(u => u.Email == email);
         }
     }
 }

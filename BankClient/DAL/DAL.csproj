@@ -30,17 +30,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Owin">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
@@ -95,7 +98,7 @@
     <Compile Include="Entities\CustomerCredit.cs" />
     <Compile Include="Entities\CustomerDeposit.cs" />
     <Compile Include="Entities\AppUser.cs" />
-    <Compile Include="Interfaces\IPersonRepository.cs" />
+    <Compile Include="Interfaces\IAppUserRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ITokenRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
@@ -110,6 +113,10 @@
     <Compile Include="Migrations\201510112026031_IdenticationNumberRenamed.cs" />
     <Compile Include="Migrations\201510112026031_IdenticationNumberRenamed.Designer.cs">
       <DependentUpon>201510112026031_IdenticationNumberRenamed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510211330420_IdRenamed.cs" />
+    <Compile Include="Migrations\201510211330420_IdRenamed.Designer.cs">
+      <DependentUpon>201510211330420_IdRenamed.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -131,6 +138,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510112026031_IdenticationNumberRenamed.resx">
       <DependentUpon>201510112026031_IdenticationNumberRenamed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510211330420_IdRenamed.resx">
+      <DependentUpon>201510211330420_IdRenamed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

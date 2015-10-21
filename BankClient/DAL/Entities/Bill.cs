@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities
 {
-    public class Bill: BaseEntity
+    public class Bill: IBaseEntity
     {
+        public int Id { get; set; }
         [Index]
         [StringLength(200)]
         public string Number { get; set; }

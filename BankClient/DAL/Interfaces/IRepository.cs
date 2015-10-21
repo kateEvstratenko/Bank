@@ -3,7 +3,7 @@ using DAL.Entities;
 
 namespace DAL.Interfaces
 {
-    public interface IRepository<T> where T: BaseEntity
+    public interface IRepository<T> where T: IBaseEntity
     {
         void Add(T entity);
         void Delete(T entity);

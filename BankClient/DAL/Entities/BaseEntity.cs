@@ -1,7 +1,9 @@
-﻿namespace DAL.Entities
+﻿using System.Security.Policy;
+
+namespace DAL.Entities
 {
-    public class BaseEntity
+    public interface IBaseEntity
     {
-        public int Id { get; set; }
+        int Id { get; set; }
     }
 }

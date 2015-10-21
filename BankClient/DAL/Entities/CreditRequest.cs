@@ -2,8 +2,9 @@ using Core.Enums;
 
 namespace DAL.Entities
 {
-    public class CreditRequest : BaseEntity
+    public class CreditRequest : IBaseEntity
     {
+        public int Id { get; set; }
         public string CreditGoal { get; set; }
         public double Sum { get; set; }
         public Currency Currency { get; set; }

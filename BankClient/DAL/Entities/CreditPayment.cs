@@ -4,8 +4,9 @@ using Core.Enums;
 
 namespace DAL.Entities
 {
-    public class CreditPayment : BaseEntity
+    public class CreditPayment : IBaseEntity
     {
+        public int Id { get; set; }
         public double MainSum { get; set; }
         public double PercentSum { get; set; }
         public double DelaySum { get; set; }
