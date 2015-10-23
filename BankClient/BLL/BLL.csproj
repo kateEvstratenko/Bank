@@ -54,13 +54,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapperConfig.cs" />
+    <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
+    <Compile Include="Interfaces\ICreditService.cs" />
     <Compile Include="Interfaces\IEncryptorService.cs" />
     <Compile Include="Interfaces\IRegistrationService.cs" />
-    <Compile Include="Models\AppUserBll.cs" />
-    <Compile Include="Models\BaseEntityBll.cs" />
-    <Compile Include="Models\TokenBll.cs" />
+    <Compile Include="Models\DomainAddress.cs" />
+    <Compile Include="Models\DomainAppUser.cs" />
+    <Compile Include="Models\DomainBankClient.cs" />
+    <Compile Include="Models\DomainBaseEntity.cs" />
+    <Compile Include="Models\DomainBill.cs" />
+    <Compile Include="Models\DomainCredit.cs" />
+    <Compile Include="Models\DomainCreditPayment.cs" />
+    <Compile Include="Models\DomainCreditRequest.cs" />
+    <Compile Include="Models\DomainCustomer.cs" />
+    <Compile Include="Models\DomainCustomerCredit.cs" />
+    <Compile Include="Models\DomainCustomerDeposit.cs" />
+    <Compile Include="Models\DomainDeposit.cs" />
+    <Compile Include="Models\DomainDepositPayment.cs" />
+    <Compile Include="Models\DomainDepositRequest.cs" />
+    <Compile Include="Models\DomainPaymentType.cs" />
+    <Compile Include="Models\DomainToken.cs" />
     <Compile Include="Interfaces\IAuthenticationService.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
+    <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\CreditService.cs" />
     <Compile Include="Services\EncryptorService.cs" />
     <Compile Include="Services\RegistrationService.cs" />
     <Compile Include="Services\UserService.cs" />

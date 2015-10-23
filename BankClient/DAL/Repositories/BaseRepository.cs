@@ -2,6 +2,7 @@ using System.Data.Entity;
 using System.Linq;
 using DAL.Entities;
 using DAL.Interfaces;
+using System;
 
 namespace DAL.Repositories
 {
@@ -15,12 +16,41 @@ namespace DAL.Repositories
 
         public void Add(T entity)
         {
-            Entities.Add(entity);
+            if (entity != null)
+            {
+                Entities.Add(entity);
+            }
+            else
+            {
+                throw new Exception();
+            }
         }
 
-        public void Delete(T entity)
+        public void Delete(int id)
         {
-            Entities.Remove(entity);
+            var entity = Entities.Find(id);
+            if (entity != null)
+            {
+                //Entities.Attach(entity);
+                Entities.Remove(entity);
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public void Update(T entity)
+        {
+            if (entity != null)
+            {
+                Entities.Attach(entity);
+                Context.Entry(entity).State = EntityState.Modified;
+            }
+            else
+            {
+                throw new Exception();
+            }
         }
 
         public T Get(int id)

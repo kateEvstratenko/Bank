@@ -7,6 +7,7 @@ namespace DAL
     {
         private readonly BankContext _context;
         private IAppUserRepository _iAppUserRepository;
+        private ICreditRepository _iCreditRepository;
         private ITokenRepository _iTokenRepository;
 
         public UnitOfWork(BankContext context)
@@ -17,6 +18,11 @@ namespace DAL
         public IAppUserRepository AppUserRepository
         {
             get { return (_iAppUserRepository ?? (_iAppUserRepository = new AppUserRepository(_context))); }
+        }
+
+        public ICreditRepository CreditRepository
+        {
+            get { return (_iCreditRepository ?? (_iCreditRepository = new CreditRepository(_context))); }
         }
 
         public ITokenRepository TokenRepository

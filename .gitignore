@@ -1,0 +1,15 @@
+*.suo
+*.user
+
+Degub/
+DebugPublic/
+Release/
+Releases/
+x64/
+x86/
+App_Data/
+build/
+bin/
+obj/
+BankClient/packages/
+!packages/repositories.config

@@ -4,6 +4,7 @@ namespace DAL.Interfaces
     {
         IAppUserRepository AppUserRepository { get; }
         ITokenRepository TokenRepository { get; }
+        ICreditRepository CreditRepository { get; }
         void SaveChanges();
     }
 }

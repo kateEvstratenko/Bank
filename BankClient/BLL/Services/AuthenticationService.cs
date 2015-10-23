@@ -27,7 +27,7 @@ namespace BLL.Services
             return token;
         }
 
-        public TokenBll CheckToken(string token)
+        public DomainToken CheckToken(string token)
         {
             if (token == null)
             {
@@ -61,7 +61,7 @@ namespace BLL.Services
 
         private void SaveToken(Guid guid, string login, int userId, DateTime date)
         {
-            var token = new TokenBll(guid, login, userId, date);
+            var token = new DomainToken(guid, login, userId, date);
 
             var existingToken = _iUnitOfWork.TokenRepository.GetByCustomerId(userId);
 
@@ -92,7 +92,7 @@ namespace BLL.Services
             return splitToken;
         }
 
-        private TokenBll CheckTokenParts(string[] tokenParts)
+        private DomainToken CheckTokenParts(string[] tokenParts)
         {
             Guid guid;    
             int userId;
@@ -106,10 +106,10 @@ namespace BLL.Services
             {
                 throw BankClientException.ThrowInvalidToken();
             }
-            return new TokenBll(guid, login, userId, date);
+            return new DomainToken(guid, login, userId, date);
         }
 
-        private void CheckTokenValidity(TokenBll token)
+        private void CheckTokenValidity(DomainToken token)
         {
             var databaseToken = _iUnitOfWork.TokenRepository.GetByGuid(token.Guid);
             if (databaseToken == null || databaseToken.IsExpired)
@@ -124,7 +124,7 @@ namespace BLL.Services
             throw TokenExpiredException.ThrowTokenExpiredException();
         }
 
-        private void ExpireToken(TokenBll token)
+        private void ExpireToken(DomainToken token)
         {
             token.IsExpired = true;
             _iUnitOfWork.SaveChanges();
