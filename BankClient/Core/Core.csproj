@@ -52,6 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\EnumHelper.cs" />
+    <Compile Include="Enums\Roles.cs" />
     <Compile Include="TokenExpiredException.cs" />
     <Compile Include="BankClientException.cs" />
     <Compile Include="Enums\Currency.cs" />

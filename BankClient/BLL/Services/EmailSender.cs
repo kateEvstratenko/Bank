@@ -37,7 +37,8 @@ namespace BLL.Services
             {
                 Subject = "Завершение регистрации",
                 Body = GenerateMailBody(email, userId, baseUrl),
-                From = new MailAddress(EmailSenderUserName, "Kokovik")
+                IsBodyHtml = true,
+                From = new MailAddress(EmailSenderUserName, "ThreeFatties")
             };
             mail.To.Add(new MailAddress(email));
             return mail;
@@ -45,8 +46,8 @@ namespace BLL.Services
 
         private string GenerateMailBody(string email, string userId, string baseUrl)
         {
-            return String.Format("Для завершения регистрации перейдите по ссылке: {0}/{1}?token={2}&email={3}", 
-                baseUrl, ConfirmEmailUrl, userId, email);
+            var urlString = String.Format("{0}/{1}?token={2}&email={3}", baseUrl, ConfirmEmailUrl, userId, email);
+            return String.Format("Для завершения регистрации перейдите по ссылке: <a href={0}>click</a>", urlString);
         }
     }
 }

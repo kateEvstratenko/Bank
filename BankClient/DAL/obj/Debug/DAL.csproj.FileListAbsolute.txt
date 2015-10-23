@@ -32,3 +32,4 @@ D:\9 сем\Курсовая\BankClient\DAL\obj\Debug\DAL.csproj.GenerateResourc
 D:\9 сем\Курсовая\BankClient\DAL\obj\Debug\DAL.dll
 D:\9 сем\Курсовая\BankClient\DAL\obj\Debug\DAL.pdb
 D:\9 сем\Курсовая\BankClient\DAL\obj\Debug\DAL.Migrations.IdRenamed.resources
+D:\9 сем\Курсовая\BankClient\DAL\obj\Debug\DAL.Migrations.PasswordFromAppUserDeleted.resources

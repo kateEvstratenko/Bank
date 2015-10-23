@@ -118,6 +118,10 @@
     <Compile Include="Migrations\201510211330420_IdRenamed.Designer.cs">
       <DependentUpon>201510211330420_IdRenamed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510220643080_PasswordFromAppUserDeleted.cs" />
+    <Compile Include="Migrations\201510220643080_PasswordFromAppUserDeleted.Designer.cs">
+      <DependentUpon>201510220643080_PasswordFromAppUserDeleted.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
@@ -141,6 +145,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510211330420_IdRenamed.resx">
       <DependentUpon>201510211330420_IdRenamed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510220643080_PasswordFromAppUserDeleted.resx">
+      <DependentUpon>201510220643080_PasswordFromAppUserDeleted.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

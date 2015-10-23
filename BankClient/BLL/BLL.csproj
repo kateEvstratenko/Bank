@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=4.0.4.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.4.0.4\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=4.1.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.1.0\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -53,13 +53,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoMapperConfig.cs" />
     <Compile Include="Interfaces\IEncryptorService.cs" />
+    <Compile Include="Interfaces\IRegistrationService.cs" />
     <Compile Include="Models\AppUserBll.cs" />
     <Compile Include="Models\BaseEntityBll.cs" />
     <Compile Include="Models\TokenBll.cs" />
     <Compile Include="Interfaces\IAuthenticationService.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\EncryptorService.cs" />
+    <Compile Include="Services\RegistrationService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\EmailSender.cs" />
     <Compile Include="Interfaces\IEmailSender.cs" />

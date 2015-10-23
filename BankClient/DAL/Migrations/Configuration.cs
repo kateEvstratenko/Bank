@@ -1,4 +1,7 @@
 using System.Data.Entity.Migrations;
+using System.Linq;
+using Core.Enums;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DAL.Migrations
 {
@@ -16,13 +19,13 @@ namespace DAL.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
             //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            var roles = EnumHelper.GetValues<AppRoles>().ToList();
+            var identityRoles = new IdentityRole[roles.Count];
+            for (var i = 0; i < roles.Count; i++)
+            {
+                identityRoles[i] = new IdentityRole(roles[i].ToString());
+            }
+            context.Roles.AddOrUpdate(r => r.Name, identityRoles);
         }
     }
 }

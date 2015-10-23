@@ -20,5 +20,10 @@ namespace Core
         {
             return new BankClientException(3, "Token is invalid.");
         }
+
+        public static BankClientException ThrowEmployeeIsNull()
+        {
+            return new BankClientException(4, "Employee is null.");
+        }
     }
 }

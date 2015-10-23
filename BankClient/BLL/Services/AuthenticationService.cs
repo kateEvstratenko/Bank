@@ -8,23 +8,6 @@ using DAL.Interfaces;
 
 namespace BLL.Services
 {
-    public class RegistrationService : IRegistrationService 
-    {
-         private readonly IUnitOfWork _iUnitOfWork;
-         public RegistrationService(IUnitOfWork iUnitOfWork)
-        {
-            _iUnitOfWork = iUnitOfWork;
-        }
-
-        public void RegisterEmployee(AppUserBll bankEmployee)
-        {
-            var employee = _iUnitOfWork.AppUserRepository.GetByEmail(bankEmployee.Id);
-            employee.Firstname = bankEmployee.Firstname;
-            employee.Lastname = bankEmployee.Lastname;
-            _iUnitOfWork.SaveChanges();
-        }
-    }
-
     public class AuthenticationService : IAuthenticationService
     {
         private const int TokenPartsCount = 4;
