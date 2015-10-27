@@ -54,16 +54,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapperConfig.cs" />
+    <Compile Include="Interfaces\IBaseService.cs" />
     <Compile Include="Interfaces\IEncryptorService.cs" />
-    <Compile Include="Interfaces\IRegistrationService.cs" />
+    <Compile Include="Interfaces\ICreditService.cs" />
     <Compile Include="Models\AppUserBll.cs" />
     <Compile Include="Models\BaseEntityBll.cs" />
     <Compile Include="Models\TokenBll.cs" />
     <Compile Include="Interfaces\IAuthenticationService.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
+    <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\EncryptorService.cs" />
-    <Compile Include="Services\RegistrationService.cs" />
-    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\CreditService.cs" />
     <Compile Include="Services\EmailSender.cs" />
     <Compile Include="Interfaces\IEmailSender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

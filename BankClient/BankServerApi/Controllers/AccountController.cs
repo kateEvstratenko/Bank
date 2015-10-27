@@ -10,7 +10,6 @@ using AutoMapper;
 using BankServerApi.Models;
 using BankServerApi.Providers;
 using BankServerApi.Results;
-using BLL.Interfaces;
 using DAL.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -25,21 +24,21 @@ namespace BankServerApi.Controllers
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
-        private readonly IEmailSender _iEmailSender;
-        private readonly IRegistrationService _iRegistrationService;
+//        private readonly IEmailSender _iEmailSender;
+//        private readonly ICreditService _iCreditService;
 
-        public AccountController(IEmailSender iEmailSender, IRegistrationService iRegistrationService)
-            : this(Startup.UserManagerFactory(), Startup.OAuthOptions.AccessTokenFormat, iEmailSender, iRegistrationService)
+        public AccountController()//IEmailSender iEmailSender, ICreditService iCreditService)
+            : this(Startup.UserManagerFactory(), Startup.OAuthOptions.AccessTokenFormat)//, iEmailSender, iCreditService)
         {
         }
 
         public AccountController(UserManager<AppUser> userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat, IEmailSender iEmailSender, IRegistrationService iRegistrationService)
+            ISecureDataFormat<AuthenticationTicket> accessTokenFormat)//, IEmailSender iEmailSender, ICreditService iCreditService)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
-            _iEmailSender = iEmailSender;
-            _iRegistrationService = iRegistrationService;
+//            _iEmailSender = iEmailSender;
+//            _iCreditService = iCreditService;
         }
 
         public UserManager<AppUser> UserManager { get; private set; }
@@ -331,8 +330,8 @@ namespace BankServerApi.Controllers
             if (result.Succeeded)
             {
                 UserManager.AddToRole(employee.Id, model.Role.ToString());
-                var baseUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
-                _iEmailSender.SendVerifyToEmail(employee.Email, employee.Id, baseUrl);
+//                var baseUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
+//                _iEmailSender.SendVerifyToEmail(employee.Email, employee.Id, baseUrl);
             }
             IHttpActionResult errorResult = GetErrorResult(result);
 

@@ -26,7 +26,7 @@ namespace BankServerApi
             builder.RegisterWebApiFilterProvider(config);
 
             builder.RegisterType<EmailSender>().As<IEmailSender>();
-            builder.RegisterType<RegistrationService>().As<IRegistrationService>();
+            builder.RegisterType<CreditService>().As<ICreditService>();
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<AppUserRepository>().As<IAppUserRepository>();
