@@ -10,6 +10,8 @@ using AutoMapper;
 using BankServerApi.Models;
 using BankServerApi.Providers;
 using BankServerApi.Results;
+using BLL.Interfaces;
+using BLL.Models;
 using DAL.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -24,21 +26,20 @@ namespace BankServerApi.Controllers
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
-//        private readonly IEmailSender _iEmailSender;
-//        private readonly ICreditService _iCreditService;
+        private readonly IAuthenticationService _iAuthenticationService;
 
-        public AccountController()//IEmailSender iEmailSender, ICreditService iCreditService)
-            : this(Startup.UserManagerFactory(), Startup.OAuthOptions.AccessTokenFormat)//, iEmailSender, iCreditService)
+        public AccountController(IAuthenticationService iAuthenticationService)
+            : this(Startup.UserManagerFactory(), Startup.OAuthOptions.AccessTokenFormat, iAuthenticationService)
         {
         }
 
         public AccountController(UserManager<AppUser> userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat)//, IEmailSender iEmailSender, ICreditService iCreditService)
+            ISecureDataFormat<AuthenticationTicket> accessTokenFormat,
+            IAuthenticationService iAuthenticationService)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
-//            _iEmailSender = iEmailSender;
-//            _iCreditService = iCreditService;
+            _iAuthenticationService = iAuthenticationService;
         }
 
         public UserManager<AppUser> UserManager { get; private set; }
@@ -57,6 +58,12 @@ namespace BankServerApi.Controllers
                 HasRegistered = externalLogin == null,
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
             };
+        }
+
+        [HttpPost]
+        public string Login(LoginViewModel request)
+        {
+            return _iAuthenticationService.SignInEmployee(request.UserName, request.Password);
         }
 
         // POST api/Account/Logout
@@ -318,18 +325,18 @@ namespace BankServerApi.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterEmployeeModel model)
+        public async Task<IHttpActionResult> Register(RegisterEmployeeModel request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var employee = Mapper.Map<AppUser>(model);
-            IdentityResult result = await UserManager.CreateAsync(employee, model.Password);
+            var employee = Mapper.Map<AppUser>(request);
+            IdentityResult result = await UserManager.CreateAsync(employee, request.Password);
             if (result.Succeeded)
             {
-                UserManager.AddToRole(employee.Id, model.Role.ToString());
+                UserManager.AddToRole(employee.Id, request.Role.ToString());
 //                var baseUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
 //                _iEmailSender.SendVerifyToEmail(employee.Email, employee.Id, baseUrl);
             }

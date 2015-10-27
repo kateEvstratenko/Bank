@@ -34,6 +34,10 @@
       <HintPath>..\packages\AutoMapper.4.1.0\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -54,7 +58,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapperConfig.cs" />
-    <Compile Include="Interfaces\IBaseService.cs" />
     <Compile Include="Interfaces\IEncryptorService.cs" />
     <Compile Include="Interfaces\ICreditService.cs" />
     <Compile Include="Models\AppUserBll.cs" />
@@ -62,12 +65,12 @@
     <Compile Include="Models\TokenBll.cs" />
     <Compile Include="Interfaces\IAuthenticationService.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
-    <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\EncryptorService.cs" />
     <Compile Include="Services\CreditService.cs" />
     <Compile Include="Services\EmailSender.cs" />
     <Compile Include="Interfaces\IEmailSender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\UserManagerFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

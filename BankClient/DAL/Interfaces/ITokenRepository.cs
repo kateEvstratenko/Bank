@@ -5,7 +5,7 @@ namespace DAL.Interfaces
 {
     public interface ITokenRepository: IRepository<Token>
     {
-        Token GetByCustomerId(int customerIds);
+        Token GetByCustomerId(string customerIds);
         Token GetByGuid(Guid guid);
     }
 }

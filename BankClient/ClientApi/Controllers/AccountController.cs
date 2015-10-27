@@ -26,18 +26,21 @@ namespace ClientApi.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private readonly IEmailSender _iEmailSender;
+        private readonly IAuthenticationService _iAuthenticationService;
 
-        public AccountController(IEmailSender iEmailSender)
-            : this(Startup.UserManagerFactory(), Startup.OAuthOptions.AccessTokenFormat, iEmailSender)
+        public AccountController(IEmailSender iEmailSender, IAuthenticationService iAuthenticationService)
+            : this(Startup.UserManagerFactory(), Startup.OAuthOptions.AccessTokenFormat, iEmailSender, iAuthenticationService)
         {
         }
 
         public AccountController(UserManager<AppUser> userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat, IEmailSender iEmailSender)
+            ISecureDataFormat<AuthenticationTicket> accessTokenFormat, IEmailSender iEmailSender,
+            IAuthenticationService iAuthenticationService)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
             _iEmailSender = iEmailSender;
+            _iAuthenticationService = iAuthenticationService;
         }
 
         public UserManager<AppUser> UserManager { get; private set; }
@@ -56,6 +59,12 @@ namespace ClientApi.Controllers
                 HasRegistered = externalLogin == null,
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
             };
+        }
+
+        [HttpPost]
+        public string Login(LoginViewModel request)
+        {
+            return _iAuthenticationService.SignInEmployee(request.UserName, request.Password);
         }
 
         // POST api/Account/Logout
@@ -317,7 +326,7 @@ namespace ClientApi.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        public async Task<IHttpActionResult> Register(RegisterBindingModel request)
         {
             if (!ModelState.IsValid)
             {
@@ -326,11 +335,11 @@ namespace ClientApi.Controllers
 
             var user = new AppUser()
             {
-                Email = model.Email,
-                UserName = model.UserName
+                Email = request.Email,
+                UserName = request.UserName
             };
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+            IdentityResult result = await UserManager.CreateAsync(user, request.Password);
             if (result.Succeeded)
             {
                 UserManager.AddToRole(user.Id, AppRoles.User.ToString());
