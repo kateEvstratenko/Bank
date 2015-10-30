@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BankServerApi.Models;
 using BLL.Models;
+using DataObjects.Requests.CreditRequest;
 using DAL.Entities;
 
 namespace BankServerApi
@@ -11,6 +12,7 @@ namespace BankServerApi
         {
 //            Mapper.CreateMap<RegisterEmployeeModel, AppUserBll>();
             Mapper.CreateMap<RegisterEmployeeModel, AppUser>();
+            Mapper.CreateMap<AddCreditRequestModel, CreditRequestBll>();
         }
     }
 }

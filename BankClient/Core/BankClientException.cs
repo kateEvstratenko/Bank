@@ -35,5 +35,10 @@ namespace Core
         {
             return new BankClientException(6, "Email is not confirmed.");
         }
+
+        public static BankClientException ThrowAutofacError(string message)
+        {
+            return new BankClientException(7, message);
+        }
     }
 }

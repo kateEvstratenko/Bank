@@ -207,8 +207,10 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="CheckTokenAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\CreditRequestController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -292,6 +294,10 @@
     <ProjectReference Include="..\DAL\DAL.csproj">
       <Project>{475AD98E-9013-4C81-9F3A-B08BED1840BE}</Project>
       <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataObjects\DataObjects.csproj">
+      <Project>{172DA606-827A-46A9-B070-0C0345E9143D}</Project>
+      <Name>DataObjects</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

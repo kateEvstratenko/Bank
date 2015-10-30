@@ -1,7 +1,7 @@
 ﻿namespace BLL.Models
 {
-    public class BaseEntityBll
+    public interface IBaseEntityBll
     {
-        public int Id { get; set; }
+        int Id { get; set; }
     }
 }

@@ -1,8 +1,9 @@
 using Core.Enums;
+using DAL.Entities;
 
-namespace DAL.Entities
+namespace BLL.Models
 {
-    public class CreditRequest : IBaseEntity
+    public class CreditRequestBll : IBaseEntity
     {
         public int Id { get; set; }
         public string CreditGoal { get; set; }
@@ -13,8 +14,5 @@ namespace DAL.Entities
         public int CreditId { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual Credit Credit { get; set; }
-
-        public int CreditRequestStatusId { get; set; }
-        public virtual CreditRequestStatus CreditRequestStatus { get; set; }
     }
 }

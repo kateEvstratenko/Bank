@@ -9,6 +9,7 @@ namespace BLL
         public static void Configure()
         {
             Mapper.CreateMap<AppUserBll, AppUser>().ReverseMap();
+            Mapper.CreateMap<CreditRequestBll, CreditRequest>().ReverseMap();
         }
     }
 }
