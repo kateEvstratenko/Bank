@@ -30,6 +30,7 @@ namespace BankServerApi
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<AppUserRepository>().As<IAppUserRepository>();
+            builder.RegisterType<CreditService>().As<ICreditService>();
             builder.RegisterType<BankContext>().AsSelf();
 
             // Set the dependency resolver to be Autofac.

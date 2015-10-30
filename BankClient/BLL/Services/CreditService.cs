@@ -36,7 +36,7 @@ namespace BLL.Services
         }
         public IQueryable<DomainCredit> GetAll()
         {
-            var credits = Uow.CreditRepository.GetAll();
+            var credits = Uow.CreditRepository.GetAll().ToList();
             var domainCredits = new List<DomainCredit>();
             foreach (var credit in credits)
             {

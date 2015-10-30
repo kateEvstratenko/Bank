@@ -9,6 +9,6 @@ namespace BLL.Models
     public class DomainPaymentType : DomainBaseEntity
     {
         public string Name { get; set; }
-        public ICollection<DomainCredit> Credits { get; set; }
+        //public ICollection<DomainCredit> Credits { get; set; }
     }
 }

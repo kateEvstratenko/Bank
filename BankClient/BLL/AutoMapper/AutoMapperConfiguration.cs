@@ -12,6 +12,7 @@ namespace BLL.AutoMapper
             #region DAL to BLL
 
             Mapper.CreateMap<Address, DomainAddress>();
+            Mapper.CreateMap<AppUser, DomainAppUser>();
             Mapper.CreateMap<BankClient, DomainBankClient>();
             Mapper.CreateMap<Bill, DomainBill>();
             Mapper.CreateMap<Credit, DomainCredit>();
@@ -32,6 +33,7 @@ namespace BLL.AutoMapper
             #region BLL to DAL
 
             Mapper.CreateMap<DomainAddress, Address>();
+            Mapper.CreateMap<DomainAppUser, AppUser>();
             Mapper.CreateMap<DomainBankClient, BankClient>();
             Mapper.CreateMap<DomainBill, Bill>();
             Mapper.CreateMap<DomainCredit, Credit>();

@@ -3,7 +3,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using BLL;
+using BLL.AutoMapper;
 
 namespace BankServerApi
 {
@@ -18,7 +18,7 @@ namespace BankServerApi
             //BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutofacConfig.Configure();
             AutomapperConfig.Configure();
-            AutoMapperConfig.Configure();
+            AutoMapperConfiguration.Register();
         }
     }
 }

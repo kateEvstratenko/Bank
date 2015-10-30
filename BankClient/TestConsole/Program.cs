@@ -1,5 +1,6 @@
 ﻿using BLL;
 using BLL.Services;
+using System;
 
 namespace TestConsole
 {
@@ -7,8 +8,6 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            var emailSender = new EmailSender();
-//            emailSender.SendVerifyToEmail("jjj");
         }
     }
 }

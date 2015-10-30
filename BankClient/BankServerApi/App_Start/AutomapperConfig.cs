@@ -9,8 +9,8 @@ namespace BankServerApi
     {
         public static void Configure()
         {
-//            Mapper.CreateMap<RegisterEmployeeModel, AppUserBll>();
             Mapper.CreateMap<RegisterEmployeeModel, AppUser>();
+            Mapper.CreateMap<CreditBindingModel, DomainCredit>();
         }
     }
 }
