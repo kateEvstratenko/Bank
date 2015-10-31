@@ -11,9 +11,8 @@ namespace DAL.Entities
         public int PercentRate { get; set; }
         public double MinSum { get; set; }
         public double MaxSum { get; set; }
-        public TimeSpan MinPeriod { get; set; }
-        public TimeSpan MaxPeriod { get; set; }
-        public TimeSpan LoanPeriod { get; set; }
+        public int MinMonthPeriod { get; set; }
+        public int MaxMonthPeriod { get; set; }
         public int PaymentTypeId { get; set; }
         public virtual PaymentType PaymentType { get; set; }
         public ICollection<CreditRequest> CreditRequests { get; set; }

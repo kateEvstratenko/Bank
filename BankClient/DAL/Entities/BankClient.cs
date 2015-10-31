@@ -8,8 +8,6 @@ namespace DAL.Entities
         [Key, ForeignKey("Customer")]
         public int Id { get; set; }
         public string Phone { get; set; }
-        public string MilitaryIdPath { get; set; }
-        public string IncomeCertificatePath { get; set; }
         public virtual Customer Customer { get; set; }
     }
 }

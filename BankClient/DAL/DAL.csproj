@@ -130,6 +130,10 @@
     <Compile Include="Migrations\201510272208236_UserNameInTokenToString.Designer.cs">
       <DependentUpon>201510272208236_UserNameInTokenToString.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510311853086_TimePeriodIsChanged.cs" />
+    <Compile Include="Migrations\201510311853086_TimePeriodIsChanged.Designer.cs">
+      <DependentUpon>201510311853086_TimePeriodIsChanged.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
@@ -162,6 +166,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510272208236_UserNameInTokenToString.resx">
       <DependentUpon>201510272208236_UserNameInTokenToString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510311853086_TimePeriodIsChanged.resx">
+      <DependentUpon>201510311853086_TimePeriodIsChanged.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

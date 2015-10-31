@@ -8,6 +8,8 @@ namespace DAL.Entities
         public string CreditGoal { get; set; }
         public double Sum { get; set; }
         public Currency Currency { get; set; }
+        public string MilitaryIdPath { get; set; }
+        public string IncomeCertificatePath { get; set; }
 
         public int CustomerId { get; set; }
         public int CreditId { get; set; }

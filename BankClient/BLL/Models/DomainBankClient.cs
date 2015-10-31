@@ -10,8 +10,6 @@ namespace BLL.Models
     {
         public int CustomerId { get; set; }
         public string Phone { get; set; }
-        public string MilitaryIdPath { get; set; }
-        public string IncomeCertificatePath { get; set; }
         public virtual DomainCustomer Customer { get; set; }
     }
 }
