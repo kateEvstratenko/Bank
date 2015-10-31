@@ -5,6 +5,7 @@ using BLL.Models;
 using Core;
 using DAL.Entities;
 using DAL.Interfaces;
+using Microsoft.AspNet.Identity;
 
 namespace BLL.Services
 {
@@ -21,9 +22,20 @@ namespace BLL.Services
 
         public string SignIn(string login, string password)
         {
-            //todo verify login-password
-            var userId = 0;
-            var token = GenerateTokenByEmail(login, userId);
+            var user = AppUserManagerFactory.Instance.Factory().Find(login, password);
+            ThrowIfInvalidCredentials(user);
+            ThrowIfEmailNotConfirmed(user);
+
+            var token = GenerateTokenByEmail(login, user.Id);
+            return token;
+        }
+
+        public string SignInEmployee(string login, string password)
+        {
+            var user = AppUserManagerFactory.Instance.Factory().Find(login, password);
+            ThrowIfInvalidCredentials(user);
+
+            var token = GenerateTokenByEmail(login, user.Id);
             return token;
         }
 
@@ -42,7 +54,7 @@ namespace BLL.Services
             return tokenObject;
         }
 
-        private string GenerateTokenByEmail(string login, int userId)
+        private string GenerateTokenByEmail(string login, string userId)
         {
             var guid = Guid.NewGuid();
             var date = DateTime.UtcNow;
@@ -54,12 +66,12 @@ namespace BLL.Services
             return encrypted;
         }
 
-        private string BuildTokenString(Guid guid, string login, int userId, DateTime date)
+        private string BuildTokenString(Guid guid, string login, string userId, DateTime date)
         {
             return String.Format("{0}|{1}|{2}|{3}", guid, login, userId, date);
         }
 
-        private void SaveToken(Guid guid, string login, int userId, DateTime date)
+        private void SaveToken(Guid guid, string login, string userId, DateTime date)
         {
             var token = new DomainToken(guid, login, userId, date);
 
@@ -94,15 +106,14 @@ namespace BLL.Services
 
         private DomainToken CheckTokenParts(string[] tokenParts)
         {
-            Guid guid;    
-            int userId;
+            Guid guid;
             DateTime date;
             var isSuccessGuidParse = Guid.TryParse(tokenParts[0], out guid);
             var login = tokenParts[1];
-            var isSuccessUserIdParse = Int32.TryParse(tokenParts[2], out userId);
+            var userId = tokenParts[2];
             var isSuccessDateParse = DateTime.TryParse(tokenParts[3], out date);
 
-            if (!isSuccessGuidParse || !isSuccessDateParse || !isSuccessUserIdParse)
+            if (!isSuccessGuidParse || !isSuccessDateParse)
             {
                 throw BankClientException.ThrowInvalidToken();
             }
@@ -128,6 +139,22 @@ namespace BLL.Services
         {
             token.IsExpired = true;
             _iUnitOfWork.SaveChanges();
+        }
+
+        private void ThrowIfInvalidCredentials(AppUser user)
+        {
+            if (user == null)
+            {
+                throw BankClientException.ThrowInvalidCredentials();
+            }
+        }
+
+        private void ThrowIfEmailNotConfirmed(AppUser user)
+        {
+            if (!user.EmailConfirmed)
+            {
+                throw BankClientException.ThrowEmailNotConfirmed();
+            }
         }
     }
 }

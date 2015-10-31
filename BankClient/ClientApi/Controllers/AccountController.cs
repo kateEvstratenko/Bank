@@ -6,11 +6,12 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using BLL;
 using BLL.Interfaces;
 using ClientApi.Models;
 using ClientApi.Providers;
 using ClientApi.Results;
+using Core.Enums;
+using DAL.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
@@ -25,21 +26,24 @@ namespace ClientApi.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private readonly IEmailSender _iEmailSender;
+        private readonly IAuthenticationService _iAuthenticationService;
 
-        public AccountController(IEmailSender iEmailSender)
-            : this(Startup.UserManagerFactory(), Startup.OAuthOptions.AccessTokenFormat, iEmailSender)
+        public AccountController(IEmailSender iEmailSender, IAuthenticationService iAuthenticationService)
+            : this(Startup.UserManagerFactory(), Startup.OAuthOptions.AccessTokenFormat, iEmailSender, iAuthenticationService)
         {
         }
 
-        public AccountController(UserManager<IdentityUser> userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat, IEmailSender iEmailSender)
+        public AccountController(UserManager<AppUser> userManager,
+            ISecureDataFormat<AuthenticationTicket> accessTokenFormat, IEmailSender iEmailSender,
+            IAuthenticationService iAuthenticationService)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
             _iEmailSender = iEmailSender;
+            _iAuthenticationService = iAuthenticationService;
         }
 
-        public UserManager<IdentityUser> UserManager { get; private set; }
+        public UserManager<AppUser> UserManager { get; private set; }
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
         // GET api/Account/UserInfo
@@ -55,6 +59,12 @@ namespace ClientApi.Controllers
                 HasRegistered = externalLogin == null,
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
             };
+        }
+
+        [HttpPost]
+        public string Login(LoginViewModel request)
+        {
+            return _iAuthenticationService.SignInEmployee(request.UserName, request.Password);
         }
 
         // POST api/Account/Logout
@@ -247,7 +257,7 @@ namespace ClientApi.Controllers
                 return new ChallengeResult(provider, this);
             }
 
-            IdentityUser user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
+            var user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
                 externalLogin.ProviderKey));
 
             bool hasRegistered = user != null;
@@ -316,23 +326,24 @@ namespace ClientApi.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        public async Task<IHttpActionResult> Register(RegisterBindingModel request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            IdentityUser user = new IdentityUser
+            var user = new AppUser()
             {
-                Email = model.Email,
-                UserName = model.UserName
+                Email = request.Email,
+                UserName = request.UserName
             };
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+            IdentityResult result = await UserManager.CreateAsync(user, request.Password);
             if (result.Succeeded)
             {
-                var baseUrl = RequestContext.VirtualPathRoot;
+                UserManager.AddToRole(user.Id, AppRoles.User.ToString());
+                var baseUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
                 _iEmailSender.SendVerifyToEmail(user.Email, user.Id, baseUrl);
             }
             IHttpActionResult errorResult = GetErrorResult(result);
@@ -363,7 +374,7 @@ namespace ClientApi.Controllers
                 return InternalServerError();
             }
 
-            IdentityUser user = new IdentityUser
+            var user = new AppUser()
             {
                 UserName = model.UserName
             };

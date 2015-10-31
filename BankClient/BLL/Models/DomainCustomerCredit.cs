@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace BLL.Models
 {
-    public class DomainCustomerCredit : DomainBaseEntity
+    public class DomainCustomerCredit : IDomainBaseEntity
     {
+        public int Id { get; set; }
         public string ContractNumber { get; set; }
         public double CreditSum { get; set; }
         public Currency Currency { get; set; }

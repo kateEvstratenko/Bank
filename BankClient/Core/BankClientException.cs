@@ -25,5 +25,20 @@ namespace Core
         {
             return new BankClientException(4, "Employee is null.");
         }
+
+        public static BankClientException ThrowInvalidCredentials()
+        {
+            return new BankClientException(5, "Credentials are invalid.");
+        }
+
+        public static BankClientException ThrowEmailNotConfirmed()
+        {
+            return new BankClientException(6, "Email is not confirmed.");
+        }
+
+        public static BankClientException ThrowAutofacError(string message)
+        {
+            return new BankClientException(7, message);
+        }
     }
 }

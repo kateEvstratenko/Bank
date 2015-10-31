@@ -3,12 +3,17 @@ using DAL.Interfaces;
 
 namespace BLL.Services
 {
-    public class RegistrationService : IRegistrationService 
+    public class PaymentService : IPaymentService 
     {
         private readonly IUnitOfWork _iUnitOfWork;
-        public RegistrationService(IUnitOfWork iUnitOfWork)
+        public PaymentService(IUnitOfWork iUnitOfWork)
         {
             _iUnitOfWork = iUnitOfWork;
+        }
+
+        public void Add()
+        {
+            
         }
     }
 }

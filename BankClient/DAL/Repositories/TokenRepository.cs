@@ -11,7 +11,7 @@ namespace DAL.Repositories
         {
         }
 
-        public Token GetByCustomerId(int customerIds)
+        public Token GetByCustomerId(string customerIds)
         {
             return Context.Tokens.FirstOrDefault(t => t.UserId == customerIds);
         }

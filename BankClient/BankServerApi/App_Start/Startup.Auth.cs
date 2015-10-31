@@ -9,6 +9,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using BankServerApi.Providers;
+using BLL.Services;
 using DAL;
 using DAL.Entities;
 
@@ -20,7 +21,7 @@ namespace BankServerApi
         {
             PublicClientId = "self";
 
-            UserManagerFactory = () => new UserManager<AppUser>(new UserStore<AppUser>(new BankContext()));
+            UserManagerFactory = AppUserManagerFactory.Instance.Factory;//() => new UserManager<AppUser>(new UserStore<AppUser>(new BankContext()));
 
             OAuthOptions = new OAuthAuthorizationServerOptions
             {

@@ -1,5 +1,7 @@
 ﻿using System;
 using ClientApi.Providers;
+using DAL;
+using DAL.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
@@ -15,7 +17,7 @@ namespace ClientApi
         {
             PublicClientId = "self";
 
-            UserManagerFactory = () => new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+            UserManagerFactory = () => new UserManager<AppUser>(new UserStore<AppUser>(new BankContext()));
 
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
@@ -29,7 +31,7 @@ namespace ClientApi
 
         public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
 
-        public static Func<UserManager<IdentityUser>> UserManagerFactory { get; set; }
+        public static Func<UserManager<AppUser>> UserManagerFactory { get; set; }
 
         public static string PublicClientId { get; private set; }
 

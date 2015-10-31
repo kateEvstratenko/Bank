@@ -2,18 +2,18 @@
 
 namespace BLL.Models
 {
-    public class DomainToken : DomainBaseEntity
+    public class DomainToken : IDomainBaseEntity
     {
         public DomainToken(){}
-        public DomainToken(Guid guid, string login, int userId, DateTime generationDate)
+        public DomainToken(Guid guid, string login, string userId, DateTime generationDate)
         {
             Guid = guid;
             Login = login;
             UserId = userId;
             GenerationDate = generationDate;
         }
-
-        public int UserId { get; set; }
+        public int Id { get; set; }
+        public string UserId { get; set; }
         public string Login { get; set; }
         public Guid Guid { get; set; }
         public DateTime GenerationDate { get; set; }

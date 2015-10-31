@@ -1,9 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace BankServerApi.Models
 {
     // Models returned by AccountController actions.
+    public class LoginViewModel
+    {
+        public string UserName { get; set; }
+        public string Password { get; set; }
+    }
 
     public class ExternalLoginViewModel
     {

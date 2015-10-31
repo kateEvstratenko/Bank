@@ -13,5 +13,8 @@ namespace DAL.Entities
         public int CreditId { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual Credit Credit { get; set; }
+
+        public int CreditRequestStatusId { get; set; }
+        public virtual CreditRequestStatus CreditRequestStatus { get; set; }
     }
 }

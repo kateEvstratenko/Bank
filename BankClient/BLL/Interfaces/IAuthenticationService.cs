@@ -6,5 +6,6 @@ namespace BLL.Interfaces
     {
         string SignIn(string login, string password);
         DomainToken CheckToken(string token);
+        string SignInEmployee(string login, string password);
     }
 }
