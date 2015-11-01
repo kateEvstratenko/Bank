@@ -8,7 +8,7 @@ namespace DAL.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public int InterestRate { get; set; }
+        public double InterestRate { get; set; }
         public double MinSum { get; set; }
         public double MaxSum { get; set; }
         public int MinMonthPeriod { get; set; }

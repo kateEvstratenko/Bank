@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 using BankServerApi.CustomAttributes;
 
 namespace BankServerApi.Models
@@ -18,7 +14,7 @@ namespace BankServerApi.Models
         public string Description { get; set; }
 
         [Required]
-        public int PercentRate { get; set; }
+        public double PercentRate { get; set; }
 
         [Required]
         [Range(1, double.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
@@ -30,14 +26,11 @@ namespace BankServerApi.Models
         public double MaxSum { get; set; }
 
         [Required]
-        public TimeSpan MinPeriod { get; set; }
+        public int MinMonthPeriod { get; set; }
 
         [Required]
-        [DateGreaterThan("MinPeriod", "Max period must exceed min period")]
-        public TimeSpan MaxPeriod { get; set; }
-
-        [Required]
-        public TimeSpan LoanPeriod { get; set; }
+        [GreaterThan("MinMonthPeriod", "Max period must exceed min period")]
+        public int MaxMonthPeriod { get; set; }
 
         [Required]
         public int PaymentTypeId { get; set; }

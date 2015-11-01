@@ -20,18 +20,12 @@ namespace BankServerApi.CustomAttributes
             try
             {
                 var otherPropertyInfo = validationContext.ObjectType.GetProperty(this.otherPropertyName);
-                if (otherPropertyInfo.PropertyType.Equals(new double().GetType()))
+                var propertyType = otherPropertyInfo.PropertyType;
+                dynamic toValidate = Convert.ChangeType(value, propertyType);
+                dynamic referenceProperty = Convert.ChangeType(otherPropertyInfo.GetValue(validationContext.ObjectInstance, null), propertyType);
+                if (toValidate.CompareTo(referenceProperty) < 1)
                 {
-                    var toValidate = (double)value;
-                    var referenceProperty = (double)otherPropertyInfo.GetValue(validationContext.ObjectInstance, null);
-                    if (toValidate.CompareTo(referenceProperty) < 1)
-                    {
-                        validationResult = new ValidationResult(ErrorMessageString);
-                    }
-                }
-                else
-                {
-                    validationResult = new ValidationResult("An error occurred while validating the property. OtherProperty is not of type double");
+                    validationResult = new ValidationResult(ErrorMessageString);
                 }
             }
             catch (Exception ex)

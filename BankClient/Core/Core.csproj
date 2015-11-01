@@ -63,6 +63,7 @@
     <Compile Include="Enums\CreditRequestStatusInfo.cs" />
     <Compile Include="Enums\EnumHelper.cs" />
     <Compile Include="Enums\Roles.cs" />
+    <Compile Include="ProjectConstants.cs" />
     <Compile Include="TokenExpiredException.cs" />
     <Compile Include="BankClientException.cs" />
     <Compile Include="Enums\Currency.cs" />

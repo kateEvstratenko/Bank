@@ -37,11 +37,7 @@ namespace BLL.Services
         public IQueryable<DomainCredit> GetAll()
         {
             var credits = Uow.CreditRepository.GetAll().ToList();
-            var domainCredits = new List<DomainCredit>();
-            foreach (var credit in credits)
-            {
-                domainCredits.Add(Mapper.Map<DomainCredit>(credit));
-            }
+            var domainCredits = Mapper.Map<List<Credit>, List<DomainCredit>>(credits);
             return domainCredits.AsQueryable();
         }
     }

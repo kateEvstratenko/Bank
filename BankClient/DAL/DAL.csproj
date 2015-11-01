@@ -134,6 +134,18 @@
     <Compile Include="Migrations\201510311853086_TimePeriodIsChanged.Designer.cs">
       <DependentUpon>201510311853086_TimePeriodIsChanged.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510312015167_PercentRateWasChangedToDouble.cs" />
+    <Compile Include="Migrations\201510312015167_PercentRateWasChangedToDouble.Designer.cs">
+      <DependentUpon>201510312015167_PercentRateWasChangedToDouble.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511011659131_AddPaymentsFieldsToCreditRequest.cs" />
+    <Compile Include="Migrations\201511011659131_AddPaymentsFieldsToCreditRequest.Designer.cs">
+      <DependentUpon>201511011659131_AddPaymentsFieldsToCreditRequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511011746309_AddIncomeSumToCreditRequest.cs" />
+    <Compile Include="Migrations\201511011746309_AddIncomeSumToCreditRequest.Designer.cs">
+      <DependentUpon>201511011746309_AddIncomeSumToCreditRequest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
@@ -169,6 +181,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510311853086_TimePeriodIsChanged.resx">
       <DependentUpon>201510311853086_TimePeriodIsChanged.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510312015167_PercentRateWasChangedToDouble.resx">
+      <DependentUpon>201510312015167_PercentRateWasChangedToDouble.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511011659131_AddPaymentsFieldsToCreditRequest.resx">
+      <DependentUpon>201511011659131_AddPaymentsFieldsToCreditRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511011746309_AddIncomeSumToCreditRequest.resx">
+      <DependentUpon>201511011746309_AddIncomeSumToCreditRequest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

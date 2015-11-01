@@ -63,12 +63,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
+    <Compile Include="Interfaces\ICalculationCreditService.cs" />
     <Compile Include="Interfaces\ICreditRequestService.cs" />
     <Compile Include="Interfaces\ICreditService.cs" />
     <Compile Include="Interfaces\IEncryptorService.cs" />
     <Compile Include="Models\DomainAddress.cs" />
     <Compile Include="Models\DomainAppUser.cs" />
     <Compile Include="Models\DomainBankClient.cs" />
+    <Compile Include="Models\DomainCreditPaymentPlan.cs" />
     <Compile Include="Models\IDomainBaseEntity.cs" />
     <Compile Include="Models\DomainBill.cs" />
     <Compile Include="Models\DomainCredit.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="Interfaces\IAuthenticationService.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\CalculationCreditService.cs" />
     <Compile Include="Services\CreditService.cs" />
     <Compile Include="Services\CreditRequestService.cs" />
     <Compile Include="Interfaces\IPaymentService.cs" />

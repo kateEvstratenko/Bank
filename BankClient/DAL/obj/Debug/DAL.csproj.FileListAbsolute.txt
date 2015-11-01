@@ -71,3 +71,6 @@ C:\Users\Рома\Desktop\Твой проект\Bank\BankClient\DAL\obj\Debug\DA
 C:\Users\Рома\Desktop\Твой проект\Bank\BankClient\DAL\obj\Debug\DAL.dll
 C:\Users\Рома\Desktop\Твой проект\Bank\BankClient\DAL\obj\Debug\DAL.pdb
 C:\Users\Рома\Desktop\Твой проект\Bank\BankClient\DAL\obj\Debug\DAL.Migrations.TimePeriodIsChanged.resources
+C:\Users\Рома\Desktop\Твой проект\Bank\BankClient\DAL\obj\Debug\DAL.Migrations.PercentRateWasChangedToDouble.resources
+C:\Users\Рома\Desktop\Твой проект\Bank\BankClient\DAL\obj\Debug\DAL.Migrations.AddPaymentsFieldsToCreditRequest.resources
+C:\Users\Рома\Desktop\Твой проект\Bank\BankClient\DAL\obj\Debug\DAL.Migrations.AddIncomeSumToCreditRequest.resources

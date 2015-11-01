@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 using BankServerApi.Models;
-using System.Threading.Tasks;
 using AutoMapper;
 using BLL.Models;
-using BLL.Services;
 using BLL.Interfaces;
 
 namespace BankServerApi.Controllers
