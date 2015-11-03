@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Data.SqlClient;
+using AutoMapper;
 using BankServerApi.Models;
 using BankServerApi.Models.CalculationModels;
 using BLL.Models;
@@ -18,4 +20,4 @@ namespace BankServerApi
             Mapper.CreateMap<DomainCreditPaymentPlan, CreditPaymentPlanViewModel>();
         }
     }
-}
+}   

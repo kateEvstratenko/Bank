@@ -14,5 +14,7 @@ namespace DataObjects.Requests.CreditRequest
         public double Sum { get; set; }
         public Currency Currency { get; set; }
         public int CreditId { get; set; }
+        public byte[] MilitaryId { get; set; }
+        public byte[] IncomeCertificate { get; set; }
     }
 }
