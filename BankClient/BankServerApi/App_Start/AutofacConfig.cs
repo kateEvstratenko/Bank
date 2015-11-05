@@ -29,19 +29,15 @@ namespace BankServerApi
             builder.RegisterType<CreditService>().As<ICreditService>();
             builder.RegisterType<AuthenticationService>().As<IAuthenticationService>();
             builder.RegisterType<EncryptorService>().As<IEncryptorService>();
-
-            builder.RegisterType<AppUserRepository>().As<IAppUserRepository>();
-<<<<<<< HEAD
-            builder.RegisterType<CreditService>().As<ICreditService>();
             builder.RegisterType<CalculationCreditService>().As<ICalculationCreditService>();
-=======
+
+            builder.RegisterType<AppUserRepository>().As<IAppUserRepository>();            
             builder.RegisterType<CreditRepository>().As<ICreditRepository>();
             builder.RegisterType<TokenRepository>().As<ITokenRepository>();
             builder.RegisterType<CreditRequestRepository>().As<ICreditRequestRepository>();
             builder.RegisterType<CustomerRepository>().As<ICustomerRepository>();
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
->>>>>>> credit request logic added
             builder.RegisterType<BankContext>().AsSelf();
 
             // Set the dependency resolver to be Autofac.
