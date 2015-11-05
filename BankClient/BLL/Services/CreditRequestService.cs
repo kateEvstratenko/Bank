@@ -34,13 +34,18 @@ namespace BLL.Services
             _iUnitOfWork.SaveChanges();
         }
 
-        public List<DomainCreditRequest> GetUnconfirmed(int userId)
+        public List<DomainCreditRequest> GetUnconfirmed(string roleId)
         {
-//            var roleId = _iUnitOfWork.
-            return Mapper.Map<IEnumerable<DomainCreditRequest>>(_iUnitOfWork.CreditRequestRepository.GetAll()
-                .Where(cr => cr.CreditRequestStatuses.Where(x => x.AppUser.Roles.Select(y => y.RoleId))!= "))
-//                    .Select(cs => cs.Info) == CreditRequestStatusInfo.None))
+            return Mapper.Map<IEnumerable<DomainCreditRequest>>(
+                _iUnitOfWork.CreditRequestRepository.GetAll()
+                .Where(cr => cr.CreditRequestStatuses
+                    .SelectMany(s => s.AppUser.Roles)
+                    .Select(r => r.RoleId)
+                    .Contains(roleId))
+                    .Where(cred => cred.CreditRequestStatuses
+                        .Select(crs => crs.Info)
+                        .Contains(CreditRequestStatusInfo.None)))
                 .ToList();
         }
     }
-}   
+}

@@ -42,7 +42,6 @@ namespace DAL
             get { return (_iCreditRequestRepository ?? (_iCreditRequestRepository = new CreditRequestRepository(_context))); }
         }
 
-
         public void SaveChanges()
         {
             _context.SaveChanges();

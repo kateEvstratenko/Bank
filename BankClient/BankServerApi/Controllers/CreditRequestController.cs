@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Http;
 using AutoMapper;
 using BLL.Interfaces;
@@ -7,12 +8,15 @@ using Core;
 using DataObjects.Requests.CreditRequest;
 using DataObjects.Responses;
 using DataObjects.Responses.CreditRequest;
+using DAL.Entities;
+using Microsoft.AspNet.Identity;
 
 namespace BankServerApi.Controllers
 {
-    [Authorize(Roles = "Operator")]
+    [Authorize(Roles = "Operator")] 
     public class CreditRequestController : ApiController
     {
+        private readonly UserManager<AppUser> _userManager = Startup.UserManagerFactory(); 
         private readonly ICreditRequestService _iCreditRequestService;
         public CreditRequestController(ICreditRequestService iCreditRequestService)
         {
@@ -38,12 +42,13 @@ namespace BankServerApi.Controllers
                 return ResponseBase.Unsuccessful(ex);
             }
         }
-
+        [Authorize(Roles = "CreditCommitteeMember, Security")]
         public GetUnconfirmedCreditResponse GetUnconfirmed(AuthenticatedRequest request)
         {
             try
             {
-                var unconfirmedCreditRequests = _iCreditRequestService.GetUnconfirmed();
+                var role = _userManager.GetRoles(request.TokenObj.UserId).FirstOrDefault();
+                var unconfirmedCreditRequests = _iCreditRequestService.GetUnconfirmed(role);
                 return new GetUnconfirmedCreditResponse()
                 {
                     CreditRequests = unconfirmedCreditRequests

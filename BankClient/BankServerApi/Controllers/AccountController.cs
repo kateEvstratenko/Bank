@@ -33,7 +33,7 @@ namespace BankServerApi.Controllers
         {
         }
 
-        public AccountController(UserManager<AppUser> userManager,
+        private AccountController(UserManager<AppUser> userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat,
             IAuthenticationService iAuthenticationService)
         {
@@ -42,8 +42,8 @@ namespace BankServerApi.Controllers
             _iAuthenticationService = iAuthenticationService;
         }
 
-        public UserManager<AppUser> UserManager { get; private set; }
-        public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
+        private UserManager<AppUser> UserManager { get; set; }
+        private ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; set; }
 
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]

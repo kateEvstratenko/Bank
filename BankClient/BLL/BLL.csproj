@@ -73,6 +73,7 @@
     <Compile Include="Models\DomainAppUser.cs" />
     <Compile Include="Models\DomainBankClient.cs" />
     <Compile Include="Models\DomainCreditPaymentPlan.cs" />
+    <Compile Include="Models\DomainCreditRequestStatus.cs" />
     <Compile Include="Models\IDomainBaseEntity.cs" />
     <Compile Include="Models\DomainBill.cs" />
     <Compile Include="Models\DomainCredit.cs" />
