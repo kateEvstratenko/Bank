@@ -146,6 +146,10 @@
     <Compile Include="Migrations\201511011746309_AddIncomeSumToCreditRequest.Designer.cs">
       <DependentUpon>201511011746309_AddIncomeSumToCreditRequest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511051844571_statussesToCredirRequestAdded.cs" />
+    <Compile Include="Migrations\201511051844571_statussesToCredirRequestAdded.Designer.cs">
+      <DependentUpon>201511051844571_statussesToCredirRequestAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
@@ -190,6 +194,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511011746309_AddIncomeSumToCreditRequest.resx">
       <DependentUpon>201511011746309_AddIncomeSumToCreditRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511051844571_statussesToCredirRequestAdded.resx">
+      <DependentUpon>201511051844571_statussesToCredirRequestAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
