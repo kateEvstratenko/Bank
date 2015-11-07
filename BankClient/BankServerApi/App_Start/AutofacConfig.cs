@@ -27,9 +27,11 @@ namespace BankServerApi
 
             builder.RegisterType<EmailSender>().As<IEmailSender>();
             builder.RegisterType<CreditService>().As<ICreditService>();
+            builder.RegisterType<CreditRequestService>().As<ICreditRequestService>();
             builder.RegisterType<AuthenticationService>().As<IAuthenticationService>();
             builder.RegisterType<EncryptorService>().As<IEncryptorService>();
             builder.RegisterType<CalculationCreditService>().As<ICalculationCreditService>();
+            builder.RegisterType<ImageService>().As<IImageService>();
 
             builder.RegisterType<AppUserRepository>().As<IAppUserRepository>();            
             builder.RegisterType<CreditRepository>().As<ICreditRepository>();
