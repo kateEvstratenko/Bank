@@ -22,6 +22,7 @@ namespace BankServerApi
             PublicClientId = "self";
 
             UserManagerFactory = AppUserManagerFactory.Instance.Factory;//() => new UserManager<AppUser>(new UserStore<AppUser>(new BankContext()));
+            RoleManagerFactory = AppRoleManagerFactory.Instance.Factory;//() => new UserManager<AppUser>(new UserStore<AppUser>(new BankContext()));
 
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
@@ -36,6 +37,7 @@ namespace BankServerApi
         public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
 
         public static Func<UserManager<AppUser>> UserManagerFactory { get; set; }
+        public static Func<RoleManager<IdentityRole>> RoleManagerFactory { get; set; }
 
         public static string PublicClientId { get; private set; }
 

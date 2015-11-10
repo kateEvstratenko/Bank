@@ -40,5 +40,9 @@ namespace Core
         {
             return new BankClientException(7, message);
         }
+        public static BankClientException ThrowAuthorizationError()
+        {
+            return new BankClientException(8, "Authorization has been denied for this request.");
+        }
     }
 }

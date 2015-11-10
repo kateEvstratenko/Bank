@@ -26,6 +26,7 @@ namespace BLL.AutoMapper
             Mapper.CreateMap<DepositRequest, DomainDepositRequest>();
             Mapper.CreateMap<PaymentType, DomainPaymentType>();
             Mapper.CreateMap<Token, DomainToken>();
+            Mapper.CreateMap<CreditRequestStatus, DomainCreditRequestStatus>();
 
             #endregion
 
