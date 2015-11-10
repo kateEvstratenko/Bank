@@ -32,11 +32,6 @@ namespace BankServerApi.Controllers
         // POST api/credit
         public IHttpActionResult Post([FromBody]CreditBindingModel creditModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var credit = Mapper.Map<DomainCredit>(creditModel);
             creditService.Add(credit);
             return Ok();
@@ -45,11 +40,6 @@ namespace BankServerApi.Controllers
         // PUT api/credit/5
         public IHttpActionResult Put(int id, [FromBody]CreditBindingModel creditModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var credit = Mapper.Map<DomainCredit>(creditModel);
             credit.Id = id;
             creditService.Update(credit);

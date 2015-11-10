@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
+using BankServerApi.CustomAttributes;
 
 namespace BankServerApi
 {
@@ -25,6 +26,8 @@ namespace BankServerApi
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Filters.Add(new InvalidModelStateAttribute());
         }
     }
 }

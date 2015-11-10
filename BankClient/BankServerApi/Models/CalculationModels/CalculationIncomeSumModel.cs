@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BankServerApi.Models.CalculationModels
 {
-    public class CalculationCreditModel
+    public class CalculationIncomeSumModel
     {
         [Required]
         [Range(1, double.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
@@ -16,10 +16,6 @@ namespace BankServerApi.Models.CalculationModels
 
         [Required]
         public int CreditId { get; set; }
-
-        [Required]
-        [Range(1, double.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
-        public double IncomeSum { get; set; }
 
         [DefaultValue(0)]
         [Range(0, double.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]

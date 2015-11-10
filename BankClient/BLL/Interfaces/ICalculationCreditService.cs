@@ -10,5 +10,11 @@ namespace BLL.Interfaces
             double percentRate, int monthPeriod, DateTime startDate);
         object CalculateSolvencyRate(double sum, double percentRate, int monthPeriod,
             double incomeSum, double otherCreditPayments, double utilitiesPayments, double otherPayments);
+
+        double CalculateMaxCreditSum(double percentRate, int monthPeriod, double incomeSum, 
+            double otherCreditPayments, double utilitiesPayments, double otherPayments);
+
+        double CalculateIncomeForCredit(double sum, double percentRate, int monthPeriod,
+            double otherCreditPayments, double utilitiesPayments, double otherPayments);
     }
 }

@@ -4,44 +4,62 @@ using AutoMapper;
 using BLL.Models;
 using BLL.Interfaces;
 using BankServerApi.Models.CalculationModels;
+using System;
 
 namespace BankServerApi.Controllers
 {
     public class CalculationCreditController : ApiController
     {
-        private readonly ICalculationCreditService calculationCreditservice;
+        private readonly ICalculationCreditService calculationCreditService;
 
-        public CalculationCreditController(ICalculationCreditService iCalculationCreditService)
+        private readonly ICreditService creditService;
+
+        public CalculationCreditController(ICalculationCreditService iCalculationCreditService, ICreditService iCreditService)
             :base()
         {
-            calculationCreditservice = iCalculationCreditService;
+            calculationCreditService = iCalculationCreditService;
+            creditService = iCreditService;
         }
 
-        // GET api/calculationcredit?sum=SUM&percentrate=RATE&monthperiod=COUNT&startdate=DATE
+        // GET /api/calculationcredit/paymentsplan?sum=SUM&creditid=ID&monthperiod=MONTH_COUNT&startdate=11-01-2015
         [Route("api/calculationcredit/paymentsplan")]
         public IHttpActionResult GetPaymentPlan([FromUri]CalculationCreditModelForPaymentPlan query)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var payments = calculationCreditservice
-                .CalculatePaymentPlan(query.Sum, query.PercentRate, query.MonthPeriod, query.StartDate);
+            var credit = creditService.Get(query.CreditId);
+            var payments = calculationCreditService
+                .CalculatePaymentPlan(query.Sum, credit.PercentRate, query.MonthPeriod, query.StartDate);
             var viewPayments = Mapper.Map<IEnumerable<DomainCreditPaymentPlan>, List<CreditPaymentPlanViewModel>>(payments);
             return Ok(viewPayments);
         }
-        
-        //GET api/calculationcredit/solvencyrate?sum=SUM&percentrate=RATE&monthperiod=COUNT&incomesum=INCOME&utilitiespayments=UTILITIES&otherpayments=OTHER
+
+        // GET /api/calculationcredit/solvencyrate?sum=SUM&creditid=ID&monthperiod=MONTH_COUNT&incomesum=INCOME&utilitiespayments=UTILSUM&otherpayments=OTHERSUM
         [Route("api/calculationcredit/solvencyrate")]
         public IHttpActionResult GetSolvencyRate([FromUri]CalculationCreditModel query)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var solvency = calculationCreditservice.CalculateSolvencyRate(query.Sum, query.PercentRate, query.MonthPeriod,
+            var credit = creditService.Get(query.CreditId);
+            var solvency = calculationCreditService.CalculateSolvencyRate(query.Sum, credit.PercentRate, query.MonthPeriod,
                 query.IncomeSum, query.OtherCreditPayments, query.UtilitiesPayments, query.OtherPayments);
             return Ok(solvency);
+        }
+
+        // GET /api/calculationcredit/solvencyrate?creditid=ID&monthperiod=MONTH_COUNT&incomesum=INCOME&utilitiespayments=UTILSUM&otherpayments=OTHERSUM
+        [Route("api/calculationcredit/maxsum")]
+        public IHttpActionResult GetMaxCreditSum([FromUri]CalculationMaxCreditSumModel query)
+        {
+            var credit = creditService.Get(query.CreditId);
+            var maxSum = calculationCreditService.CalculateMaxCreditSum(credit.PercentRate, query.MonthPeriod,
+                query.IncomeSum, query.OtherCreditPayments, query.UtilitiesPayments, query.OtherPayments);
+            return Ok(maxSum);
+        }
+
+        // GET /api/calculationcredit/solvencyrate?sum=SUM&creditid=ID&monthperiod=MONTH_COUNT&utilitiespayments=UTILSUM&otherpayments=OTHERSUM
+        [Route("api/calculationcredit/income")]
+        public IHttpActionResult GetIncomeSum([FromUri]CalculationIncomeSumModel query)
+        {
+            var credit = creditService.Get(query.CreditId);
+            var incomeSum = calculationCreditService.CalculateIncomeForCredit(query.Sum, credit.PercentRate, query.MonthPeriod,
+                query.OtherCreditPayments, query.UtilitiesPayments, query.OtherPayments);
+            return Ok(incomeSum);
         }
     }
 }

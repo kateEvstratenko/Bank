@@ -7,6 +7,7 @@ using BLL.Services;
 using DAL;
 using DAL.Interfaces;
 using DAL.Repositories;
+using BankServerApi.CustomAttributes;
 
 namespace BankServerApi
 {

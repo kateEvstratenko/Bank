@@ -1,12 +1,14 @@
-﻿using System;
+﻿using BankServerApi.CustomAttributes;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace BankServerApi.Models.CalculationModels
 {
     public class CalculationCreditModelForPaymentPlan
     {
         [Required]
-        [Range(1, double.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
+        [SumRange("CreditId")]
         public double Sum { get; set; }
 
         [Required]
@@ -14,8 +16,7 @@ namespace BankServerApi.Models.CalculationModels
         public int MonthPeriod { get; set; }
 
         [Required]
-        [Range(1, double.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
-        public double PercentRate { get; set; }
+        public int CreditId { get; set; }
 
         [Required, DataType(DataType.Date)]
         public DateTime StartDate { get; set; }

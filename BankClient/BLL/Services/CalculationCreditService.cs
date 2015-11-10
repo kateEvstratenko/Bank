@@ -80,8 +80,25 @@ namespace BLL.Services
             return new
             {
                 solvencyRate = solvencyRate,
-                solvency = solvencyRate < ProjectConstants.MaxSolvencyRate
+                solvency = solvencyRate <= ProjectConstants.MaxSolvencyRate
             };
+        }
+
+        public double CalculateMaxCreditSum(double percentRate, int monthPeriod, 
+            double incomeSum, double otherCreditPayments, double utilitiesPayments, double otherPayments)
+        {
+            var netIncomeSum = incomeSum - utilitiesPayments - otherPayments;
+            var maxMonthlyPayment = netIncomeSum * ProjectConstants.MaxSolvencyRate - otherCreditPayments;
+            var maxCreditSum = maxMonthlyPayment / CalculateAnnuityRate(percentRate, monthPeriod);
+            return maxCreditSum;
+        }
+
+        public double CalculateIncomeForCredit(double sum, double percentRate, int monthPeriod,
+            double otherCreditPayments, double utilitiesPayments, double otherPayments)
+        {
+            var paymentSum = CalculatePaymentSum(sum, percentRate, monthPeriod);
+            var incomeSum = (paymentSum + otherCreditPayments) / ProjectConstants.MaxSolvencyRate + utilitiesPayments + otherPayments;
+            return incomeSum;
         }
     }
 }

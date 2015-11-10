@@ -213,6 +213,8 @@
     <Compile Include="Controllers\CreditController.cs" />
     <Compile Include="CustomAttributes\GreaterThanAttribute.cs" />
     <Compile Include="Controllers\CreditRequestController.cs" />
+    <Compile Include="CustomAttributes\InvalidModelStateAttribute.cs" />
+    <Compile Include="CustomAttributes\SumRangeAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -220,6 +222,8 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CalculationModels\CalculationCreditModel.cs" />
     <Compile Include="Models\CalculationModels\CalculationCreditModelForPaymentPlan.cs" />
+    <Compile Include="Models\CalculationModels\CalculationIncomeSumModel.cs" />
+    <Compile Include="Models\CalculationModels\CalculationMaxCreditSumModel.cs" />
     <Compile Include="Models\CreditBindingModel.cs" />
     <Compile Include="Models\CalculationModels\CreditPaymentPlanViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -275,6 +279,9 @@
       <Project>{172DA606-827A-46A9-B070-0C0345E9143D}</Project>
       <Name>DataObjects</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
