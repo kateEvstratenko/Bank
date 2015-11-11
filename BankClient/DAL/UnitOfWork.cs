@@ -1,3 +1,4 @@
+using DAL.Entities;
 using DAL.Interfaces;
 using DAL.Repositories;
 
@@ -11,6 +12,7 @@ namespace DAL
         private ITokenRepository _iTokenRepository;
         private ICreditRequestRepository _iCreditRequestRepository;
         private ICustomerRepository _iCustomerRepository;
+        private ICustomerCreditRepository _iCustomerCreditRepository;
 
         public UnitOfWork(BankContext context)
         {
@@ -30,6 +32,11 @@ namespace DAL
         public ICreditRepository CreditRepository
         {
             get { return (_iCreditRepository ?? (_iCreditRepository = new CreditRepository(_context))); }
+        }
+
+        public ICustomerCreditRepository CustomerCreditRepository
+        {
+            get { return (_iCustomerCreditRepository ?? (_iCustomerCreditRepository = new CustomerCreditRepository(_context))); }
         }
 
         public ITokenRepository TokenRepository

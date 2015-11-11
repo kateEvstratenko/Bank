@@ -92,6 +92,7 @@
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\CalculationCreditService.cs" />
+    <Compile Include="Services\DailyCalculateService.cs" />
     <Compile Include="Services\CreditService.cs" />
     <Compile Include="Services\CreditRequestService.cs" />
     <Compile Include="Interfaces\IPaymentService.cs" />

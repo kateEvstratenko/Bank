@@ -99,6 +99,7 @@
     <Compile Include="Entities\CustomerCredit.cs" />
     <Compile Include="Entities\CustomerDeposit.cs" />
     <Compile Include="Entities\AppUser.cs" />
+    <Compile Include="Interfaces\ICustomerCreditRepository.cs" />
     <Compile Include="Interfaces\ICustomerRepository.cs" />
     <Compile Include="Interfaces\IAppUserRepository.cs" />
     <Compile Include="Interfaces\ICreditRepository.cs" />
