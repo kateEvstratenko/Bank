@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Web.Http;
+using System.Web.Http.Dependencies;
 using Autofac;
 using Autofac.Integration.WebApi;
 using BLL.Interfaces;
@@ -11,6 +12,11 @@ using BankServerApi.CustomAttributes;
 
 namespace BankServerApi
 {
+    public static class CustomDependencyResolver
+    {
+        public static IDependencyResolver Resolver { get; set; }
+    }
+
     public class AutofacConfig
     {
         public static void Configure()
@@ -46,6 +52,7 @@ namespace BankServerApi
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+            CustomDependencyResolver.Resolver = config.DependencyResolver;
         }
     }
 }
