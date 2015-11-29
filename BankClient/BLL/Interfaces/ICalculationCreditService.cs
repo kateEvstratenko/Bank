@@ -6,7 +6,7 @@ namespace BLL.Interfaces
 {
     public interface ICalculationCreditService
     {
-        IEnumerable<DomainCreditPaymentPlan> CalculatePaymentPlan(double sum,
+        IEnumerable<DomainCreditPaymentPlanItem> CalculatePaymentPlan(double sum,
             double percentRate, int monthPeriod, DateTime startDate);
         object CalculateSolvencyRate(double sum, double percentRate, int monthPeriod,
             double incomeSum, double otherCreditPayments, double utilitiesPayments, double otherPayments);

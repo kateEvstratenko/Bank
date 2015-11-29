@@ -21,12 +21,4 @@ namespace DAL.Repositories
             return Context.Tokens.FirstOrDefault(t => t.Guid == guid);
         }
     }
-
-    public class CustomerCreditRepository : BaseRepository<CustomerCredit>, ICustomerCreditRepository
-    {
-        public CustomerCreditRepository(BankContext context)
-            : base(context)
-        {
-        }
-    }
 }

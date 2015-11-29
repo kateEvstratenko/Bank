@@ -45,6 +45,8 @@ namespace BLL.Services
 
             _iUnitOfWork.CreditRequestRepository.Add(creditRequestDal);
             _iUnitOfWork.SaveChanges();
+
+            //todo generate text document
         }
 
         public List<DomainCreditRequest> GetUnconfirmed(IdentityRole role)

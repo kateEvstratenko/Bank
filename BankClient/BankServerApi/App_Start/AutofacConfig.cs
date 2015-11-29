@@ -8,7 +8,6 @@ using BLL.Services;
 using DAL;
 using DAL.Interfaces;
 using DAL.Repositories;
-using BankServerApi.CustomAttributes;
 
 namespace BankServerApi
 {
@@ -39,6 +38,7 @@ namespace BankServerApi
             builder.RegisterType<EncryptorService>().As<IEncryptorService>();
             builder.RegisterType<CalculationCreditService>().As<ICalculationCreditService>();
             builder.RegisterType<ImageService>().As<IImageService>();
+            builder.RegisterType<CustomerCreditService>().As<ICustomerCreditService>();
 
             builder.RegisterType<AppUserRepository>().As<IAppUserRepository>();            
             builder.RegisterType<CreditRepository>().As<ICreditRepository>();

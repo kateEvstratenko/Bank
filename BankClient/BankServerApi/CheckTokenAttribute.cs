@@ -29,7 +29,7 @@ namespace BankServerApi
                     throw BankClientException.ThrowAutofacError("AuthenticationService is null");
                 }
                 var requestParams = ((AuthenticatedRequest)actionContext.ActionArguments.First().Value);
-                var token = requestParams.Token;
+                var token = actionContext.Request.Headers.First(p => p.Key.ToLower() == "token").Value.First();
                 var parsedToken = authenticationService.CheckToken(token);
                 requestParams.TokenObj = parsedToken;
             }

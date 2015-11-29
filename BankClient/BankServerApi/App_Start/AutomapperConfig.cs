@@ -15,9 +15,10 @@ namespace BankServerApi
         {
             Mapper.CreateMap<RegisterEmployeeModel, AppUser>();
             Mapper.CreateMap<CreditBindingModel, DomainCredit>();
-            Mapper.CreateMap<AddCreditRequestModel, DomainCreditRequest>();
+            Mapper.CreateMap<DepositBindingModel, DomainDeposit>();
+            Mapper.CreateMap<AddCreditRequest, DomainCreditRequest>();
 
-            Mapper.CreateMap<DomainCreditPaymentPlan, CreditPaymentPlanViewModel>();
+            Mapper.CreateMap<DomainCreditPaymentPlanItem, CreditPaymentPlanViewModel>();
         }
     }
 }   

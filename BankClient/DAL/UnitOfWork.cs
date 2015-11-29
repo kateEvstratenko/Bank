@@ -9,6 +9,7 @@ namespace DAL
         private readonly BankContext _context;
         private IAppUserRepository _iAppUserRepository;
         private ICreditRepository _iCreditRepository;
+        private IDepositRepository _iDepositRepository;
         private ITokenRepository _iTokenRepository;
         private ICreditRequestRepository _iCreditRequestRepository;
         private ICustomerRepository _iCustomerRepository;
@@ -32,6 +33,11 @@ namespace DAL
         public ICreditRepository CreditRepository
         {
             get { return (_iCreditRepository ?? (_iCreditRepository = new CreditRepository(_context))); }
+        }
+
+        public IDepositRepository DepositRepository
+        {
+            get { return (_iDepositRepository ?? (_iDepositRepository = new DepositRepository(_context))); }
         }
 
         public ICustomerCreditRepository CustomerCreditRepository

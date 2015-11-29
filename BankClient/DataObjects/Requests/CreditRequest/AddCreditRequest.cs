@@ -6,11 +6,6 @@ namespace DataObjects.Requests.CreditRequest
 {
     public class AddCreditRequest: AuthenticatedRequest
     {
-        public AddCreditRequestModel CreditRequest { get; set; }
-    }
-
-    public class AddCreditRequestModel
-    {
         public string CreditGoal { get; set; }
         public double Sum { get; set; }
         public Currency Currency { get; set; }
@@ -26,11 +21,11 @@ namespace DataObjects.Requests.CreditRequest
 
         //Customer
         public DomainCustomer Customer { get; set; }
-//        public DateTime DateOfBirth { get; set; }
-//        public DocumentType DocumentType { get; set; }
-//        public string DocumentNumber { get; set; }
-//        public string IdentificationNumber { get; set; }
-//        public DomainAddress Address { get; set; }
-//        public DomainBankClient BankClient { get; set; }
+        //        public DateTime DateOfBirth { get; set; }
+        //        public DocumentType DocumentType { get; set; }
+        //        public string DocumentNumber { get; set; }
+        //        public string IdentificationNumber { get; set; }
+        //        public DomainAddress Address { get; set; }
+        //        public DomainBankClient BankClient { get; set; }
     }
 }
