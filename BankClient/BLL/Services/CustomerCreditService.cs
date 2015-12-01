@@ -2,13 +2,14 @@
 using System.Linq;
 using System.Collections.Generic;
 using AutoMapper;
+using BLL.Interfaces;
 using BLL.Models;
 using DAL.Interfaces;
 using DAL.Entities;
 
 namespace BLL.Services
 {
-    public class CustomerCreditService : BaseService
+    public class CustomerCreditService : BaseService, ICustomerCreditService
     {
         public CustomerCreditService(IUnitOfWork uow) : base(uow) { }
         public void Add(int creditRequestId)
