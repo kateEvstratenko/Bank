@@ -18,6 +18,7 @@ namespace BankServerApi.CustomAttributes
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            var a = CustomDependencyResolver.Resolver;
             ValidationResult validationResult = ValidationResult.Success;
             try
             {

@@ -1,6 +1,12 @@
-﻿using BLL;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using BLL.Models;
 using BLL.Services;
-using System;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace TestConsole
 {
@@ -8,13 +14,22 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            var calculate = new CalculationCreditService();
-            var payments = calculate.CalculatePaymentPlan(3000000, 38, 24, DateTime.Now);
-            foreach(var i in payments)
+            new DocService().FillConcreteContract(new DomainCustomerCredit()
             {
-                Console.WriteLine(i.StartDate.ToShortDateString() + ' ' + 
-                    (i.MainSum + i.PercentSum) + ' ' + i.MainSum + ' ' + i.PercentSum);
-            }
+                ContractNumber = "67836458457899",
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now + TimeSpan.FromDays(365 * 5),
+                CreditSum = 50000000,
+                Customer = new DomainCustomer()
+                {
+                    Firstname = "Екатерина",
+                    Lastname = "Евстратенко"
+                },
+                Credit = new DomainCredit()
+                {
+                    Name = "Прозрачный"
+                }
+            });
         }
     }
 }

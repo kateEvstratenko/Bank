@@ -12,7 +12,7 @@ namespace BLL.Services
         private const string MilitaryPath = "Military";
         private const string IncomeCertificatesPath = "IncomeCertificates";
 
-        public string SaveImageFromByteArray(byte[] array, string baseUrl, string userId, ImageType imageType)
+        public string SaveImageFromByteArray(byte[] array, string baseUrl, int userId, ImageType imageType)
         {
             using (var ms = new MemoryStream(array))
             {
@@ -25,12 +25,12 @@ namespace BLL.Services
             }           
         }
 
-        private string GetMilitaryIdPath(string baseUrl, string userId)
+        private string GetMilitaryIdPath(string baseUrl, int userId)
         {
             return String.Format("{0}/{1}/{2}_{3}", baseUrl, MilitaryPath, userId, Guid.NewGuid());
         }
 
-        private string GetIncomeCertificatePath(string baseUrl, string userId)
+        private string GetIncomeCertificatePath(string baseUrl, int userId)
         {
             return String.Format("{0}/{1}/{2}_{3}", baseUrl, IncomeCertificatesPath, userId, Guid.NewGuid());
         }

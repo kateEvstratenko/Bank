@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.ModelBinding;
 using BLL.Interfaces;
 using ClientApi.Models;
 using ClientApi.Providers;
 using ClientApi.Results;
 using Core.Enums;
 using DAL.Entities;
+using DAL.Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
@@ -27,20 +31,22 @@ namespace ClientApi.Controllers
         private const string LocalLoginProvider = "Local";
         private readonly IEmailSender _iEmailSender;
         private readonly IAuthenticationService _iAuthenticationService;
+        private readonly IUnitOfWork _iUnitOfWork;
 
-        public AccountController(IEmailSender iEmailSender, IAuthenticationService iAuthenticationService)
-            : this(Startup.UserManagerFactory(), Startup.OAuthOptions.AccessTokenFormat, iEmailSender, iAuthenticationService)
+        public AccountController(IEmailSender iEmailSender, IAuthenticationService iAuthenticationService, IUnitOfWork iUnitOfWork)
+            : this(Startup.UserManagerFactory(), Startup.OAuthOptions.AccessTokenFormat, iEmailSender, iAuthenticationService, iUnitOfWork)
         {
         }
 
         public AccountController(UserManager<AppUser> userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat, IEmailSender iEmailSender,
-            IAuthenticationService iAuthenticationService)
+            IAuthenticationService iAuthenticationService, IUnitOfWork iUnitOfWork)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
             _iEmailSender = iEmailSender;
             _iAuthenticationService = iAuthenticationService;
+            _iUnitOfWork = iUnitOfWork;
         }
 
         public UserManager<AppUser> UserManager { get; private set; }
@@ -338,6 +344,13 @@ namespace ClientApi.Controllers
                 Email = request.Email,
                 UserName = request.UserName
             };
+
+            var customer = _iUnitOfWork.CustomerRepository.GetAll()
+                .FirstOrDefault(c => c.IdentificationNumber == request.IdentificationNumber);
+            if (customer != null)
+            {
+                user.CustomerId = customer.Id;
+            }
 
             IdentityResult result = await UserManager.CreateAsync(user, request.Password);
             if (result.Succeeded)

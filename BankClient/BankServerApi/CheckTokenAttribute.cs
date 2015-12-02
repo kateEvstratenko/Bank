@@ -6,13 +6,16 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using BLL.Interfaces;
 using Core;
+using Core.Enums;
 using DataObjects.Requests.CreditRequest;
 using DataObjects.Responses;
+using Microsoft.AspNet.Identity;
 
 namespace BankServerApi
 {
     public class CheckTokenAttribute : ActionFilterAttribute
     {
+        public int Order { get; set; }
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
             try
@@ -26,7 +29,7 @@ namespace BankServerApi
                     throw BankClientException.ThrowAutofacError("AuthenticationService is null");
                 }
                 var requestParams = ((AuthenticatedRequest)actionContext.ActionArguments.First().Value);
-                var token = requestParams.Token;
+                var token = actionContext.Request.Headers.First(p => p.Key.ToLower() == "token").Value.First();
                 var parsedToken = authenticationService.CheckToken(token);
                 requestParams.TokenObj = parsedToken;
             }
@@ -64,4 +67,38 @@ namespace BankServerApi
             }
         }
     }
+
+    public class CheckRoleAttribute : ActionFilterAttribute
+    {
+        public int Order { get; set; }
+        public AppRoles[] Roles { get; set; }
+        public override void OnActionExecuting(HttpActionContext actionContext)
+        {
+            try
+            {
+                var userManager = Startup.UserManagerFactory();
+                var requestParams = ((AuthenticatedRequest)actionContext.ActionArguments.First().Value);
+                var userId = requestParams.TokenObj.UserId;
+                if (Roles.Any(role => userManager.IsInRole(userId, role.ToString())))
+                {
+                    return;
+                }
+                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
+            }
+
+            catch (TokenExpiredException)
+            {
+                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.OK, ResponseBase.TokenExpired());
+            }
+            catch (BankClientException ex)
+            {
+                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.OK, ResponseBase.Unsuccessful(ex));
+            }
+
+            catch (Exception ex)
+            {
+               actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.OK, ResponseBase.Unsuccessful(ex));
+            }
+        }
+    } 
 }

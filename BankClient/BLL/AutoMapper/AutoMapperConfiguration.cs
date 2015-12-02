@@ -50,6 +50,8 @@ namespace BLL.AutoMapper
             Mapper.CreateMap<DomainToken, Token>();
 
             #endregion
+
+            Mapper.CreateMap<CreditPaymentPlanItem, DomainCreditPaymentPlanItem>().ReverseMap();
         }
     }
 }

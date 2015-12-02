@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http;
-using System.Web.Security;
 using AutoMapper;
 using BLL.Interfaces;
 using BLL.Models;
 using Core;
+using Core.Enums;
 using DataObjects.Requests.CreditRequest;
 using DataObjects.Responses;
 using DataObjects.Responses.CreditRequest;
@@ -15,12 +15,11 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BankServerApi.Controllers
 {
-//    [Authorize(Roles = "Operator")] 
-    [CheckToken]
+    [CheckToken(Order = 0)]
     public class CreditRequestController : ApiController
     {
-        private readonly UserManager<AppUser> _userManager = Startup.UserManagerFactory(); 
-        private readonly RoleManager<IdentityRole> _roleManager = Startup.RoleManagerFactory(); 
+        private readonly UserManager<AppUser> _userManager = Startup.UserManagerFactory();
+        private readonly RoleManager<IdentityRole> _roleManager = Startup.RoleManagerFactory();
         private readonly ICreditRequestService _iCreditRequestService;
         public CreditRequestController(ICreditRequestService iCreditRequestService)
         {
@@ -28,13 +27,13 @@ namespace BankServerApi.Controllers
         }
 
         [HttpPost]
+        [CheckRole(Order = 1, Roles = new[] { AppRoles.Operator })]
         public ResponseBase Add(AddCreditRequest request)
         {
             try
             {
                 var baseUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
-                _iCreditRequestService.Add(Mapper.Map<DomainCreditRequest>(request), request.TokenObj.UserId, 
-                    request.CreditRequest.MilitaryId, request.CreditRequest.IncomeCertificate, baseUrl);
+                _iCreditRequestService.Add(Mapper.Map<DomainCreditRequest>(request), request.MilitaryId, request.IncomeCertificate, baseUrl);
                 return new ResponseBase();
             }
             catch (BankClientException ex)
@@ -47,7 +46,8 @@ namespace BankServerApi.Controllers
             }
         }
         [HttpPost]
-//        [Authorize(Roles = "CreditCommitteeMember, Security")]
+        [CheckRole(Order = 1, Roles = new[] { AppRoles.CreditCommitteeMember, 
+            AppRoles.CreditDepartmentChief, AppRoles.Security })]
         public GetUnconfirmedCreditResponse GetUnconfirmed(AuthenticatedRequest request)
         {
             try
@@ -59,7 +59,7 @@ namespace BankServerApi.Controllers
                 {
                     CreditRequests = unconfirmedCreditRequests
                 };
-            }   
+            }
             catch (BankClientException ex)
             {
                 return ResponseBase.Unsuccessful<GetUnconfirmedCreditResponse>(ex);
@@ -67,6 +67,27 @@ namespace BankServerApi.Controllers
             catch (Exception ex)
             {
                 return ResponseBase.Unsuccessful<GetUnconfirmedCreditResponse>(ex);
+            }
+        }
+
+        [HttpPost]
+        [CheckRole(Order = 1, Roles = new[] { AppRoles.CreditCommitteeMember, 
+            AppRoles.CreditDepartmentChief, AppRoles.Security })]
+        public ResponseBase SetStatus(SetStatusRequest request)
+        {
+            try
+            {
+                _iCreditRequestService.SetStatus(request.TokenObj.UserId,
+                    request.CreditRequestId, request.CreditRequestStatusInfo, request.Message);
+                return new ResponseBase();
+            }
+            catch (BankClientException ex)
+            {
+                return ResponseBase.Unsuccessful(ex);
+            }
+            catch (Exception ex)
+            {
+                return ResponseBase.Unsuccessful(ex);
             }
         }
     }

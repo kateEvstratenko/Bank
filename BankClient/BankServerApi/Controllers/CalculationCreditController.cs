@@ -28,7 +28,7 @@ namespace BankServerApi.Controllers
             var credit = creditService.Get(query.CreditId);
             var payments = calculationCreditService
                 .CalculatePaymentPlan(query.Sum, credit.PercentRate, query.MonthPeriod, query.StartDate);
-            var viewPayments = Mapper.Map<IEnumerable<DomainCreditPaymentPlan>, List<CreditPaymentPlanViewModel>>(payments);
+            var viewPayments = Mapper.Map<IEnumerable<DomainCreditPaymentPlanItem>, List<CreditPaymentPlanViewModel>>(payments);
             return Ok(viewPayments);
         }
 

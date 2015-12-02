@@ -19,6 +19,7 @@ namespace DAL.Entities
         public virtual Customer Customer { get; set; }
         public virtual Credit Credit { get; set; }
         public virtual Bill Bill { get; set; }
-        public virtual ICollection<CreditPayment> Payments { get; set; } 
+        public virtual ICollection<CreditPayment> Payments { get; set; }
+        public virtual ICollection<CreditPaymentPlanItem> CreditPaymentPlanItems { get; set; }
     }
 }

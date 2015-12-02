@@ -49,22 +49,22 @@ namespace BLL.Services
             return Math.Pow(monthlyPercentRateCoefficient, monthPeriod);
         }
 
-        public IEnumerable<DomainCreditPaymentPlan> CalculatePaymentPlan(double sum, 
+        public IEnumerable<DomainCreditPaymentPlanItem> CalculatePaymentPlan(double sum, 
             double percentRate, int monthPeriod, DateTime startDate)
         {
-            var payments = new List<DomainCreditPaymentPlan>();
+            var payments = new List<DomainCreditPaymentPlanItem>();
             var delaySum = 0;
             var paymentSum = CalculatePaymentSum(sum, percentRate, monthPeriod);
             var firstMainDept = CalculateFirstMainDebt(paymentSum, percentRate, monthPeriod);
 
-            var firstCreditPayment = new DomainCreditPaymentPlan(firstMainDept, paymentSum - firstMainDept, delaySum,
+            var firstCreditPayment = new DomainCreditPaymentPlanItem(firstMainDept, paymentSum - firstMainDept, delaySum,
                 Currency.Blr, startDate);
             payments.Add(firstCreditPayment);
 
             for (var i = 0; i < monthPeriod - 1; i++)
             {
                 var nextMainDept = CalculateNextMainDebt(payments.ElementAt(i).MainSum, percentRate);
-                var nextCreditPayment = new DomainCreditPaymentPlan(nextMainDept, paymentSum - nextMainDept, delaySum,
+                var nextCreditPayment = new DomainCreditPaymentPlanItem(nextMainDept, paymentSum - nextMainDept, delaySum,
                     Currency.Blr, payments.ElementAt(i).StartDate.AddMonths(1));
                 payments.Add(nextCreditPayment);
             }

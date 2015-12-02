@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -12,6 +13,8 @@ using BankServerApi.Providers;
 using BankServerApi.Results;
 using BLL.Interfaces;
 using BLL.Models;
+using DataObjects.Requests.CreditRequest;
+using DataObjects.Responses.Account;
 using DAL.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -21,7 +24,7 @@ using Microsoft.Owin.Security.OAuth;
 
 namespace BankServerApi.Controllers
 {
-//    [Authorize]
+    //    [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
@@ -68,11 +71,26 @@ namespace BankServerApi.Controllers
 
         // POST api/Account/Logout
         [Route("Logout")]
-        public IHttpActionResult Logout()
+        public IHttpActionResult Logout(AuthenticatedRequest request)
         {
-            Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+            //            Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+            _iAuthenticationService.SignOut(request.Token);
             return Ok();
         }
+
+        [Route("GetRole")]
+        [CheckToken]
+        public GetRoleResponse GetRole(AuthenticatedRequest request)
+        {
+            var role = UserManager.GetRoles(request.TokenObj.UserId).FirstOrDefault();
+            return new GetRoleResponse()
+            {
+                Role = role
+            };
+            //            return Ok();
+        }
+
+
 
         // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
         [Route("ManageInfo")]
@@ -337,8 +355,8 @@ namespace BankServerApi.Controllers
             if (result.Succeeded)
             {
                 UserManager.AddToRole(employee.Id, request.Role.ToString());
-//                var baseUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
-//                _iEmailSender.SendVerifyToEmail(employee.Email, employee.Id, baseUrl);
+                //                var baseUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
+                //                _iEmailSender.SendVerifyToEmail(employee.Email, employee.Id, baseUrl);
             }
             IHttpActionResult errorResult = GetErrorResult(result);
 

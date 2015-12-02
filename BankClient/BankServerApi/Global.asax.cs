@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using BLL.AutoMapper;
+using BLL.Services;
 
 namespace BankServerApi
 {
@@ -19,6 +20,8 @@ namespace BankServerApi
             AutofacConfig.Configure();
             AutomapperConfig.Configure();
             AutoMapperConfiguration.Register();
+
+            DailyCalculateService.Init();
         }
     }
 }
