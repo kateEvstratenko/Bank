@@ -8,7 +8,6 @@ namespace BankServerApi.Models.CalculationModels
     public class CalculationCreditModelForPaymentPlan
     {
         [Required]
-        [SumRange("CreditId")]
         public double Sum { get; set; }
 
         [Required]
