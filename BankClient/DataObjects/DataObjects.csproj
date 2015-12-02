@@ -66,6 +66,7 @@
     <Compile Include="Requests\CreditRequest\AddCreditRequest.cs" />
     <Compile Include="Requests\CreditRequest\AuthenticatedRequest.cs" />
     <Compile Include="Requests\Payment\AddPaymentRequest.cs" />
+    <Compile Include="Responses\Account\GetRoleResponse.cs" />
     <Compile Include="Responses\CreditRequest\GetUnconfirmedCreditResponse.cs" />
     <Compile Include="Responses\ResponseBase.cs" />
   </ItemGroup>
@@ -86,6 +87,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Requests\Account\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

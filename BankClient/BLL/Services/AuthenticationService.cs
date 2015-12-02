@@ -39,6 +39,20 @@ namespace BLL.Services
             return token;
         }
 
+        public void SignOut(string token)
+        {
+            if (token == null)
+            {
+                throw BankClientException.ThrowInvalidToken();
+            }
+            var decryptedToken = _iEncryptorService.Decrypt(token);
+            var tokenParts = ParseToken(decryptedToken);
+            var tokenObject = CheckTokenParts(tokenParts);
+            var databaseToken = _iUnitOfWork.TokenRepository.GetByGuid(tokenObject.Guid);
+            _iUnitOfWork.TokenRepository.Delete(databaseToken.Id);
+            _iUnitOfWork.SaveChanges();
+        }
+
         public DomainToken CheckToken(string token)
         {
             if (token == null)
