@@ -10,7 +10,7 @@ namespace BLL.Models
     {
         public int Id { get; set; }
         public string Number { get; set; }
-        public int CustomerId { get; set; }
+        public int? CustomerId { get; set; }
         public DomainCustomer Customer { get; set; }
         public ICollection<DomainCustomerCredit> CustomerCredits { get; set; }
         public ICollection<DomainCustomerDeposit> CustomerDeposits { get; set; }

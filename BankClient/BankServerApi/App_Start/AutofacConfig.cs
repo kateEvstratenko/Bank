@@ -40,6 +40,8 @@ namespace BankServerApi
             builder.RegisterType<CalculationCreditService>().As<ICalculationCreditService>();
             builder.RegisterType<ImageService>().As<IImageService>();
             builder.RegisterType<CustomerCreditService>().As<ICustomerCreditService>();
+            builder.RegisterType<BillService>().As<IBillService>();
+//            builder.RegisterType<DailyCalculateService>().AsSelf().SingleInstance();
 
             builder.RegisterType<AppUserRepository>().As<IAppUserRepository>();            
             builder.RegisterType<CreditRepository>().As<ICreditRepository>();
@@ -47,6 +49,7 @@ namespace BankServerApi
             builder.RegisterType<CreditRequestRepository>().As<ICreditRequestRepository>();
             builder.RegisterType<CreditPaymentPlanItemRepository>().As<ICreditPaymentPlanItemRepository>();
             builder.RegisterType<CustomerRepository>().As<ICustomerRepository>();
+            builder.RegisterType<BillRepository>().As<IBillRepository>();
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<BankContext>().AsSelf();

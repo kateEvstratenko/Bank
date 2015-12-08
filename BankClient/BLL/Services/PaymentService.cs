@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Linq;
 using BLL.Interfaces;
 using Core.Enums;
@@ -26,7 +27,8 @@ namespace BLL.Services
 
             var payment = CalculatePayment(currentPaymentPlan, sum);
             payment.SourceBillId = customerCredit.BillId;
-
+            payment.DestinationBillId = _iUnitOfWork.BillRepository
+                .GetByNumber(ConfigurationManager.AppSettings.Get("BankBillNumber")).Id;
             // TODO: payment.DestinationBillId = getBillByNumber(ProjectConstants.BankBill);
             //
             // We need to add same bills and a method for search a bill by its unique number.

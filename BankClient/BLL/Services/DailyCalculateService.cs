@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using DAL;
@@ -7,11 +6,36 @@ using DAL.Entities;
 
 namespace BLL.Services
 {
-    public static class DailyCalculateService
+    public class DailyCalculateService
     {
         private const double Penalty = 0.1;
-        private static Timer _timer;
-        public static void Init()
+        private Timer _timer;
+        private static DailyCalculateService _instance;
+        private static readonly object SyncRoot =  new object();
+
+        private DailyCalculateService()
+        {
+            Init();
+        }
+
+        public static DailyCalculateService Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    lock (SyncRoot)
+                    {
+                        return _instance ?? (_instance = new DailyCalculateService());
+                    }
+                }
+                return _instance;
+            }
+        }
+
+        public void InitService(){ }
+
+        private void Init()
         {
             var dateNow = DateTime.Now;
             var mitnight = dateNow.AddDays(1).Date;
@@ -19,7 +43,7 @@ namespace BLL.Services
             _timer = new Timer(CheckPayments, null, new TimeSpan(dueTime), TimeSpan.FromDays(1));
         }
 
-        private static void CheckPayments(object state)
+        private void CheckPayments(object state)
         {
             var currentDate = DateTime.Now;
             var uow = new UnitOfWork(new BankContext());
@@ -35,7 +59,7 @@ namespace BLL.Services
             }
         }
 
-        private static void ReCalculatePenalty(CreditPaymentPlanItem payment)
+        private void ReCalculatePenalty(CreditPaymentPlanItem payment)
         {
             //payment.DelaySum += payment.MainSum * Penalty;
         }

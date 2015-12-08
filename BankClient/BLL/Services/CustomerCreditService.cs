@@ -23,8 +23,12 @@ namespace BLL.Services
                 CustomerId = creditRequest.CustomerId,
                 StartDate = DateTime.Now.Date,
                 EndDate = DateTime.Now.Date.AddMonths(creditRequest.MonthCount),
-                ContractNumber = GenerateContractNumber()
-                //todo billId add
+                ContractNumber = GenerateContractNumber(),
+                Bill = new DomainBill()
+                {
+                    Number = GenerateBillNumber(),
+                    CustomerId = creditRequest.CustomerId
+                }
             };
 
             var paymentPlan = new CalculationCreditService().CalculatePaymentPlan(credit.CreditSum,
@@ -59,6 +63,11 @@ namespace BLL.Services
         }
 
         private string GenerateContractNumber()
+        {
+            return RandomHelper.GetRandomString(10);
+        }
+
+        private string GenerateBillNumber()
         {
             return RandomHelper.GetRandomString(10);
         }

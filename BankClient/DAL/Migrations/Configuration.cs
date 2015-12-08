@@ -1,6 +1,8 @@
+using System.Configuration;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using Core.Enums;
+using DAL.Entities;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DAL.Migrations
@@ -26,6 +28,8 @@ namespace DAL.Migrations
                 identityRoles[i] = new IdentityRole(roles[i].ToString());
             }
             context.Roles.AddOrUpdate(r => r.Name, identityRoles);
+
+            context.Bills.AddOrUpdate(b => b.Number, new Bill(){Number = ConfigurationManager.AppSettings.Get("BankBillNumber")});
         }
     }
 }

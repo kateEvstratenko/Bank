@@ -15,6 +15,7 @@ namespace DAL
         private ICustomerRepository _iCustomerRepository;
         private ICustomerCreditRepository _iCustomerCreditRepository;
         private ICreditPaymentPlanItemRepository _iCretitPaymentPlanItemRepository;
+        private IBillRepository _iBillRepository;
 
         public UnitOfWork(BankContext context)
         {
@@ -59,6 +60,11 @@ namespace DAL
         public ICreditRequestRepository CreditRequestRepository
         {
             get { return (_iCreditRequestRepository ?? (_iCreditRequestRepository = new CreditRequestRepository(_context))); }
+        }
+
+        public IBillRepository BillRepository
+        {
+            get { return (_iBillRepository ?? (_iBillRepository = new BillRepository(_context))); }
         }
 
         public void SaveChanges()

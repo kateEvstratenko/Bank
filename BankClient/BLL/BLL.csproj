@@ -40,7 +40,7 @@
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
+    <Compile Include="Interfaces\IBillService.cs" />
     <Compile Include="Interfaces\ICalculationCreditService.cs" />
     <Compile Include="Interfaces\ICalculationDebtService.cs" />
     <Compile Include="Interfaces\ICreditRequestService.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Interfaces\IImageService.cs" />
     <Compile Include="Services\DepositService.cs" />
     <Compile Include="Services\ImageService.cs" />
+    <Compile Include="Services\BillService.cs" />
     <Compile Include="Services\PaymentService.cs" />
     <Compile Include="Services\EncryptorService.cs" />
     <Compile Include="Services\EmailSender.cs" />

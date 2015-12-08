@@ -53,6 +53,7 @@ namespace BLL.AutoMapper
 
             Mapper.CreateMap<CreditPaymentPlanItem, DomainCreditPaymentPlanItem>().ReverseMap();
             Mapper.CreateMap<Debt, DomainDebt>().ReverseMap();
+            Mapper.CreateMap<Bill, DomainBill>().ReverseMap();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace BankServerApi
             AutomapperConfig.Configure();
             AutoMapperConfiguration.Register();
 
-            DailyCalculateService.Init();
+            DailyCalculateService.Instance.InitService();
         }
     }
 }
