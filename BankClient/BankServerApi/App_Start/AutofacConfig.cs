@@ -11,11 +11,6 @@ using DAL.Repositories;
 
 namespace BankServerApi
 {
-    public static class CustomDependencyResolver
-    {
-        public static IDependencyResolver Resolver { get; set; }
-    }
-
     public class AutofacConfig
     {
         public static void Configure()
@@ -53,6 +48,7 @@ namespace BankServerApi
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<BankContext>().AsSelf();
+
 
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();

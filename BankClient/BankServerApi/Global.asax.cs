@@ -10,6 +10,7 @@ namespace BankServerApi
 {
     public class WebApiApplication : HttpApplication
     {
+        private DailyCalculateService _dailyCalculateService;
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -21,7 +22,7 @@ namespace BankServerApi
             AutomapperConfig.Configure();
             AutoMapperConfiguration.Register();
 
-            DailyCalculateService.Instance.InitService();
+            _dailyCalculateService = new DailyCalculateService();
         }
     }
 }
