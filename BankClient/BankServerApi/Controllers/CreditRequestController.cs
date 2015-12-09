@@ -15,18 +15,21 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BankServerApi.Controllers
 {
+    [RoutePrefix("api/CreditRequest")]
     [CheckToken(Order = 0)]
     public class CreditRequestController : ApiController
     {
         private readonly UserManager<AppUser> _userManager = Startup.UserManagerFactory();
         private readonly RoleManager<IdentityRole> _roleManager = Startup.RoleManagerFactory();
         private readonly ICreditRequestService _iCreditRequestService;
+        
         public CreditRequestController(ICreditRequestService iCreditRequestService)
         {
             _iCreditRequestService = iCreditRequestService;
         }
 
         [HttpPost]
+        [Route("Add")]
         [CheckRole(Order = 1, Roles = new[] { AppRoles.Operator })]
         public ResponseBase Add(AddCreditRequest request)
         {
@@ -46,8 +49,8 @@ namespace BankServerApi.Controllers
             }
         }
         [HttpPost]
-        [CheckRole(Order = 1, Roles = new[] { AppRoles.CreditCommitteeMember, 
-            AppRoles.CreditDepartmentChief, AppRoles.Security })]
+        [Route("GetUnconfirmed")]
+        [CheckRole(Order = 1, Roles = new[] { AppRoles.CreditCommitteeMember, AppRoles.CreditDepartmentChief, AppRoles.Security })]
         public GetUnconfirmedCreditResponse GetUnconfirmed(AuthenticatedRequest request)
         {
             try
@@ -71,8 +74,8 @@ namespace BankServerApi.Controllers
         }
 
         [HttpPost]
-        [CheckRole(Order = 1, Roles = new[] { AppRoles.CreditCommitteeMember, 
-            AppRoles.CreditDepartmentChief, AppRoles.Security })]
+        [Route("SetStatus")]
+        [CheckRole(Order = 1, Roles = new[] { AppRoles.CreditCommitteeMember, AppRoles.CreditDepartmentChief, AppRoles.Security })]
         public ResponseBase SetStatus(SetStatusRequest request)
         {
             try

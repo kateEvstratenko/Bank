@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 using BLL.Models;
 using BLL.Services;
-using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace TestConsole
 {
@@ -14,7 +8,7 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            new DocService().FillConcreteContract(new DomainCustomerCredit()
+            new CreditDocService().FillConcreteCreditContract(new DomainCustomerCredit()
             {
                 ContractNumber = "67836458457899",
                 StartDate = DateTime.Now,

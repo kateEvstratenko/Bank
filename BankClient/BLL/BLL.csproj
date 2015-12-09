@@ -98,8 +98,9 @@
     <Compile Include="Models\DomainPaymentType.cs" />
     <Compile Include="Models\DomainToken.cs" />
     <Compile Include="Interfaces\IAuthenticationService.cs" />
+    <Compile Include="Services\BaseDocService.cs" />
     <Compile Include="Services\CalculationDebtService.cs" />
-    <Compile Include="Services\DocService.cs" />
+    <Compile Include="Services\CreditDocService.cs" />
     <Compile Include="Services\AppRoleManagerFactory.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\BaseService.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Services\CreditRequestService.cs" />
     <Compile Include="Interfaces\IPaymentService.cs" />
     <Compile Include="Interfaces\IImageService.cs" />
+    <Compile Include="Services\DepositDocService.cs" />
     <Compile Include="Services\DepositService.cs" />
     <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\BillService.cs" />

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using BLL.Models;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
@@ -10,10 +9,10 @@ using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace BLL.Services
 {
-    public class DocService
+    public class CreditDocService : BaseDocService
     {
-        private static readonly string CreditContractsDocPath;
-        private static readonly string TemplateDocPath;
+        private readonly string _creditContractsDocPath;
+        private readonly string _templateDocPath;
         private const string ContractNumberPlace = "________________";
         private const string DaymonthPlace = "\"__\"______";
         private const string YearPlace = "20__";
@@ -25,21 +24,22 @@ namespace BLL.Services
         private const string PercentRatePlace = "_________";
         private const string PaymentDayPlace = "___________";
 
-        static DocService()
+        public CreditDocService()
         {
-            CreditContractsDocPath = AppDomain.CurrentDomain.BaseDirectory + "Content\\CreditContracts\\";
-            TemplateDocPath = CreditContractsDocPath + "template.docx";
+            _creditContractsDocPath = AppDomain.CurrentDomain.BaseDirectory + "Content\\CreditContracts\\";
+            _templateDocPath = _creditContractsDocPath + "creditTemplate.docx";
         }
-        public void FillConcreteContract(DomainCustomerCredit customerCredit)
+
+        public void FillConcreteCreditContract(DomainCustomerCredit customerCredit)
         {
-            if (!File.Exists(TemplateDocPath))
+            if (!File.Exists(_templateDocPath))
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(TemplateDocPath));
-                GenerateTemplate();
+                Directory.CreateDirectory(Path.GetDirectoryName(_templateDocPath));
+                GenerateCreditContractTemplate();
             }
 
-            var byteArray = File.ReadAllBytes(TemplateDocPath);
-//            using (var fs = new FileStream(string.Format("{0}{1}.docx", CreditContractsDocPath, customerCredit.ContractNumber),FileMode.Create))
+            var byteArray = File.ReadAllBytes(_templateDocPath);
+            //            using (var fs = new FileStream(string.Format("{0}{1}.docx", CreditContractsDocPath, customerCredit.ContractNumber),FileMode.Create))
             {
                 using (var stream = new MemoryStream())
                 {
@@ -86,18 +86,18 @@ namespace BLL.Services
                         FindAndReplace(ref i, runs, PaymentDayPlace, customerCredit.StartDate.ToString("dd"));
 
                         wordDoc.MainDocumentPart.Document.Save();
-//                        wordDoc.MainDocumentPart.Document.Save(fs);
+                        //                        wordDoc.MainDocumentPart.Document.Save(fs);
                         File.WriteAllBytes(
-                            string.Format("{0}{1}.docx", CreditContractsDocPath, customerCredit.ContractNumber),
+                            string.Format("{0}{1}.docx", _creditContractsDocPath, customerCredit.ContractNumber),
                             stream.ToArray());
                     }
                 }
             }
         }
 
-        private void GenerateTemplate()
+        private void GenerateCreditContractTemplate()
         {
-            using (var document = WordprocessingDocument.Create(TemplateDocPath, WordprocessingDocumentType.Document, true))
+            using (var document = WordprocessingDocument.Create(_templateDocPath, WordprocessingDocumentType.Document, true))
             {
                 var mainPart = document.AddMainDocumentPart();
                 var doc = new Document();
@@ -185,77 +185,6 @@ namespace BLL.Services
                 doc.AppendChild(body);
                 mainPart.Document = doc;
             }
-        }
-
-        private void AddParagraph(Body body, JustificationValues justification, RunProperties runProperties, string text)
-        {
-            var paragraph = body.AppendChild(new Paragraph()
-            {
-                ParagraphProperties = new ParagraphProperties()
-                {
-                    Justification = new Justification() { Val = justification }
-                }
-            });
-
-            var run = paragraph.AppendChild(new Run() { RunProperties = runProperties });
-            run.AppendChild(new Text(text));
-        }
-
-        private void AddParagraph(Body body, JustificationValues justification, List<Run> runs)
-        {
-            var paragraph = body.AppendChild(new Paragraph()
-            {
-                ParagraphProperties = new ParagraphProperties()
-                {
-                    Justification = new Justification() { Val = justification }
-                }
-            });
-
-            foreach (var run in runs)
-            {
-                paragraph.AppendChild(run);
-            }
-        }
-
-        private Run GenerateRun(RunProperties runProperties, string text)
-        {
-            var run = new Run() { RunProperties = runProperties };
-            run.AppendChild(new Text(text));
-            return run;
-        }
-
-        private RunProperties SetBoldRunProperties(RunProperties runProperties)
-        {
-            runProperties.Bold = new Bold();
-            return runProperties;
-        }
-
-        private void FindAndReplace(ref int i, List<Run> runs, string textToReplace, string newText, UnderlineValues underlineValue = UnderlineValues.Single)
-        {
-            for (; i < runs.Count(); i++)
-            {
-                var run = runs[i];
-                var itemOld = FindByInnerText(run, textToReplace);
-                if (itemOld == null)
-                {
-                    continue;
-                }
-                run.RunProperties.Underline = new Underline() { Val = underlineValue };
-                Replace(itemOld, textToReplace, newText);
-                return;
-            }
-        }
-
-
-        private static Text FindByInnerText(Run run, string innerText)
-        {
-            return run.Descendants<Text>().FirstOrDefault(x => x.Text.Contains(innerText));
-        }
-
-        private static void Replace(Text text, string oldText, string newText)
-        {
-            var regex = new Regex(oldText);
-            text.Text = regex.Replace(text.Text, newText, 1);
         }
     }
 }
