@@ -17,8 +17,7 @@ namespace BLL.Services
         private const string DaymonthPlace = "\"__\"______";
         private const string YearPlace = "20__";
         private const string CustomerPlace = "_________________________";
-        private const string CreditPlace = "_________";
-        private const string CreditSumPlace = "____________";
+        private const string SumPlace = "____________";
         private const string SincePlace = "____________";
         private const string UntilPlace = "____________";
         private const string PercentRatePlace = "_________";
@@ -30,12 +29,12 @@ namespace BLL.Services
             _templateDocPath = _creditContractsDocPath + "depositTemplate.docx";
         }
 
-        public void FillConcreteCreditContract(DomainCustomerCredit customerCredit)
+        public void FillConcreteContract(DomainCustomerDeposit customerDeposit)
         {
             if (!File.Exists(_templateDocPath))
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(_templateDocPath));
-                GenerateCreditContractTemplate();
+                GenerateContractTemplate();
             }
 
             var byteArray = File.ReadAllBytes(_templateDocPath);
@@ -50,50 +49,50 @@ namespace BLL.Services
                     var i = 0;
 
                     //contract number
-                    FindAndReplace(ref i, runs, ContractNumberPlace, " " + customerCredit.ContractNumber);
+                    FindAndReplace(ref i, runs, ContractNumberPlace, " " + customerDeposit.ContractNumber);
 
                     //day & month
-                    FindAndReplace(ref i, runs, DaymonthPlace, customerCredit.StartDate.ToString("M"));
+                    FindAndReplace(ref i, runs, DaymonthPlace, customerDeposit.StartDate.ToString("dd MM"));//customerDeposit.StartDate.ToString("M"));
 
                     //year
-                    FindAndReplace(ref i, runs, YearPlace, " " + customerCredit.StartDate.ToString("yyyy"));
+                    FindAndReplace(ref i, runs, YearPlace, " " + customerDeposit.StartDate.ToString("yyyy"));
 
                     //customerPlace
                     FindAndReplace(ref i, runs, CustomerPlace,
-                        string.Format("{0} {1}{2}", customerCredit.Customer.Lastname,
-                            customerCredit.Customer.Firstname,
-                            customerCredit.Customer.Patronymic != null
-                                ? " " + customerCredit.Customer.Patronymic
+                        string.Format("{0} {1}{2}", customerDeposit.Customer.Lastname,
+                            customerDeposit.Customer.Firstname,
+                            customerDeposit.Customer.Patronymic != null
+                                ? " " + customerDeposit.Customer.Patronymic
                                 : ""), UnderlineValues.None);
 
                     //credit name
-                    FindAndReplace(ref i, runs, CreditPlace, customerCredit.Credit.Name);
+//                    FindAndReplace(ref i, runs, CreditPlace, customerDeposit.Deposit.Name);
 
                     //sum
-                    FindAndReplace(ref i, runs, CreditSumPlace, customerCredit.CreditSum.ToString());
+                    FindAndReplace(ref i, runs, SumPlace, customerDeposit.InitialSum.ToString());
 
                     //since
-                    FindAndReplace(ref i, runs, SincePlace, customerCredit.StartDate.ToString("dd.MM.yyyy"));
+                    FindAndReplace(ref i, runs, SincePlace, customerDeposit.StartDate.ToString("dd.MM.yyyy"));
 
                     //end date
-                    FindAndReplace(ref i, runs, UntilPlace, customerCredit.EndDate.ToString("dd.MM.yyyy"));
+                    FindAndReplace(ref i, runs, UntilPlace, customerDeposit.EndDate.ToString("dd.MM.yyyy"));
 
                     //percent rate
-                    FindAndReplace(ref i, runs, PercentRatePlace, customerCredit.Credit.PercentRate.ToString());
+                    FindAndReplace(ref i, runs, PercentRatePlace, customerDeposit.Deposit.InterestRate.ToString());
 
                     //payment day
-                    FindAndReplace(ref i, runs, PaymentDayPlace, customerCredit.StartDate.ToString("dd"));
+                    FindAndReplace(ref i, runs, PaymentDayPlace, customerDeposit.StartDate.ToString("dd"));
 
                     wordDoc.MainDocumentPart.Document.Save();
                     //                        wordDoc.MainDocumentPart.Document.Save(fs);
                     File.WriteAllBytes(
-                        string.Format("{0}{1}.docx", _creditContractsDocPath, customerCredit.ContractNumber),
+                        string.Format("{0}{1}.docx", _creditContractsDocPath, customerDeposit.ContractNumber),
                         stream.ToArray());
                 }
             }
         }
 
-        private void GenerateCreditContractTemplate()
+        private void GenerateContractTemplate()
         {
             using (var document = WordprocessingDocument.Create(_templateDocPath, WordprocessingDocumentType.Document, true))
             {
@@ -134,12 +133,12 @@ namespace BLL.Services
                 runs = new List<Run>
                 {
                     GenerateRun(new RunProperties(), "1.1. Вкладчик вносит, а Банк принимает в  порядке и на условиях, предусмотренных Договором, денежные средства в размере "),
-                    GenerateRun(new RunProperties(), "____________"),
+                    GenerateRun(new RunProperties(), SumPlace),
                     GenerateRun(new RunProperties(), " рублей"),
                     GenerateRun(new RunProperties(), " с "),
-                    GenerateRun(new RunProperties(), "____________"),
+                    GenerateRun(new RunProperties(), SincePlace),
                     GenerateRun(new RunProperties(), " по "),
-                    GenerateRun(new RunProperties(), "____________"),
+                    GenerateRun(new RunProperties(), UntilPlace),
                     GenerateRun(new RunProperties(), ".")
                 };
                 AddParagraph(body, JustificationValues.Both, runs);
@@ -148,7 +147,7 @@ namespace BLL.Services
                 runs = new List<Run>
                 {
                     GenerateRun(new RunProperties(), "1.2. Банк начисляет Вкладчику проценты на сумму Депозита, внесенного в соответствии с условиями Договора, по ставке "),
-                    GenerateRun(new RunProperties(), "_________"),
+                    GenerateRun(new RunProperties(), PercentRatePlace),
                     GenerateRun(new RunProperties(),  " процентов годовых.")
                 };
                 AddParagraph(body, JustificationValues.Both, runs);
@@ -158,24 +157,7 @@ namespace BLL.Services
                                                                                   "числу дней (365 дней или 366 дней соответственно).");
                 //1.3
                 AddParagraph(body, JustificationValues.Both, new RunProperties(), "1.3. Выплата Банком процентов по вкладу осуществляется по истечении Срока депозита.");
-                //2. Порядок и сроки погашения кредита
-                AddParagraph(body, JustificationValues.Left, new RunProperties(), string.Empty);
-                AddParagraph(body, JustificationValues.Center, new RunProperties() { Italic = new Italic(), Bold = new Bold() }, "2. Порядок и сроки погашения кредита");
-
-                runs = new List<Run>
-                {
-                    GenerateRun(new RunProperties(), "2.1. Заемщик обязан погасить полученный им кредит путем совершения ежемесячных платежей. " +
-                                                     "При этом платеж должен быть произведен "),
-                    GenerateRun(new RunProperties(), "___________"),
-                    GenerateRun(new RunProperties(),   " числа либо ранее, но не более, чем за 10 дней до даты платежа.")
-                };
-                AddParagraph(body, JustificationValues.Both, runs);
-
-                AddParagraph(body, JustificationValues.Both, new RunProperties(), "2.2. Сумма произведенного платежа, недостаточная для полного погашения всей " +
-                                                                                  "задолженности Заемщика, погашает прежде всего издержки Кредитора по " +
-                                                                                  "принятию исполнения и принудительному взысканию, затем - проценты за " +
-                                                                                  "пользование кредитными ресурсами, " +
-                                                                                  "а в оставшейся части - основную сумму долга.");
+//                AddParagraph(body, JustificationValues.Both, new RunProperties(), "1.4. Сумма Депозита и начисленные проценты в день окончания Срока депозита перечисляются на " +
 
                 doc.AppendChild(body);
                 mainPart.Document = doc;

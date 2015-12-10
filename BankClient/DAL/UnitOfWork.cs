@@ -1,4 +1,3 @@
-using DAL.Entities;
 using DAL.Interfaces;
 using DAL.Repositories;
 
@@ -14,6 +13,7 @@ namespace DAL
         private ICreditRequestRepository _iCreditRequestRepository;
         private ICustomerRepository _iCustomerRepository;
         private ICustomerCreditRepository _iCustomerCreditRepository;
+        private ICustomerDepositRepository _iCustomerDepositRepository;
         private ICreditPaymentPlanItemRepository _iCretitPaymentPlanItemRepository;
         private IBillRepository _iBillRepository;
 
@@ -50,6 +50,11 @@ namespace DAL
         public ICustomerCreditRepository CustomerCreditRepository
         {
             get { return (_iCustomerCreditRepository ?? (_iCustomerCreditRepository = new CustomerCreditRepository(_context))); }
+        }
+
+        public ICustomerDepositRepository CustomerDepositRepository
+        {
+            get { return (_iCustomerDepositRepository ?? (_iCustomerDepositRepository = new CustomerDepositRepository(_context))); }
         }
 
         public ITokenRepository TokenRepository

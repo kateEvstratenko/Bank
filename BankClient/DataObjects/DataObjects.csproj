@@ -65,6 +65,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\CreditRequest\AddCreditRequest.cs" />
     <Compile Include="Requests\CreditRequest\AuthenticatedRequest.cs" />
+    <Compile Include="Requests\CustomerDeposit\AddDepositRequest.cs" />
     <Compile Include="Requests\Payment\AddPaymentRequest.cs" />
     <Compile Include="Responses\Account\GetRoleResponse.cs" />
     <Compile Include="Responses\CreditRequest\GetUnconfirmedCreditResponse.cs" />

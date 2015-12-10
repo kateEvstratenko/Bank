@@ -105,6 +105,7 @@
     <Compile Include="Interfaces\IBillRepository.cs" />
     <Compile Include="Interfaces\ICreditPaymentPlanItemRepository.cs" />
     <Compile Include="Interfaces\ICustomerCreditRepository.cs" />
+    <Compile Include="Interfaces\ICustomerDepositRepository.cs" />
     <Compile Include="Interfaces\ICustomerRepository.cs" />
     <Compile Include="Interfaces\IAppUserRepository.cs" />
     <Compile Include="Interfaces\ICreditRepository.cs" />
@@ -184,6 +185,7 @@
     <Compile Include="Repositories\CreditPaymentPlanItemRepository.cs" />
     <Compile Include="Repositories\CreditRepository.cs" />
     <Compile Include="Repositories\CustomerCreditRepository.cs" />
+    <Compile Include="Repositories\CustomerDepositRepository.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />
     <Compile Include="Repositories\CreditRequestRepository.cs" />
     <Compile Include="Repositories\DepositRepository.cs" />

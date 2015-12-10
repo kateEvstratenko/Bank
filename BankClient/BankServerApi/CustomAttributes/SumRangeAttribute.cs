@@ -1,6 +1,7 @@
 ﻿using BLL.Interfaces;
 using System;
 using System.ComponentModel.DataAnnotations;
+using BLL.Services;
 
 namespace BankServerApi.CustomAttributes
 {
@@ -8,9 +9,7 @@ namespace BankServerApi.CustomAttributes
     public class SumRangeAttribute : ValidationAttribute
     {
         private string otherPropertyName;
-
-        public ICreditService creditService;
-
+        
         public SumRangeAttribute(string otherPropertyName) : base()
         {
             this.otherPropertyName = otherPropertyName;
@@ -18,19 +17,30 @@ namespace BankServerApi.CustomAttributes
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var a = CustomDependencyResolver.Resolver;
             ValidationResult validationResult = ValidationResult.Success;
             try
             {
                 var otherPropertyInfo = validationContext.ObjectType.GetProperty(this.otherPropertyName);
                 var sum = (double)value;
                 var creditId = (int)otherPropertyInfo.GetValue(validationContext.ObjectInstance, null);
-                var credit = creditService.Get(creditId);
-                if (sum < credit.MinSum || sum > credit.MaxSum)
+                using (var scope = CustomDependencyResolver.Resolver.BeginScope())
                 {
-                    var errorMessage = String.Format("Sum should be between {0} and {1}.", credit.MinSum, credit.MaxSum);
-                    validationResult = new ValidationResult(errorMessage);
-                }
+                    var creditService = scope.GetService(typeof (ICreditService)) as ICreditService;
+                    if (creditService == null)
+                    {
+                        validationResult = new ValidationResult("Cannot resolve ICreditService");
+                    }
+                    else
+                    {
+                        var credit = creditService.Get(creditId);
+                        if (sum < credit.MinSum || sum > credit.MaxSum)
+                        {
+                            var errorMessage = String.Format("Sum should be between {0} and {1}.", credit.MinSum,
+                                credit.MaxSum);
+                            validationResult = new ValidationResult(errorMessage);
+                        }
+                    }            
+                }           
             }
             catch (Exception ex)
             {

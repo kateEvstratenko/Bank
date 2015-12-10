@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using BLL.Models;
@@ -13,10 +14,10 @@ namespace BLL.Services
     {
         private readonly string _creditContractsDocPath;
         private readonly string _templateDocPath;
-        private const string ContractNumberPlace = "________________";
+        private const string ContractNumberPlace = " ________________ ";
         private const string DaymonthPlace = "\"__\"______";
         private const string YearPlace = "20__";
-        private const string CustomerPlace = "_________________________";
+        private const string CustomerPlace = " _________________________ ";
         private const string CreditPlace = "_________";
         private const string CreditSumPlace = "____________";
         private const string SincePlace = "____________";
@@ -30,7 +31,7 @@ namespace BLL.Services
             _templateDocPath = _creditContractsDocPath + "creditTemplate.docx";
         }
 
-        public void FillConcreteCreditContract(DomainCustomerCredit customerCredit)
+        public void FillConcreteContract(DomainCustomerCredit customerCredit)
         {
             if (!File.Exists(_templateDocPath))
             {
@@ -54,7 +55,7 @@ namespace BLL.Services
                         FindAndReplace(ref i, runs, ContractNumberPlace, " " + customerCredit.ContractNumber);
 
                         //day & month
-                        FindAndReplace(ref i, runs, DaymonthPlace, customerCredit.StartDate.ToString("M"));
+                        FindAndReplace(ref i, runs, DaymonthPlace, customerCredit.StartDate.ToString("dd MM"));
 
                         //year
                         FindAndReplace(ref i, runs, YearPlace, " " + customerCredit.StartDate.ToString("yyyy"));
@@ -122,7 +123,7 @@ namespace BLL.Services
 
                 runs = new List<Run>
                 {
-                    GenerateRun(new RunProperties(), "Банк \"Три толстяка\", далее именуемый \"Кредитор\", в лице Чугаинова Кирилла, действующего(-ей) на основании Устава, с одной стороны, и "),
+                    GenerateRun(new RunProperties(), "Банк \"Три толстяка\", далее именуемый \"Кредитор\", в  лице  Чугаинова Кирилла, действующего(-ей) на основании Устава, с одной стороны, и  "),
                     GenerateRun(new RunProperties(), CustomerPlace),
                     GenerateRun(new RunProperties(), ", далее именуемый(-ая) \"Заемщик\", с другой стороны, заключили настоящий договор о следующем.")
                 };
@@ -135,16 +136,15 @@ namespace BLL.Services
                 //1.1
                 runs = new List<Run>
                 {
-                    GenerateRun(new RunProperties(), "1.1. Кредитор предоставляет Заемщику  в  порядке  и  на  условиях,  предусмотренных  Договором, кредит "),
-                    GenerateRun(new RunProperties(), "_________"),
+                    GenerateRun(new RunProperties(), "1.1. Кредитор   предоставляет   Заемщику   в  порядке  и  на  условиях,  предусмотренных   Договором, кредит "),
+                    GenerateRun(new RunProperties(), CreditPlace),
                     GenerateRun(new RunProperties(), " (далее  –  кредит) "),
                     GenerateRun(new RunProperties(), "в сумме "),
-                    GenerateRun(new RunProperties(), "____________"),
-                    GenerateRun(new RunProperties(), " рублей"),
-                    GenerateRun(new RunProperties(), " с "),
-                    GenerateRun(new RunProperties(), "____________"),
+                    GenerateRun(new RunProperties(), CreditSumPlace),
+                    GenerateRun(new RunProperties(), " рублей c "),
+                    GenerateRun(new RunProperties(), SincePlace),
                     GenerateRun(new RunProperties(), " по "),
-                    GenerateRun(new RunProperties(), "____________"),
+                    GenerateRun(new RunProperties(), UntilPlace),
                     GenerateRun(new RunProperties(), "."),
 //                    GenerateRun(new RunProperties(), "на _____________________________________________________________. (целевое использование кредита)")
                 };
@@ -154,7 +154,7 @@ namespace BLL.Services
                 runs = new List<Run>
                 {
                     GenerateRun(new RunProperties(), "1.2.  Процентная ставка за пользование кредитом устанавливается в размере "),
-                    GenerateRun(new RunProperties(), "_________"),
+                    GenerateRun(new RunProperties(), PercentRatePlace),
                     GenerateRun(new RunProperties(),  " процентов годовых.")
                 };
                 AddParagraph(body, JustificationValues.Both, runs);
@@ -171,7 +171,7 @@ namespace BLL.Services
                 {
                     GenerateRun(new RunProperties(), "2.1. Заемщик обязан погасить полученный им кредит путем совершения ежемесячных платежей. " +
                                                                                   "При этом платеж должен быть произведен "),
-                    GenerateRun(new RunProperties(), "___________"),
+                    GenerateRun(new RunProperties(), PaymentDayPlace),
                     GenerateRun(new RunProperties(),   " числа либо ранее, но не более, чем за 10 дней до даты платежа.")
                 };
                 AddParagraph(body, JustificationValues.Both, runs);

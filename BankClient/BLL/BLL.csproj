@@ -76,6 +76,7 @@
     <Compile Include="Interfaces\ICreditRequestService.cs" />
     <Compile Include="Interfaces\ICreditService.cs" />
     <Compile Include="Interfaces\ICustomerCreditService.cs" />
+    <Compile Include="Interfaces\ICustomerDepositService.cs" />
     <Compile Include="Interfaces\IDepositService.cs" />
     <Compile Include="Interfaces\IEncryptorService.cs" />
     <Compile Include="Models\DomainAddress.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\CalculationCreditService.cs" />
     <Compile Include="Services\CustomDependencyResolver.cs" />
+    <Compile Include="Services\CustomerDepositService.cs" />
     <Compile Include="Services\CustomerCreditService.cs" />
     <Compile Include="Services\DailyCalculateService.cs" />
     <Compile Include="Services\CreditService.cs" />

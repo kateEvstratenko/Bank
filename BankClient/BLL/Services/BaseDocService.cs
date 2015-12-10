@@ -9,6 +9,7 @@ namespace BLL.Services
     {
         protected void AddParagraph(Body body, JustificationValues justification, RunProperties runProperties, string text)
         {
+            SetFontRunProperties(runProperties);
             var paragraph = body.AppendChild(new Paragraph()
             {
                 ParagraphProperties = new ParagraphProperties()
@@ -39,9 +40,22 @@ namespace BLL.Services
 
         protected Run GenerateRun(RunProperties runProperties, string text)
         {
+            SetFontRunProperties(runProperties);
             var run = new Run() { RunProperties = runProperties };
             run.AppendChild(new Text(text));
             return run;
+        }
+
+        protected void SetFontRunProperties(RunProperties runProperties)
+        {
+            runProperties.RunFonts = new RunFonts()
+            {
+                Ascii = "Times New Roman"
+            };
+            runProperties.FontSize = new FontSize()
+            {
+                Val = "24"
+            };
         }
 
         protected RunProperties SetBoldRunProperties(RunProperties runProperties)

@@ -37,6 +37,8 @@ namespace BLL.Services
 
             Uow.CustomerCreditRepository.Add(Mapper.Map<CustomerCredit>(credit));
             Uow.SaveChanges();
+
+            new CreditDocService().FillConcreteContract(credit);
         }
         public void Delete(int id)
         {
