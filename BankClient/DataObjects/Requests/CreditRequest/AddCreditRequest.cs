@@ -4,7 +4,7 @@ using Core.Enums;
 
 namespace DataObjects.Requests.CreditRequest
 {
-    public class AddCreditRequest: AuthenticatedRequest
+    public class AddCreditRequest
     {
         public string CreditGoal { get; set; }
         public double Sum { get; set; }

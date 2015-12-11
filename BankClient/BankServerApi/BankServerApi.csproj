@@ -221,6 +221,7 @@
     <Compile Include="Controllers\CreditRequestController.cs" />
     <Compile Include="CustomAttributes\InvalidModelStateAttribute.cs" />
     <Compile Include="CustomAttributes\SumRangeAttribute.cs" />
+    <Compile Include="GetParsedToken.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

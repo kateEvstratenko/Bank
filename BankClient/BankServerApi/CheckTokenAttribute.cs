@@ -28,10 +28,11 @@ namespace BankServerApi
                 {
                     throw BankClientException.ThrowAutofacError("AuthenticationService is null");
                 }
-                var requestParams = ((AuthenticatedRequest)actionContext.ActionArguments.First().Value);
+//                var requestParams = ((AuthenticatedRequest)actionContext.ActionArguments.First().Value);
                 var token = actionContext.Request.Headers.First(p => p.Key.ToLower() == "token").Value.First();
                 var parsedToken = authenticationService.CheckToken(token);
-                requestParams.TokenObj = parsedToken;
+                actionContext.Request.Properties.Add("tokenObj", parsedToken);
+//                requestParams.TokenObj = parsedToken;
             }
 
             catch (TokenExpiredException)
@@ -77,8 +78,8 @@ namespace BankServerApi
             try
             {
                 var userManager = Startup.UserManagerFactory();
-                var requestParams = ((AuthenticatedRequest)actionContext.ActionArguments.First().Value);
-                var userId = requestParams.TokenObj.UserId;
+                var tokenObj = new ParsedTokenHelper().GetParsedToken(actionContext.Request.Properties);
+                var userId = tokenObj.UserId;
                 if (Roles.Any(role => userManager.IsInRole(userId, role.ToString())))
                 {
                     return;

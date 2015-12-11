@@ -51,11 +51,12 @@ namespace BankServerApi.Controllers
         [HttpPost]
         [Route("GetUnconfirmed")]
         [CheckRole(Order = 1, Roles = new[] { AppRoles.CreditCommitteeMember, AppRoles.CreditDepartmentChief, AppRoles.Security })]
-        public GetUnconfirmedCreditResponse GetUnconfirmed(AuthenticatedRequest request)
+        public GetUnconfirmedCreditResponse GetUnconfirmed()
         {
             try
             {
-                var roleName = _userManager.GetRoles(request.TokenObj.UserId).FirstOrDefault();
+                var tokenObj = new ParsedTokenHelper().GetParsedToken(Request.Properties);
+                var roleName = _userManager.GetRoles(tokenObj.UserId).FirstOrDefault();
                 var role = _roleManager.FindByName(roleName);
                 var unconfirmedCreditRequests = _iCreditRequestService.GetUnconfirmed(role);
                 return new GetUnconfirmedCreditResponse()
@@ -80,7 +81,8 @@ namespace BankServerApi.Controllers
         {
             try
             {
-                _iCreditRequestService.SetStatus(request.TokenObj.UserId,
+                var tokenObj = new ParsedTokenHelper().GetParsedToken(Request.Properties);
+                _iCreditRequestService.SetStatus(tokenObj.UserId,
                     request.CreditRequestId, request.CreditRequestStatusInfo, request.Message);
                 return new ResponseBase();
             }

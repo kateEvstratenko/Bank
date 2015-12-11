@@ -5,6 +5,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using BLL.AutoMapper;
 using BLL.Services;
+using Newtonsoft.Json;
 
 namespace BankServerApi
 {
@@ -21,6 +22,7 @@ namespace BankServerApi
             AutofacConfig.Configure();
             AutomapperConfig.Configure();
             AutoMapperConfiguration.Register();
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
             _dailyCalculateService = new DailyCalculateService();
         }

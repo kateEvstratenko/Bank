@@ -13,7 +13,9 @@ using BankServerApi.Providers;
 using BankServerApi.Results;
 using BLL.Interfaces;
 using BLL.Models;
+using Core;
 using DataObjects.Requests.CreditRequest;
+using DataObjects.Responses;
 using DataObjects.Responses.Account;
 using DAL.Entities;
 using Microsoft.AspNet.Identity;
@@ -71,23 +73,34 @@ namespace BankServerApi.Controllers
 
         // POST api/Account/Logout
         [Route("Logout")]
-        public IHttpActionResult Logout(AuthenticatedRequest request)
+        public IHttpActionResult Logout()
         {
             //            Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
-            _iAuthenticationService.SignOut(request.Token);
+            _iAuthenticationService.SignOut(Request.Headers.First(p => p.Key.ToLower() == "token").Value.First());
             return Ok();
         }
 
         [Route("GetRole")]
         [CheckToken]
-        public GetRoleResponse GetRole(AuthenticatedRequest request)
+        public GetRoleResponse GetRole()
         {
-            var role = UserManager.GetRoles(request.TokenObj.UserId).FirstOrDefault();
-            return new GetRoleResponse()
+            try
             {
-                Role = role
-            };
-            //            return Ok();
+                var tokenObj = new ParsedTokenHelper().GetParsedToken(Request.Properties);
+                var role = UserManager.GetRoles(tokenObj.UserId).FirstOrDefault();
+                return new GetRoleResponse()
+                {
+                    Role = role
+                };
+            }
+            catch (BankClientException ex)
+            {
+                return ResponseBase.Unsuccessful<GetRoleResponse>(ex);
+            }
+            catch (Exception ex)
+            {
+                return ResponseBase.Unsuccessful<GetRoleResponse>(ex);
+            }
         }
 
 

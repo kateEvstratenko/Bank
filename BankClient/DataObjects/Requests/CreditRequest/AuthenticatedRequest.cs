@@ -4,15 +4,15 @@ using Newtonsoft.Json;
 
 namespace DataObjects.Requests.CreditRequest
 {
-    public class AuthenticatedRequest
-    {
-        public string Token { get; set; }
+//    public class AuthenticatedRequest
+//    {
+//        public string Token { get; set; }
+//
+//        [JsonIgnore]
+//        public DomainToken TokenObj { get; set; }
+//    }
 
-        [JsonIgnore]
-        public DomainToken TokenObj { get; set; }
-    }
-
-    public class SetStatusRequest: AuthenticatedRequest
+    public class SetStatusRequest
     {
         public int CreditRequestId { get; set; }
         public CreditRequestStatusInfo CreditRequestStatusInfo { get; set; }

@@ -19,9 +19,9 @@ namespace BLL.Models
         public string IdentificationNumber { get; set; }
         public DomainAddress Address { get; set; }
         public DomainBankClient BankClient { get; set; }
-        public ICollection<DomainBill> Bills { get; set; }
-        public ICollection<DomainCreditRequest> CreditRequests { get; set; }
-        public ICollection<DomainCustomerCredit> CustomerCredits { get; set; }
-        public ICollection<DomainCustomerDeposit> CustomerDeposits { get; set; } 
+        public IList<DomainBill> Bills { get; set; }
+        public IList<DomainCreditRequest> CreditRequests { get; set; }
+        public IList<DomainCustomerCredit> CustomerCredits { get; set; }
+        public IList<DomainCustomerDeposit> CustomerDeposits { get; set; } 
     }
 }

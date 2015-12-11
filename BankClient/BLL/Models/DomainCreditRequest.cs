@@ -23,6 +23,6 @@ namespace BLL.Models
         public int CreditId { get; set; }
         public DomainCustomer Customer { get; set; }
         public DomainCredit Credit { get; set; }
-        public ICollection<DomainCreditRequestStatus> CreditRequestStatuses { get; set; }
+        public IList<DomainCreditRequestStatus> CreditRequestStatuses { get; set; }
     }
 }
