@@ -17,7 +17,14 @@ namespace BLL.Services
         public void SendVerifyToEmail(string email, string userId, string baseUrl)
         {
             var smtpClient = GetSmtpClient();
-            var mail = GetMailMessage(email, userId, baseUrl);
+            var mail = GetRegistrationMailMessage(email, userId, baseUrl);
+            smtpClient.Send(mail);
+        }
+
+        public void SendLockoutNotification(string email, string login)
+        {
+            var smtpClient = GetSmtpClient();
+            var mail = GetLockoutMailMessage(email, login);
             smtpClient.Send(mail);
         }
 
@@ -31,12 +38,12 @@ namespace BLL.Services
             };
         }
 
-        private MailMessage GetMailMessage(string email, string userId, string baseUrl)
+        private MailMessage GetRegistrationMailMessage(string email, string userId, string baseUrl)
         {
             var mail = new MailMessage
             {
                 Subject = "Завершение регистрации",
-                Body = GenerateMailBody(email, userId, baseUrl),
+                Body = GenerateRegistrationMailBody(email, userId, baseUrl),
                 IsBodyHtml = true,
                 From = new MailAddress(EmailSenderUserName, "ThreeFatties")
             };
@@ -44,10 +51,28 @@ namespace BLL.Services
             return mail;
         }
 
-        private string GenerateMailBody(string email, string userId, string baseUrl)
+        private string GenerateRegistrationMailBody(string email, string userId, string baseUrl)
         {
             var urlString = String.Format("{0}/{1}?token={2}&email={3}", baseUrl, ConfirmEmailUrl, userId, email);
             return String.Format("Для завершения регистрации перейдите по ссылке: <a href={0}>click</a>", urlString);
+        }
+
+        private MailMessage GetLockoutMailMessage(string email, string login)
+        {
+            var mail = new MailMessage
+            {
+                Subject = "Сообщение о блокировке",
+                Body = GenerateLockoutMailBody(login),
+                IsBodyHtml = true,
+                From = new MailAddress(EmailSenderUserName, "ThreeFatties")
+            };
+            mail.To.Add(new MailAddress(email));
+            return mail;
+        }
+
+        private string GenerateLockoutMailBody(string login)
+        {
+            return String.Format("Количество неудачных попыток ввода пароля пользователя с именем {0} превышено. Попробуйте снова через 15 минут.", login);
         }
     }
 }

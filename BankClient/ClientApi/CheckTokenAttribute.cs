@@ -6,10 +6,9 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using BLL.Interfaces;
 using Core;
-using DataObjects.Requests.CreditRequest;
 using DataObjects.Responses;
 
-namespace BankServerApi
+namespace ClientApi
 {
     public class CheckTokenAttribute : ActionFilterAttribute
     {

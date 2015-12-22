@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -68,16 +69,25 @@ namespace ClientApi.Controllers
         }
 
         [HttpPost]
-        public string Login(LoginViewModel request)
+        [AllowAnonymous]
+        public IHttpActionResult Login(LoginViewModel request)
         {
-            return _iAuthenticationService.SignInEmployee(request.UserName, request.Password);
+            try
+            {
+                return Ok(_iAuthenticationService.SignIn(request.UserName, request.Password));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // POST api/Account/Logout
         [Route("Logout")]
         public IHttpActionResult Logout()
         {
-            Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+            //Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+            _iAuthenticationService.SignOut(Request.Headers.First(p => p.Key.ToLower() == "token").Value.First());
             return Ok();
         }
 

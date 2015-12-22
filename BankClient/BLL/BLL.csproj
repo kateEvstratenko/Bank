@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
+    <Compile Include="ParsedTokenHelper.cs" />
     <Compile Include="Interfaces\IBillService.cs" />
     <Compile Include="Interfaces\ICalculationCreditService.cs" />
     <Compile Include="Interfaces\ICalculationDebtService.cs" />

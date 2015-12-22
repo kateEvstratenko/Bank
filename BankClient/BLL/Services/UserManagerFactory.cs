@@ -13,7 +13,16 @@ namespace BLL.Services
 
         private AppUserManagerFactory()
         {
-            _userManager = () => new UserManager<AppUser>(new UserStore<AppUser>(new BankContext()));
+            _userManager = () => new UserManager<AppUser>(new UserStore<AppUser>(new BankContext()))
+            {
+                PasswordValidator = new PasswordValidator()
+                {
+                    RequiredLength = 8,
+                    RequireDigit = true,
+                    RequireLowercase = true, 
+                    RequireUppercase = true
+                }
+            };
         }
         private static Func<UserManager<AppUser>> _userManager;
 

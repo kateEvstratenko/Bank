@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BLL.Models;
 using Core;
 
-namespace BankServerApi
+namespace BLL
 {
     public class ParsedTokenHelper
     {

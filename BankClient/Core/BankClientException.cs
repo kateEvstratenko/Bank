@@ -44,5 +44,15 @@ namespace Core
         {
             return new BankClientException(8, "Authorization has been denied for this request.");
         }
+
+        public static BankClientException ThrowUserNotRegistered()
+        {
+            return new BankClientException(9, "User is not registered.");
+        }
+
+        public static BankClientException ThrowUserLockout()
+        {
+            return new BankClientException(10, "User is lockout.");
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AutoMapper;
 using BLL.Interfaces;
 using BLL.Models;
@@ -14,28 +15,34 @@ namespace BLL.Services
         private const int TokenPartsCount = 4;
         private readonly IUnitOfWork _iUnitOfWork;
         private readonly IEncryptorService _iEncryptorService;
-        public AuthenticationService(IUnitOfWork iUnitOfWork, IEncryptorService iEncryptorService)
+        private readonly IEmailSender _iEmailSender;
+        public AuthenticationService(IUnitOfWork iUnitOfWork, IEncryptorService iEncryptorService, IEmailSender iEmailSender)
         {
             _iUnitOfWork = iUnitOfWork;
             _iEncryptorService = iEncryptorService;
+            _iEmailSender = iEmailSender;
         }
 
         public string SignIn(string login, string password)
         {
-            var user = AppUserManagerFactory.Instance.Factory().Find(login, password);
-            ThrowIfInvalidCredentials(user);
-            ThrowIfEmailNotConfirmed(user);
+            var userByLogin = _iUnitOfWork.AppUserRepository.GetAll().FirstOrDefault(x => x.UserName == login);
 
-            var token = GenerateTokenByEmail(login, user.Id);
+            ThrowIfNotRegistered(userByLogin);
+            ThrowIfLockout(userByLogin);
+            ThrowIfInvalidCredentials(userByLogin, password);
+            ThrowIfEmailNotConfirmed(userByLogin);
+
+            var token = GenerateTokenByEmail(login, userByLogin.Id);
             return token;
         }
 
         public string SignInEmployee(string login, string password)
         {
-            var user = AppUserManagerFactory.Instance.Factory().Find(login, password);
-            ThrowIfInvalidCredentials(user);
+            var userByLogin = _iUnitOfWork.AppUserRepository.GetAll().FirstOrDefault(x => x.UserName == login);
+            ThrowIfNotRegistered(userByLogin);
+            ThrowIfInvalidEmployeeCredentials(userByLogin, password);
 
-            var token = GenerateTokenByEmail(login, user.Id);
+            var token = GenerateTokenByEmail(login, userByLogin.Id);
             return token;
         }
 
@@ -155,10 +162,54 @@ namespace BLL.Services
             _iUnitOfWork.SaveChanges();
         }
 
-        private void ThrowIfInvalidCredentials(AppUser user)
+        private void ThrowIfNotRegistered(AppUser user)
         {
             if (user == null)
             {
+                throw BankClientException.ThrowUserNotRegistered();
+            }
+        }
+
+        private void ThrowIfLockout(AppUser user)
+        {
+            if (user.LockoutEnabled)
+            {
+                if (DateTime.UtcNow > user.LockoutEndDateUtc)
+                {
+                    user.LockoutEnabled = false;
+                    user.AccessFailedCount = 0;
+                    _iUnitOfWork.SaveChanges();
+                }
+                else
+                {
+                    throw BankClientException.ThrowUserLockout();
+                }
+            }
+        }
+
+        private void ThrowIfInvalidEmployeeCredentials(AppUser user, string password)
+        {
+            var appUser = AppUserManagerFactory.Instance.Factory().Find(user.UserName, password);
+            if (appUser == null)
+            {
+                throw BankClientException.ThrowInvalidCredentials();
+            }
+        }
+
+        private void ThrowIfInvalidCredentials(AppUser user, string password)
+        {
+            var appUser = AppUserManagerFactory.Instance.Factory().Find(user.UserName, password);
+            if (appUser == null)
+            {
+                user.AccessFailedCount += 1;
+                if (user.AccessFailedCount == 3)
+                {
+                    user.LockoutEnabled = true;
+                    user.LockoutEndDateUtc = DateTime.UtcNow + TimeSpan.FromMinutes(15);
+                    _iEmailSender.SendLockoutNotification(user.Email, user.UserName);
+                }
+                _iUnitOfWork.SaveChanges();
+
                 throw BankClientException.ThrowInvalidCredentials();
             }
         }

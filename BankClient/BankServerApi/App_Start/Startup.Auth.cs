@@ -20,7 +20,6 @@ namespace BankServerApi
         static Startup()
         {
             PublicClientId = "self";
-
             UserManagerFactory = AppUserManagerFactory.Instance.Factory;//() => new UserManager<AppUser>(new UserStore<AppUser>(new BankContext()));
             RoleManagerFactory = AppRoleManagerFactory.Instance.Factory;//() => new UserManager<AppUser>(new UserStore<AppUser>(new BankContext()));
 

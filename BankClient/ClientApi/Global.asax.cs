@@ -16,6 +16,7 @@ namespace ClientApi
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             //BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutofacConfig.Configure();
+            BLL.AutoMapper.AutoMapperConfiguration.Register();
         }
     }
 }

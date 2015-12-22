@@ -1,4 +1,5 @@
 ﻿using System;
+using BLL.Services;
 using ClientApi.Providers;
 using DAL;
 using DAL.Entities;
@@ -17,7 +18,7 @@ namespace ClientApi
         {
             PublicClientId = "self";
 
-            UserManagerFactory = () => new UserManager<AppUser>(new UserStore<AppUser>(new BankContext()));
+            UserManagerFactory = () => AppUserManagerFactory.Instance.Factory();
 
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
