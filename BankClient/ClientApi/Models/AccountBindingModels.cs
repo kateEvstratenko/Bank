@@ -32,6 +32,13 @@ namespace ClientApi.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class ChangeEmailBindingModel
+    {
+        [Required]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        public string NewEmail { get; set; }
+    }
+
     public class RegisterBindingModel
     {
         [Required]

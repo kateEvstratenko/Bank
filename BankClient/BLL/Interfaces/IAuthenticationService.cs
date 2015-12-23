@@ -8,5 +8,6 @@ namespace BLL.Interfaces
         DomainToken CheckToken(string token);
         string SignInEmployee(string login, string password);
         void SignOut(string token);
+        void ChangeEmail(string userId, string newEmail);
     }
 }

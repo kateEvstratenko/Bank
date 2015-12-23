@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
+using BLL;
 using BLL.Interfaces;
 using ClientApi.Models;
 using ClientApi.Providers;
@@ -132,7 +133,9 @@ namespace ClientApi.Controllers
         }
 
         // POST api/Account/ChangePassword
+        [CheckToken]
         [Route("ChangePassword")]
+        [AllowAnonymous]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -140,7 +143,8 @@ namespace ClientApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
+            var tokenObj = new ParsedTokenHelper().GetParsedToken(Request.Properties);
+            IdentityResult result = await UserManager.ChangePasswordAsync(tokenObj.UserId, model.OldPassword,
                 model.NewPassword);
             IHttpActionResult errorResult = GetErrorResult(result);
 
@@ -148,6 +152,22 @@ namespace ClientApi.Controllers
             {
                 return errorResult;
             }
+
+            return Ok();
+        }
+
+        [CheckToken]
+        [Route("ChangePassword")]
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> ChangeEmail(ChangeEmailBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var tokenObj = new ParsedTokenHelper().GetParsedToken(Request.Properties);
+            _iAuthenticationService.ChangeEmail(tokenObj.UserId, model.NewEmail);
 
             return Ok();
         }
