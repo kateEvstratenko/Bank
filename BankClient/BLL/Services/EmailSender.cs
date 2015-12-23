@@ -13,6 +13,7 @@ namespace BLL.Services
         private static readonly string EmailSenderUserName = ConfigurationManager.AppSettings["EmailSenderUserName"];
         private static readonly string EmailSenderPassword = ConfigurationManager.AppSettings["EmailSenderPassword"];
         private static readonly string ConfirmEmailUrl = ConfigurationManager.AppSettings["ConfirmEmailUrl"];
+        private static readonly string ConfirmChangeEmailUrl = ConfigurationManager.AppSettings["ConfirmChangeEmailUrl"];
 
         public void SendVerifyToEmail(string email, string userId, string baseUrl)
         {
@@ -25,6 +26,13 @@ namespace BLL.Services
         {
             var smtpClient = GetSmtpClient();
             var mail = GetLockoutMailMessage(email, login);
+            smtpClient.Send(mail);
+        }
+
+        public void SendChangeEmail(string userId, string newEmail, string baseUrl)
+        {
+            var smtpClient = GetSmtpClient();
+            var mail = GetChangeEmailMailMessage(userId, newEmail, baseUrl);
             smtpClient.Send(mail);
         }
 
@@ -55,6 +63,25 @@ namespace BLL.Services
         {
             var urlString = String.Format("{0}/{1}?token={2}&email={3}", baseUrl, ConfirmEmailUrl, userId, email);
             return String.Format("Для завершения регистрации перейдите по ссылке: <a href={0}>click</a>", urlString);
+        }
+
+        private MailMessage GetChangeEmailMailMessage(string userId, string email, string baseUrl)
+        {
+            var mail = new MailMessage
+            {
+                Subject = "Подтверждение изменения email",
+                Body = GenerateChangeEmailMailBody(email, userId, baseUrl),
+                IsBodyHtml = true,
+                From = new MailAddress(EmailSenderUserName, "ThreeFatties")
+            };
+            mail.To.Add(new MailAddress(email));
+            return mail;
+        }
+
+        private string GenerateChangeEmailMailBody(string email, string userId, string baseUrl)
+        {
+            var urlString = String.Format("{0}/{1}?token={2}&email={3}", baseUrl, ConfirmChangeEmailUrl, userId, email);
+            return String.Format("Для подтверждения смены email перейдите по ссылке: <a href={0}>click</a>", urlString);
         }
 
         private MailMessage GetLockoutMailMessage(string email, string login)

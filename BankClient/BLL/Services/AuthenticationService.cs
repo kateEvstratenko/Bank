@@ -60,9 +60,9 @@ namespace BLL.Services
             _iUnitOfWork.SaveChanges();
         }
 
-        public void ChangeEmail(string userId, string newEmail)
+        public void ChangeEmail(string userId, string newEmail, string baseUrl)
         {
-//            _iEmailSender.
+            _iEmailSender.SendChangeEmail(userId, newEmail, baseUrl);
         }
 
         public DomainToken CheckToken(string token)

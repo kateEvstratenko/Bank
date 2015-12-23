@@ -26,6 +26,7 @@ namespace ClientApi.Models
         [Display(Name = "New password")]
         public string NewPassword { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
@@ -37,6 +38,12 @@ namespace ClientApi.Models
         [Required]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string NewEmail { get; set; }
+
+        [Required]
+        [Display(Name = "Confirm new email")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [Compare("NewEmail", ErrorMessage = "The new email and confirmation email do not match.")]
+        public string ConfirmEmail { get; set; }
     }
 
     public class RegisterBindingModel

@@ -157,9 +157,9 @@ namespace ClientApi.Controllers
         }
 
         [CheckToken]
-        [Route("ChangePassword")]
+        [Route("ChangeEmail")]
         [AllowAnonymous]
-        public async Task<IHttpActionResult> ChangeEmail(ChangeEmailBindingModel model)
+        public IHttpActionResult ChangeEmail(ChangeEmailBindingModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -167,7 +167,17 @@ namespace ClientApi.Controllers
             }
 
             var tokenObj = new ParsedTokenHelper().GetParsedToken(Request.Properties);
-            _iAuthenticationService.ChangeEmail(tokenObj.UserId, model.NewEmail);
+            var user = UserManager.FindById(tokenObj.UserId);
+            if (user != null && user.Email == model.NewEmail)
+            {
+                return BadRequest("Current email is equal to entered.");
+            }
+            if (UserManager.FindByEmail(model.NewEmail) != null)
+            {
+                return BadRequest("User with specified email is already registered.");
+            }
+            var baseUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
+            _iAuthenticationService.ChangeEmail(tokenObj.UserId, model.NewEmail, baseUrl);
 
             return Ok();
         }
@@ -439,6 +449,7 @@ namespace ClientApi.Controllers
 
         [AllowAnonymous]
         [HttpGet]
+        [Route("ConfirmEmail")]
         public async Task<bool> ConfirmEmail(string token, string email)
         {
             var user = UserManager.FindById(token);
@@ -451,6 +462,21 @@ namespace ClientApi.Controllers
                 return false;
             }
             user.EmailConfirmed = true;
+            await UserManager.UpdateAsync(user);
+            return true;
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("ConfirmChangeEmail")]
+        public async Task<bool> ConfirmChangeEmail(string token, string email)
+        {
+            var user = UserManager.FindById(token);
+            if (user == null)
+            {
+                return false;
+            }
+            user.Email = email;
             await UserManager.UpdateAsync(user);
             return true;
         }
