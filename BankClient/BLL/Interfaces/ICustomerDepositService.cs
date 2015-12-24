@@ -10,5 +10,6 @@ namespace BLL.Interfaces
         void Update(DomainCustomerDeposit deposit);
         DomainCustomerDeposit Get(int id);
         IQueryable<DomainCustomerDeposit> GetAll();
+        IQueryable<DomainCustomerDeposit> GetAllByUser(string userId);
     }
 }

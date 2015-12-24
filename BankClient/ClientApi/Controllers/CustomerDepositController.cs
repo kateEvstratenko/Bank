@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using BLL;
 using BLL.Interfaces;
 using BLL.Models;
 
@@ -17,9 +18,10 @@ namespace ClientApi.Controllers
             _customerDepositService = customerDepositService;
         }
 
-        public IEnumerable<DomainCustomerDeposit> GetByCustomerId(int customerId)
+        public IEnumerable<DomainCustomerDeposit> GetByCustomerId()
         {
-            return _customerDepositService.GetAll().Where(c => c.CustomerId == customerId).ToList();
+            var tokenObj = new ParsedTokenHelper().GetParsedToken(Request.Properties);
+            return _customerDepositService.GetAllByUser(tokenObj.UserId).ToList();
         }
     }
 }

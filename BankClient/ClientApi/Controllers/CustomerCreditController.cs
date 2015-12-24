@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using BLL;
 using BLL.Interfaces;
 using BLL.Models;
 
@@ -17,9 +18,10 @@ namespace ClientApi.Controllers
             _customerCreditService = customerCreditService;
         }
 
-        public IEnumerable<DomainCustomerCredit> GetByCustomerId(int customerId)
+        public IEnumerable<DomainCustomerCredit> GetByCustomerId()
         {
-            return _customerCreditService.GetAll().Where(c => c.CustomerId == customerId).ToList();
+            var tokenObj = new ParsedTokenHelper().GetParsedToken(Request.Properties);
+            return _customerCreditService.GetAllByUser(tokenObj.UserId).ToList();
         }
     }
 }

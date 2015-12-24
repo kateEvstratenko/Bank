@@ -10,5 +10,6 @@ namespace BLL.Interfaces
         void Update(DomainCustomerCredit credit);
         DomainCustomerCredit Get(int id);
         IQueryable<DomainCustomerCredit> GetAll();
+        IQueryable<DomainCustomerCredit> GetAllByUser(string userId);
     }
 }

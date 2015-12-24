@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using BLL.Interfaces;
 using BLL.Models;
+using Core;
 using DAL.Interfaces;
 using DAL.Entities;
 
@@ -61,6 +62,18 @@ namespace BLL.Services
         public IQueryable<DomainCustomerDeposit> GetAll()
         {
             var deposits = Uow.CustomerDepositRepository.GetAll().ToList();
+            var domainDeposits = Mapper.Map<List<CustomerDeposit>, List<DomainCustomerDeposit>>(deposits);
+            return domainDeposits.AsQueryable();
+        }
+
+        public IQueryable<DomainCustomerDeposit> GetAllByUser(string userId)
+        {
+            var user = Uow.AppUserRepository.GetAll().FirstOrDefault(u => u.Id == userId);
+            if (user == null)
+            {
+                throw BankClientException.ThrowUserNotRegistered();
+            }
+            var deposits = Uow.CustomerDepositRepository.GetAll().Where(cc => cc.CustomerId == user.CustomerId).ToList();
             var domainDeposits = Mapper.Map<List<CustomerDeposit>, List<DomainCustomerDeposit>>(deposits);
             return domainDeposits.AsQueryable();
         }

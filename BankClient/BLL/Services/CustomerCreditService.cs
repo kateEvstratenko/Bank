@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using BLL.Interfaces;
 using BLL.Models;
+using Core;
 using DAL.Interfaces;
 using DAL.Entities;
 
@@ -18,7 +19,7 @@ namespace BLL.Services
             var credit = new DomainCustomerCredit()
             {
                 CreditId = creditRequest.CreditId,
-                CreditSum =  creditRequest.Sum,
+                CreditSum = creditRequest.Sum,
                 Currency = creditRequest.Currency,
                 CustomerId = creditRequest.CustomerId,
                 StartDate = DateTime.Now.Date,
@@ -60,6 +61,18 @@ namespace BLL.Services
         public IQueryable<DomainCustomerCredit> GetAll()
         {
             var credits = Uow.CustomerCreditRepository.GetAll().ToList();
+            var domainCredits = Mapper.Map<List<CustomerCredit>, List<DomainCustomerCredit>>(credits);
+            return domainCredits.AsQueryable();
+        }
+
+        public IQueryable<DomainCustomerCredit> GetAllByUser(string userId)
+        {
+            var user = Uow.AppUserRepository.GetAll().FirstOrDefault(u => u.Id == userId);
+            if (user == null)
+            {
+                throw BankClientException.ThrowUserNotRegistered();
+            }
+            var credits = Uow.CustomerCreditRepository.GetAll().Where(cc => cc.CustomerId == user.CustomerId).ToList();
             var domainCredits = Mapper.Map<List<CustomerCredit>, List<DomainCustomerCredit>>(credits);
             return domainCredits.AsQueryable();
         }
