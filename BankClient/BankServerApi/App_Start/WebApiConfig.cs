@@ -29,6 +29,8 @@ namespace BankServerApi
             );
 
             config.Filters.Add(new InvalidModelStateAttribute());
+
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
         }
     }
 }

@@ -2,7 +2,7 @@
 using BLL.Models;
 using Core;
 
-namespace BLL
+namespace BLL.Helpers
 {
     public class ParsedTokenHelper
     {

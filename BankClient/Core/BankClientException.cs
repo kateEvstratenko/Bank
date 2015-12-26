@@ -54,5 +54,10 @@ namespace Core
         {
             return new BankClientException(10, "User is lockout.");
         }
+
+        public static BankClientException ThrowCannotSetStatus()
+        {
+            return new BankClientException(11, "Can't set status for this credit request.");
+        }
     }
 }

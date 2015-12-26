@@ -28,6 +28,7 @@ namespace ClientApi
 
             builder.RegisterType<EmailSender>().As<IEmailSender>();
             builder.RegisterType<CreditService>().As<ICreditService>();
+            builder.RegisterType<DepositService>().As<IDepositService>();
             builder.RegisterType<CreditRequestService>().As<ICreditRequestService>();
             builder.RegisterType<CalculationDebtService>().As<ICalculationDebtService>();
             builder.RegisterType<AuthenticationService>().As<IAuthenticationService>();
@@ -41,6 +42,7 @@ namespace ClientApi
 
             builder.RegisterType<AppUserRepository>().As<IAppUserRepository>();
             builder.RegisterType<CreditRepository>().As<ICreditRepository>();
+            builder.RegisterType<DepositRepository>().As<IDepositRepository>();
             builder.RegisterType<TokenRepository>().As<ITokenRepository>();
             builder.RegisterType<CreditRequestRepository>().As<ICreditRequestRepository>();
             builder.RegisterType<CreditPaymentPlanItemRepository>().As<ICreditPaymentPlanItemRepository>();

@@ -12,6 +12,7 @@ using BankServerApi.Models;
 using BankServerApi.Providers;
 using BankServerApi.Results;
 using BLL;
+using BLL.Helpers;
 using BLL.Interfaces;
 using BLL.Models;
 using Core;
@@ -67,9 +68,16 @@ namespace BankServerApi.Controllers
         }
 
         [HttpPost]
-        public string Login(LoginViewModel request)
+        public IHttpActionResult Login(LoginViewModel request)
         {
-            return _iAuthenticationService.SignInEmployee(request.UserName, request.Password);
+            try
+            {
+                return Ok(_iAuthenticationService.SignInEmployee(request.UserName, request.Password));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // POST api/Account/Logout

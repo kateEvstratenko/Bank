@@ -24,6 +24,10 @@ namespace BankServerApi
             AutoMapperConfiguration.Register();
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
+            
+            AuthManagerService.UserManager = Startup.UserManagerFactory();
+            AuthManagerService.RoleManager = Startup.RoleManagerFactory();
+
             _dailyCalculateService = new DailyCalculateService();
         }
     }

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Data.SqlClient;
-using AutoMapper;
+﻿using AutoMapper;
 using BankServerApi.Models;
 using BankServerApi.Models.CalculationModels;
+using BLL.Classes;
 using BLL.Models;
 using DataObjects.Requests.CreditRequest;
 using DAL.Entities;
@@ -19,6 +18,8 @@ namespace BankServerApi
             Mapper.CreateMap<AddCreditRequest, DomainCreditRequest>();
 
             Mapper.CreateMap<DomainCreditPaymentPlanItem, CreditPaymentPlanViewModel>();
+            Mapper.CreateMap<DomainCustomerCredit, ShortCustomerCredit>();
+            Mapper.CreateMap<CustomPagedList<DomainCustomerCredit>, CustomPagedList<ShortCustomerCredit>>();
         }
     }
 }   

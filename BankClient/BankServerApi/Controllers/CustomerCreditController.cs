@@ -1,8 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web.Http;
+using AutoMapper;
+using BankServerApi.Models;
+using BLL;
+using BLL.Classes;
+using BLL.Helpers;
 using BLL.Models;
 using BLL.Interfaces;
+using PagedList;
 
 namespace BankServerApi.Controllers
 {
@@ -17,14 +25,22 @@ namespace BankServerApi.Controllers
             _customerCreditService = customerCreditService;
         }
 
+        [Route("Get")]
         public IEnumerable<DomainCustomerCredit> Get()
         {
-            return _customerCreditService.GetAll();
+            return _customerCreditService.GetAll().ToList();
         }
 
-        public IEnumerable<DomainCustomerCredit> GetByCustomerId(int customerId)
+        [HttpGet]
+        [Route("GetByCustomerId")]
+        public CustomPagedList<ShortCustomerCredit> GetByCustomerId(int customerId, int? page = null)
         {
-            return _customerCreditService.GetAll().Where(c => c.CustomerId == customerId).ToList();
+            const int pageSize = 10;
+            var pageNumber = page ?? 1;
+            var result = Mapper.Map<CustomPagedList<DomainCustomerCredit>, CustomPagedList<ShortCustomerCredit>>
+                (_customerCreditService.GetAll().Where(c => c.CustomerId == customerId)
+                .ToCustomPagedList(pageNumber, pageSize));
+            return result;
         }
 
         [HttpPost]

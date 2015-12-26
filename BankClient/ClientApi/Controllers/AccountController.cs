@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using BLL;
+using BLL.Helpers;
 using BLL.Interfaces;
 using ClientApi.Models;
 using ClientApi.Providers;
