@@ -30,6 +30,7 @@ namespace BankServerApi.Controllers
 {
     //    [Authorize]
     [RoutePrefix("api/Account")]
+//    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
