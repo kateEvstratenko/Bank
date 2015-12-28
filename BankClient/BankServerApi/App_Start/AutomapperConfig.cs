@@ -19,7 +19,11 @@ namespace BankServerApi
 
             Mapper.CreateMap<DomainCreditPaymentPlanItem, CreditPaymentPlanViewModel>();
             Mapper.CreateMap<DomainCustomerCredit, ShortCustomerCredit>();
+            Mapper.CreateMap<DomainCredit, ShortCredit>();
+            Mapper.CreateMap<DomainDeposit, ShortDeposit>();
             Mapper.CreateMap<CustomPagedList<DomainCustomerCredit>, CustomPagedList<ShortCustomerCredit>>();
+            Mapper.CreateMap<CustomPagedList<DomainCredit>, CustomPagedList<ShortCredit>>();
+            Mapper.CreateMap<CustomPagedList<DomainDeposit>, CustomPagedList<ShortDeposit>>();
         }
     }
 }   

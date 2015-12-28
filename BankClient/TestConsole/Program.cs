@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using BLL.Models;
 using BLL.Services;
+using PagedList;
 
 namespace TestConsole
 {
@@ -8,6 +10,8 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
+//            var a = new [] { 1, 2, 3 };
+//            var b = a.ToPagedList<int>(1, 10);
             new CreditDocService().FillConcreteContract(new DomainCustomerCredit()
             {
                 ContractNumber = "67836458457899",
@@ -21,7 +25,7 @@ namespace TestConsole
                 },
                 Credit = new DomainCredit()
                 {
-                    Name = "Прозрачный", 
+                    Name = "Прозрачный",
                     PercentRate = 45
                 }
             });
@@ -37,7 +41,7 @@ namespace TestConsole
                     Firstname = "Екатерина",
                     Lastname = "Евстратенко"
                 },
-                
+
                 Deposit = new DomainDeposit()
                 {
                     Name = "Прозрачный",

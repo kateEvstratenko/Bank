@@ -1,28 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Policy;
 using BankServerApi.CustomAttributes;
 using BLL.Models;
-using Core.Enums;
 
 namespace BankServerApi.Models
 {
-    public class ShortCustomerCredit
-    {
-        public int Id { get; set; }
-        public string ContractNumber { get; set; }
-        public double CreditSum { get; set; }
-        public Currency Currency { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public int CustomerId { get; set; }
-        public int CreditId { get; set; }
-        public int BillId { get; set; }
-        //        public DomainBill Bill { get; set; }
-        //        public List<DomainCreditPaymentPlanItem> CreditPaymentPlanItems { get; set; }   
-    }
-
     public class CreditBindingModel
     {
         [Required]
