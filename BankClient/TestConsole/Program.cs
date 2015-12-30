@@ -10,6 +10,30 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
+
+            new CreditRequestDocService().FillConcreteContract(new DomainCreditRequest()
+            {
+                Credit = new DomainCredit()
+                {
+                    Name = "Прозрачный"                   
+                },
+                Customer = new DomainCustomer()
+                {
+                    Lastname = "Иванов",
+                    Firstname = "Иван",
+                    Patronymic = "Иванович",
+                    DateOfBirth = new DateTime(1979, 3, 15),
+                    Address = new DomainAddress()
+                    {
+                        City = "Минск",
+                        Street = "Калинина",
+                        House = "56",
+                        Flat = 34
+                    },
+                    DocumentNumber = "MP1234567"
+                },
+                Sum = 5000000
+            });
 //            var a = new [] { 1, 2, 3 };
 //            var b = a.ToPagedList<int>(1, 10);
             new CreditDocService().FillConcreteContract(new DomainCustomerCredit()

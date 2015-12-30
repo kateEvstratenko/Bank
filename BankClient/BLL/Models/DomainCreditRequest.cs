@@ -12,6 +12,7 @@ namespace BLL.Models
         public int Id { get; set; }
         public string CreditGoal { get; set; }
         public double Sum { get; set; }
+        public int MonthCount { get; set; }
         public Currency Currency { get; set; }
         public double IncomeSum { get; set; }
         public double OtherCreditPayments { get; set; }
