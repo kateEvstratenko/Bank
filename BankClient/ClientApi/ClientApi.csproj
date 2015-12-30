@@ -214,6 +214,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BankServerApi\BankServerApi.csproj">
+      <Project>{43F9FF0D-C5D7-49FF-8950-0290AFD24870}</Project>
+      <Name>BankServerApi</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BLL\BLL.csproj">
       <Project>{521FBD53-DC67-4DB8-85D5-3F8997204418}</Project>
       <Name>BLL</Name>
@@ -225,10 +229,6 @@
     <ProjectReference Include="..\DAL\DAL.csproj">
       <Project>{475AD98E-9013-4C81-9F3A-B08BED1840BE}</Project>
       <Name>DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DataObjects\DataObjects.csproj">
-      <Project>{172DA606-827A-46A9-B070-0C0345E9143D}</Project>
-      <Name>DataObjects</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

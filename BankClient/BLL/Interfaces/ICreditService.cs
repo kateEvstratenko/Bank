@@ -1,4 +1,5 @@
-﻿using BLL.Models;
+﻿using BLL.Classes;
+using BLL.Models;
 using System.Linq;
 
 namespace BLL.Interfaces
@@ -9,6 +10,6 @@ namespace BLL.Interfaces
         void Delete(int id);
         void Update(DomainCredit credit);
         DomainCredit Get(int id);
-        IQueryable<DomainCredit> GetAll();
+        CustomPagedList<DomainCredit> GetAll(int pageNumber, int pageSize);
     }
 }

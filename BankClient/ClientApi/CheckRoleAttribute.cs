@@ -4,11 +4,11 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
+using BankServerApi.DataObjects.Responses;
 using BLL;
 using BLL.Helpers;
 using Core;
 using Core.Enums;
-using DataObjects.Responses;
 using Microsoft.AspNet.Identity;
 
 namespace ClientApi

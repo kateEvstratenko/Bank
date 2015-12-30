@@ -233,6 +233,16 @@
     <Compile Include="Controllers\CreditRequestController.cs" />
     <Compile Include="CustomAttributes\InvalidModelStateAttribute.cs" />
     <Compile Include="CustomAttributes\SumRangeAttribute.cs" />
+    <Compile Include="DataObjects\Error.cs" />
+    <Compile Include="DataObjects\Message.cs" />
+    <Compile Include="DataObjects\Requests\CreditRequest\AddCreditRequest.cs" />
+    <Compile Include="DataObjects\Requests\CreditRequest\AuthenticatedRequest.cs" />
+    <Compile Include="DataObjects\Requests\CustomerDeposit\AddDepositRequest.cs" />
+    <Compile Include="DataObjects\Requests\Payment\AddPaymentRequest.cs" />
+    <Compile Include="DataObjects\Responses\Account\GetRoleResponse.cs" />
+    <Compile Include="DataObjects\Responses\CreditRequest\GetUnconfirmedCreditResponse.cs" />
+    <Compile Include="DataObjects\Responses\CreditRequest\GetСonfirmedCreditResponse.cs" />
+    <Compile Include="DataObjects\Responses\ResponseBase.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -279,6 +289,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="DataObjects\Requests\Account\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -296,10 +307,6 @@
     <ProjectReference Include="..\DAL\DAL.csproj">
       <Project>{475AD98E-9013-4C81-9F3A-B08BED1840BE}</Project>
       <Name>DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DataObjects\DataObjects.csproj">
-      <Project>{172DA606-827A-46A9-B070-0C0345E9143D}</Project>
-      <Name>DataObjects</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

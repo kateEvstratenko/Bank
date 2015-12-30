@@ -13,9 +13,21 @@ namespace BankServerApi.Models
         public DateTime EndDate { get; set; }
         public int CustomerId { get; set; }
         public int CreditId { get; set; }
+        public int BillId { get; set; } 
+    }
+
+    public class ShortCustomerDeposit
+    {
+        public int Id { get; set; }
+        public string ContractNumber { get; set; }
+        public double InitialSum { get; set; }
+        public Currency Currency { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+
+        public int CustomerId { get; set; }
+        public int DepositId { get; set; }
         public int BillId { get; set; }
-        //        public DomainBill Bill { get; set; }
-        //        public List<DomainCreditPaymentPlanItem> CreditPaymentPlanItems { get; set; }   
     }
 
     public class ShortCredit
@@ -41,5 +53,22 @@ namespace BankServerApi.Models
         public double MaxSum { get; set; }
         public int MinMonthPeriod { get; set; }
         public int MaxMonthPeriod { get; set; }
+    }
+
+    public class ShortCreditRequest
+    {
+        public int Id { get; set; }
+        public string CreditGoal { get; set; }
+        public double Sum { get; set; }
+        public int MonthCount { get; set; }
+        public Currency Currency { get; set; }
+        public double IncomeSum { get; set; }
+        public double OtherCreditPayments { get; set; }
+        public double UtilitiesPayments { get; set; }
+        public double OtherPayments { get; set; }
+        public string MilitaryIdPath { get; set; }
+        public string IncomeCertificatePath { get; set; }
+        public int CustomerId { get; set; }
+        public int CreditId { get; set; }
     }
 }

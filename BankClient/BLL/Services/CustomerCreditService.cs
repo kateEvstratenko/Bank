@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
 using AutoMapper;
+using BLL.Classes;
+using BLL.Helpers;
 using BLL.Interfaces;
 using BLL.Models;
 using Core;
@@ -58,23 +59,30 @@ namespace BLL.Services
             var domainCredit = Mapper.Map<DomainCustomerCredit>(credit);
             return domainCredit;
         }
-        public IQueryable<DomainCustomerCredit> GetAll()
+        public CustomPagedList<DomainCustomerCredit> GetAll(int pageNumber, int pageSize)
         {
-            var credits = Uow.CustomerCreditRepository.GetAll().ToList();
-            var domainCredits = Mapper.Map<List<CustomerCredit>, List<DomainCustomerCredit>>(credits);
-            return domainCredits.AsQueryable();
+            var credits = Uow.CustomerCreditRepository.GetAll();
+            var domainCredits = Mapper.Map<CustomPagedList<DomainCustomerCredit>>(credits.ToCustomPagedList(pageNumber, pageSize));
+            return domainCredits;
         }
 
-        public IQueryable<DomainCustomerCredit> GetAllByUser(string userId)
+        public CustomPagedList<DomainCustomerCredit> GetAll(int customerId, int pageNumber, int pageSize)
+        {
+            var credits = Uow.CustomerCreditRepository.GetAll().Where(c => c.CustomerId == customerId);
+            var domainCredits = Mapper.Map<CustomPagedList<DomainCustomerCredit>>(credits.ToCustomPagedList(pageNumber, pageSize));
+            return domainCredits;
+        }
+
+        public CustomPagedList<DomainCustomerCredit> GetAllByUser(string userId, int pageNumber, int pageSize)
         {
             var user = Uow.AppUserRepository.GetAll().FirstOrDefault(u => u.Id == userId);
             if (user == null)
             {
                 throw BankClientException.ThrowUserNotRegistered();
             }
-            var credits = Uow.CustomerCreditRepository.GetAll().Where(cc => cc.CustomerId == user.CustomerId).ToList();
-            var domainCredits = Mapper.Map<List<CustomerCredit>, List<DomainCustomerCredit>>(credits);
-            return domainCredits.AsQueryable();
+            var credits = Uow.CustomerCreditRepository.GetAll().Where(cc => cc.CustomerId == user.CustomerId);
+            var domainCredits = Mapper.Map<CustomPagedList<DomainCustomerCredit>>(credits.ToCustomPagedList(pageNumber, pageSize));
+            return domainCredits;
         }
 
         private string GenerateContractNumber()

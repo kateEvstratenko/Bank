@@ -2,15 +2,16 @@
 using System.Linq;
 using System.Web.Http;
 using AutoMapper;
-using BLL;
+using BankServerApi.DataObjects.Requests.CreditRequest;
+using BankServerApi.DataObjects.Responses;
+using BankServerApi.DataObjects.Responses.CreditRequest;
+using BankServerApi.Models;
+using BLL.Classes;
 using BLL.Helpers;
 using BLL.Interfaces;
 using BLL.Models;
 using Core;
 using Core.Enums;
-using DataObjects.Requests.CreditRequest;
-using DataObjects.Responses;
-using DataObjects.Responses.CreditRequest;
 using DAL.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -58,17 +59,20 @@ namespace BankServerApi.Controllers
         [HttpPost]
         [Route("GetUnconfirmed")]
         [CheckRole(Order = 1, Roles = new[] { AppRoles.CreditCommitteeMember, AppRoles.Security })]
-        public GetUnconfirmedCreditResponse GetUnconfirmed()
+        public GetUnconfirmedCreditResponse GetUnconfirmed(int? page = null)
         {
             try
             {
                 var tokenObj = new ParsedTokenHelper().GetParsedToken(Request.Properties);
                 var roleName = _userManager.GetRoles(tokenObj.UserId).FirstOrDefault();
                 var role = _roleManager.FindByName(roleName);
-                var unconfirmedCreditRequests = _iCreditRequestService.GetUnconfirmed(role);
+
+                const int pageSize = 10;
+                var pageNumber = page ?? 1;
+                var unconfirmedCreditRequests = _iCreditRequestService.GetUnconfirmed(role, pageNumber, pageSize);
                 return new GetUnconfirmedCreditResponse()
                 {
-                    CreditRequests = unconfirmedCreditRequests
+                    CreditRequests = Mapper.Map<CustomPagedList<ShortCreditRequest>>(unconfirmedCreditRequests)
                 };
             }
             catch (BankClientException ex)
@@ -88,16 +92,19 @@ namespace BankServerApi.Controllers
         [HttpPost]
         [Route("GetСonfirmed")]
         [CheckRole(Order = 1, Roles = new[] { AppRoles.CreditCommitteeMember, AppRoles.Security })]
-        public GetСonfirmedCreditResponse GetСonfirmed()
+        public GetСonfirmedCreditResponse GetСonfirmed(int? page = null)
         {
             try
             {
                 var chiefRole = _roleManager.Roles.FirstOrDefault(r => r.Name == AppRoles.CreditDepartmentChief.ToString());
                 var tokenObj = new ParsedTokenHelper().GetParsedToken(Request.Properties);
-                var сonfirmedCreditRequests = _iCreditRequestService.GetСonfirmed(tokenObj.UserId, chiefRole);
+
+                const int pageSize = 10;
+                var pageNumber = page ?? 1;
+                var сonfirmedCreditRequests = _iCreditRequestService.GetСonfirmed(tokenObj.UserId, chiefRole, pageNumber, pageSize);
                 return new GetСonfirmedCreditResponse()
                 {
-                    CreditRequests = сonfirmedCreditRequests
+                    CreditRequests = Mapper.Map<CustomPagedList<ShortCreditRequest>>(сonfirmedCreditRequests)
                 };
             }
             catch (BankClientException ex)
@@ -117,17 +124,20 @@ namespace BankServerApi.Controllers
         [HttpPost]
         [Route("GetUnconfirmedByChief")]
         [CheckRole(Order = 1, Roles = new[] { AppRoles.CreditDepartmentChief })]
-        public GetUnconfirmedCreditResponse GetUnconfirmedByChief()
+        public GetUnconfirmedCreditResponse GetUnconfirmedByChief(int? page = null)
         {
             try
             {
                 var tokenObj = new ParsedTokenHelper().GetParsedToken(Request.Properties);
                 var roleName = _userManager.GetRoles(tokenObj.UserId).FirstOrDefault();
                 var role = _roleManager.FindByName(roleName);
-                var unconfirmedCreditRequests = _iCreditRequestService.GetUnconfirmedByChief(role);
+
+                const int pageSize = 10;
+                var pageNumber = page ?? 1;
+                var unconfirmedCreditRequests = _iCreditRequestService.GetUnconfirmedByChief(role, pageNumber, pageSize);
                 return new GetUnconfirmedCreditResponse()
                 {
-                    CreditRequests = unconfirmedCreditRequests
+                    CreditRequests = Mapper.Map<CustomPagedList<ShortCreditRequest>>(unconfirmedCreditRequests)
                 };
             }
             catch (BankClientException ex)
@@ -147,15 +157,18 @@ namespace BankServerApi.Controllers
         [HttpPost]
         [Route("GetСonfirmedByChief")]
         [CheckRole(Order = 1, Roles = new[] { AppRoles.CreditDepartmentChief })]
-        public GetСonfirmedCreditResponse GetСonfirmedByChief()
+        public GetСonfirmedCreditResponse GetСonfirmedByChief(int? page = null)
         {
             try
             {
                 var tokenObj = new ParsedTokenHelper().GetParsedToken(Request.Properties);
-                var сonfirmedCreditRequests = _iCreditRequestService.GetConfirmedByChief(tokenObj.UserId);
+
+                const int pageSize = 10;
+                var pageNumber = page ?? 1;
+                var сonfirmedCreditRequests = _iCreditRequestService.GetConfirmedByChief(tokenObj.UserId, pageNumber, pageSize);
                 return new GetСonfirmedCreditResponse()
                 {
-                    CreditRequests = сonfirmedCreditRequests
+                    CreditRequests = Mapper.Map<CustomPagedList<ShortCreditRequest>>(сonfirmedCreditRequests)
                 };
             }
             catch (BankClientException ex)

@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
+using BLL.Classes;
+using BLL.Helpers;
 using BLL.Interfaces;
 using BLL.Models;
 using DAL.Interfaces;
@@ -34,11 +34,11 @@ namespace BLL.Services
             var domainCredit = Mapper.Map<DomainCredit>(credit);
             return domainCredit;
         }
-        public IQueryable<DomainCredit> GetAll()
+        public CustomPagedList<DomainCredit> GetAll(int pageNumber, int pageSize)
         {
-            var credits = Uow.CreditRepository.GetAll().ToList();
-            var domainCredits = Mapper.Map<List<Credit>, List<DomainCredit>>(credits);
-            return domainCredits.AsQueryable();
+            var credits = Uow.CreditRepository.GetAll();
+            var domainCredits = Mapper.Map<CustomPagedList<DomainCredit>>(credits.ToCustomPagedList(pageNumber, pageSize));
+            return domainCredits;
         }
     }
 }

@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
-using BLL;
+﻿using System.Web.Http;
+using AutoMapper;
+using BankServerApi.Models;
+using BLL.Classes;
 using BLL.Helpers;
 using BLL.Interfaces;
-using BLL.Models;
 
 namespace ClientApi.Controllers
 {
@@ -19,10 +18,12 @@ namespace ClientApi.Controllers
             _customerDepositService = customerDepositService;
         }
 
-        public IEnumerable<DomainCustomerDeposit> GetByCustomerId()
+        public CustomPagedList<ShortCustomerDeposit> GetByCustomerId(int? page = null)
         {
             var tokenObj = new ParsedTokenHelper().GetParsedToken(Request.Properties);
-            return _customerDepositService.GetAllByUser(tokenObj.UserId).ToList();
+            const int pageSize = 10;
+            var pageNumber = page ?? 1;
+            return Mapper.Map<CustomPagedList<ShortCustomerDeposit>>(_customerDepositService.GetAllByUser(tokenObj.UserId, pageNumber, pageSize));
         }
     }
 }

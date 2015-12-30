@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
 using AutoMapper;
+using BLL.Classes;
+using BLL.Helpers;
 using BLL.Interfaces;
 using BLL.Models;
 using Core;
@@ -59,23 +60,31 @@ namespace BLL.Services
             return domainDeposit;
         }
 
-        public IQueryable<DomainCustomerDeposit> GetAll()
+        public CustomPagedList<DomainCustomerDeposit> GetAll(int pageNumber, int pageSize)
         {
-            var deposits = Uow.CustomerDepositRepository.GetAll().ToList();
-            var domainDeposits = Mapper.Map<List<CustomerDeposit>, List<DomainCustomerDeposit>>(deposits);
-            return domainDeposits.AsQueryable();
+            var deposits = Uow.CustomerDepositRepository.GetAll();
+            var domainDeposits = Mapper.Map<CustomPagedList<DomainCustomerDeposit>>(deposits);
+            return domainDeposits;
         }
 
-        public IQueryable<DomainCustomerDeposit> GetAllByUser(string userId)
+        public CustomPagedList<DomainCustomerDeposit> GetAll(int customerId, int pageNumber, int pageSize)
+        {
+            var deposits = Uow.CustomerDepositRepository.GetAll().Where(d => d.CustomerId == customerId);
+            var domainDeposits = Mapper.Map<CustomPagedList<DomainCustomerDeposit>>(deposits);
+            return domainDeposits;
+        }
+
+        public CustomPagedList<DomainCustomerDeposit> GetAllByUser(string userId, int pageNumber, int pageSize)
         {
             var user = Uow.AppUserRepository.GetAll().FirstOrDefault(u => u.Id == userId);
             if (user == null)
             {
                 throw BankClientException.ThrowUserNotRegistered();
             }
-            var deposits = Uow.CustomerDepositRepository.GetAll().Where(cc => cc.CustomerId == user.CustomerId).ToList();
-            var domainDeposits = Mapper.Map<List<CustomerDeposit>, List<DomainCustomerDeposit>>(deposits);
-            return domainDeposits.AsQueryable();
+            var deposits = Uow.CustomerDepositRepository.GetAll();
+            var domainDeposits = Mapper.Map<CustomPagedList<DomainCustomerDeposit>>(deposits.ToCustomPagedList(pageNumber, pageSize));
+
+            return domainDeposits;
         }
 
         private string GenerateContractNumber()

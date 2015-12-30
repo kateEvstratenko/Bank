@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using BLL.Classes;
 using BLL.Models;
 
 namespace DataObjects.Responses.CreditRequest
 {
     public class GetСonfirmedCreditResponse : ResponseBase
     {
-        public List<DomainCreditRequest> CreditRequests { get; set; }
+        public CustomPagedList<DomainCreditRequest> CreditRequests { get; set; }
     }
 }

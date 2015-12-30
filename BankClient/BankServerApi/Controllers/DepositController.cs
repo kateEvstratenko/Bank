@@ -26,7 +26,7 @@ namespace BankServerApi.Controllers
         {
             const int pageSize = 10;
             var pageNumber = page ?? 1;
-            var result = Mapper.Map<CustomPagedList<ShortDeposit>>(_depositService.GetAll().AsQueryable().ToCustomPagedList(pageNumber, pageSize));
+            var result = Mapper.Map<CustomPagedList<ShortDeposit>>(_depositService.GetAll(pageNumber, pageSize));
             return result;
         }
 

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 using AutoMapper;
+using BankServerApi.DataObjects.Requests.CustomerDeposit;
+using BankServerApi.Models;
+using BLL.Classes;
 using BLL.Models;
 using BLL.Interfaces;
 using Core.Enums;
-using DataObjects.Requests.CustomerDeposit;
 
 namespace BankServerApi.Controllers
 {
@@ -21,14 +21,18 @@ namespace BankServerApi.Controllers
             _customerDepositService = customerDepositService;
         }
 
-        public IEnumerable<DomainCustomerDeposit> Get()
+        public CustomPagedList<ShortCustomerDeposit> Get(int? page = null)
         {
-            return _customerDepositService.GetAll();
+            const int pageSize = 10;
+            var pageNumber = page ?? 1;
+            return Mapper.Map<CustomPagedList<ShortCustomerDeposit>>(_customerDepositService.GetAll(pageNumber, pageSize));
         }
 
-        public IEnumerable<DomainCustomerDeposit> GetByCustomerId(int customerId)
+        public CustomPagedList<ShortCustomerDeposit> GetByCustomerId(int customerId, int? page = null)
         {
-            return _customerDepositService.GetAll().Where(c => c.CustomerId == customerId).ToList();
+            const int pageSize = 10;
+            var pageNumber = page ?? 1;
+            return Mapper.Map<CustomPagedList<ShortCustomerDeposit>>(_customerDepositService.GetAll(customerId, pageNumber, pageSize));
         }
 
         [HttpPost]
@@ -36,7 +40,7 @@ namespace BankServerApi.Controllers
         [CheckRole(Order = 1, Roles = new[] { AppRoles.Operator })]
         public IHttpActionResult Add(AddDepositRequest request)
         {
-            _customerDepositService.Add(Mapper.Map<DomainCustomerDeposit>(request));             
+            _customerDepositService.Add(Mapper.Map<DomainCustomerDeposit>(request));
             return Ok();
         }
 

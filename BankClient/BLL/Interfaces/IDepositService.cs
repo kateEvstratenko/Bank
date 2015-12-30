@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BLL.Classes;
 using BLL.Models;
 
 namespace BLL.Interfaces
@@ -9,6 +10,6 @@ namespace BLL.Interfaces
         void Delete(int id);
         void Update(DomainDeposit deposit);
         DomainDeposit Get(int id);
-        IEnumerable<DomainDeposit> GetAll();
+        CustomPagedList<DomainDeposit> GetAll(int pageNumber, int pageSize);
     }
 }

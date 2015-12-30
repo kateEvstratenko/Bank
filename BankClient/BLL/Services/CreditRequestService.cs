@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using AutoMapper;
+using BLL.Classes;
+using BLL.Helpers;
 using BLL.Interfaces;
 using BLL.Models;
 using Core;
@@ -36,34 +37,33 @@ namespace BLL.Services
                 _iUnitOfWork.SaveChanges();
             }
 
-            var creditRequestDal = Mapper.Map<CreditRequest>(creditRequest);
             creditRequest.CustomerId = customerDb.Id;
 
             var militaryPath = _iImageService.SaveImageFromByteArray(militaryId, baseUrl, customerDb.Id, ImageType.MilitaryId);
             creditRequest.MilitaryIdPath = militaryPath;
             var incomeSertificatePath = _iImageService.SaveImageFromByteArray(incomeCertificate, baseUrl, customerDb.Id, ImageType.IncomeCertificate);
             creditRequest.IncomeCertificatePath = incomeSertificatePath;
-
+            
+            var creditRequestDal = Mapper.Map<CreditRequest>(creditRequest);
             _iUnitOfWork.CreditRequestRepository.Add(creditRequestDal);
             _iUnitOfWork.SaveChanges();
 
-            //todo generate text document
+            new CreditRequestDocService().FillConcreteContract(creditRequest);
         }
 
-        public List<DomainCreditRequest> GetUnconfirmed(IdentityRole role)
+        public CustomPagedList<DomainCreditRequest> GetUnconfirmed(IdentityRole role, int pageNumber, int pageSize)
         {
-            return Mapper.Map<IEnumerable<DomainCreditRequest>>(
+            return Mapper.Map<CustomPagedList<DomainCreditRequest>>(
                 _iUnitOfWork.CreditRequestRepository.GetAll()
                 .Where(cr => !cr.CreditRequestStatuses
                     .SelectMany(s => s.AppUser.Roles)
                     .Select(r => r.RoleId)
-                    .Contains(role.Id)))
-                .ToList();
+                    .Contains(role.Id)).ToCustomPagedList(pageNumber, pageSize));
         }
 
-        public List<DomainCreditRequest> GetСonfirmed(string appUserId, IdentityRole chiefRole)
+        public CustomPagedList<DomainCreditRequest> GetСonfirmed(string appUserId, IdentityRole chiefRole, int pageNumber, int pageSize)
         {
-            return Mapper.Map<IEnumerable<DomainCreditRequest>>(
+            return Mapper.Map<CustomPagedList<DomainCreditRequest>>(
                 _iUnitOfWork.CreditRequestRepository.GetAll()
                 .Where(cr => cr.CreditRequestStatuses
                     .Select(s => s.AppUserId)
@@ -71,32 +71,27 @@ namespace BLL.Services
                     && !cr.CreditRequestStatuses
                     .SelectMany(s => s.AppUser.Roles)
                     .Select(r => r.RoleId)
-                    .Contains(chiefRole.Id)))
-                .ToList();
+                    .Contains(chiefRole.Id)).ToCustomPagedList(pageNumber, pageSize));
         }
 
-        public List<DomainCreditRequest> GetUnconfirmedByChief(IdentityRole role)
+        public CustomPagedList<DomainCreditRequest> GetUnconfirmedByChief(IdentityRole role, int pageNumber, int pageSize)
         {
-            return Mapper.Map<IEnumerable<DomainCreditRequest>>(
+            return Mapper.Map<CustomPagedList<DomainCreditRequest>>(
                 _iUnitOfWork.CreditRequestRepository.GetAll()
                 .Where(cr => !cr.CreditRequestStatuses
                     .SelectMany(s => s.AppUser.Roles)
                     .Select(r => r.RoleId)
-                    .Contains(role.Id)))
-                .ToList();
+                    .Contains(role.Id)).ToCustomPagedList(pageNumber, pageSize));
         }
 
-        public List<DomainCreditRequest> GetConfirmedByChief(string appUserId)
+        public CustomPagedList<DomainCreditRequest> GetConfirmedByChief(string appUserId, int pageNumber, int pageSize)
         {
-            return Mapper.Map<IEnumerable<DomainCreditRequest>>(
-                   _iUnitOfWork.CreditRequestRepository.GetAll()
-                       .Where(cr => cr.CreditRequestStatuses
-                           .Select(s => s.AppUserId)
-                           .Contains(appUserId) && cr.Credit == null))
-                           .ToList();
+            return Mapper.Map<CustomPagedList<DomainCreditRequest>>(
+                _iUnitOfWork.CreditRequestRepository.GetAll()
+                    .Where(cr => cr.CreditRequestStatuses
+                        .Select(s => s.AppUserId)
+                        .Contains(appUserId) && cr.Credit == null).ToCustomPagedList(pageNumber, pageSize));
         }
-
-
 
         public void SetStatus(string userId, int creditRequestId, CreditRequestStatusInfo statusInfo, string message)
         {
@@ -105,7 +100,7 @@ namespace BLL.Services
             //не выдали ли уже кредит
             if (creditRequest.Credit != null)
             {
-                throw BankClientException.ThrowCannotSetStatus();               
+                throw BankClientException.ThrowCannotSetStatus();
             }
 
             var chiefRoleName = AppRoles.CreditDepartmentChief.ToString();

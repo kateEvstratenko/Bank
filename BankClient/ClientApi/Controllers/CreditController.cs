@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Web.Http;
-using AutoMapper;
+﻿using System.Web.Http;
+using BLL.Classes;
 using BLL.Interfaces;
 using BLL.Models;
 
@@ -18,9 +17,11 @@ namespace ClientApi.Controllers
         }
 
         // GET api/credit
-        public IEnumerable<DomainCredit> Get()
+        public CustomPagedList<DomainCredit> Get(int? page = null)
         {
-            return creditService.GetAll();
+            const int pageSize = 10;
+            var pageNumber = page ?? 1;
+            return creditService.GetAll(pageNumber, pageSize);
         }
 
         // GET api/credit/5

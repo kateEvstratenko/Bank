@@ -26,9 +26,11 @@ namespace BankServerApi.Controllers
         }
 
         [Route("Get")]
-        public IEnumerable<DomainCustomerCredit> Get()
+        public CustomPagedList<ShortCustomerCredit> Get(int? page = null)
         {
-            return _customerCreditService.GetAll().ToList();
+            const int pageSize = 10;
+            var pageNumber = page ?? 1;
+            return Mapper.Map<CustomPagedList<ShortCustomerCredit>>(_customerCreditService.GetAll(pageNumber, pageSize));
         }
 
         [HttpGet]
@@ -37,9 +39,8 @@ namespace BankServerApi.Controllers
         {
             const int pageSize = 10;
             var pageNumber = page ?? 1;
-            var result = Mapper.Map<CustomPagedList<DomainCustomerCredit>, CustomPagedList<ShortCustomerCredit>>
-                (_customerCreditService.GetAll().Where(c => c.CustomerId == customerId)
-                .ToCustomPagedList(pageNumber, pageSize));
+            var result = Mapper.Map<CustomPagedList<ShortCustomerCredit>>
+                (_customerCreditService.GetAll(customerId, pageNumber, pageSize));
             return result;
         }
 

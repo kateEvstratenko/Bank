@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Web.Http;
-using AutoMapper;
+﻿using System.Web.Http;
+using BLL.Classes;
 using BLL.Interfaces;
 using BLL.Models;
 
@@ -17,9 +16,11 @@ namespace ClientApi.Controllers
         }
 
         // GET api/deposit
-        public IEnumerable<DomainDeposit> Get()
+        public CustomPagedList<DomainDeposit> Get(int? page = null)
         {
-            return _depositService.GetAll();
+            const int pageSize = 10;
+            var pageNumber = page ?? 1;
+            return _depositService.GetAll(pageNumber, pageSize);
         }
 
         // GET api/deposit/5

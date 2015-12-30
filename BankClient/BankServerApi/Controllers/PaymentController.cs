@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
+using BankServerApi.DataObjects.Requests.Payment;
 using BLL.Interfaces;
 using Core.Enums;
-using DataObjects.Requests.CreditRequest;
 
 namespace BankServerApi.Controllers
 {

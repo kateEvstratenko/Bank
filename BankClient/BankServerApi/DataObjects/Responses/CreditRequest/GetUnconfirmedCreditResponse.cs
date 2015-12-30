@@ -1,7 +1,7 @@
-﻿using BLL.Classes;
-using BLL.Models;
+﻿using BankServerApi.Models;
+using BLL.Classes;
 
-namespace DataObjects.Responses.CreditRequest
+namespace BankServerApi.DataObjects.Responses.CreditRequest
 {
     public class GetUnconfirmedCreditResponse: ResponseBase
     {
