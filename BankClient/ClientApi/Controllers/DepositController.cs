@@ -18,6 +18,7 @@ namespace ClientApi.Controllers
         }
 
         // GET api/deposit
+        [Route("Get")]
         public CustomPagedList<ShortDeposit> Get(int? page = null)
         {
             const int pageSize = 10;
@@ -27,6 +28,7 @@ namespace ClientApi.Controllers
         }
 
         // GET api/deposit/5
+        [Route("GetById")]
         public DomainDeposit Get(int id)
         {
             return _depositService.Get(id);

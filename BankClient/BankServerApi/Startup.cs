@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(BankServerApi.Startup))]
+[assembly: OwinStartup("BankStartup", typeof(BankServerApi.Startup))]
 
 namespace BankServerApi
 {

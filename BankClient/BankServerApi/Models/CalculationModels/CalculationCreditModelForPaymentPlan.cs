@@ -1,5 +1,4 @@
-﻿using BankServerApi.CustomAttributes;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 

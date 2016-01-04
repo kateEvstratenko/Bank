@@ -1,15 +1,13 @@
-﻿namespace BankServerApi.DataObjects
+﻿namespace Core
 {
-    public class Message
+    public class Error
     {
-        public Message()
+        public Error()
         {
-
         }
 
-        public Message(int code, string description)
+        public Error(string description)
         {
-            Code = code;
             Description = description;
         }
 

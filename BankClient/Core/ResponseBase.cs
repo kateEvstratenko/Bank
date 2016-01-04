@@ -1,7 +1,6 @@
 ﻿using System;
-using Core;
 
-namespace BankServerApi.DataObjects.Responses
+namespace Core
 {
     public class ResponseBase
     {

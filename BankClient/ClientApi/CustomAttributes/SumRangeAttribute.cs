@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using BLL.Interfaces;
 using BLL.Services;
 
-namespace BankServerApi.CustomAttributes
+namespace ClientApi.CustomAttributes
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class SumRangeAttribute : ValidationAttribute

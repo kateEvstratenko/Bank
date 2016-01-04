@@ -1,6 +1,5 @@
 ﻿using System.Web.Http;
 using AutoMapper;
-using BankServerApi.Models;
 using BLL.Classes;
 using BLL.Helpers;
 using BLL.Interfaces;

@@ -1,6 +1,5 @@
 ﻿using System.Web.Http;
 using AutoMapper;
-using BankServerApi.Models;
 using BLL.Classes;
 using BLL.Interfaces;
 using BLL.Models;
@@ -19,6 +18,7 @@ namespace ClientApi.Controllers
         }
 
         // GET api/credit
+        [Route("Get")]
         public CustomPagedList<ShortCredit> Get(int? page = null)
         {
             const int pageSize = 10;
@@ -27,6 +27,7 @@ namespace ClientApi.Controllers
             return result;
         }
 
+        [Route("GetById")]
         // GET api/credit/5
         public DomainCredit Get(int id)
         {

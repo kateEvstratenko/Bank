@@ -27,7 +27,7 @@ using Microsoft.Owin.Security.OAuth;
 
 namespace ClientApi.Controllers
 {
-    [Authorize]
+//    [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {

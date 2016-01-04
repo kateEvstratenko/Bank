@@ -2,7 +2,8 @@
 using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(Startup))]
+[assembly: OwinStartup("ClientStartup", typeof(ClientApi.Startup))]
+//[assembly: OwinStartup(typeof(Startup))]
 
 namespace ClientApi
 {

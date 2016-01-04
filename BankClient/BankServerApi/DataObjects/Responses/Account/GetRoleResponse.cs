@@ -1,4 +1,6 @@
-﻿namespace BankServerApi.DataObjects.Responses.Account
+﻿using Core;
+
+namespace BankServerApi.DataObjects.Responses.Account
 {
     public class GetRoleResponse: ResponseBase
     {

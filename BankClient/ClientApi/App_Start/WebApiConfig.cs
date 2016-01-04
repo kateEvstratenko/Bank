@@ -1,5 +1,8 @@
 ﻿using System.Web.Http;
+using System.Web.Http.Cors;
+using ClientApi.CustomAttributes;
 using Microsoft.Owin.Security.OAuth;
+using Newtonsoft.Json;
 
 namespace ClientApi
 {
@@ -16,10 +19,20 @@ namespace ClientApi
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+                "DefaultApi",
+                "api/{controller}/{id}",
+                new { id = RouteParameter.Optional }
+           );
+
+            config.Filters.Add(new InvalidModelStateAttribute());
+
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
+            var cors = new EnableCorsAttribute(
+                origins: "*",
+                headers: "*",
+                methods: "*");
+            config.EnableCors(cors);
         }
     }
 }

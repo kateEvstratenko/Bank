@@ -229,12 +229,10 @@
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\CustomerCreditController.cs" />
     <Compile Include="Controllers\CreditController.cs" />
-    <Compile Include="CustomAttributes\GreaterThanAttribute.cs" />
     <Compile Include="Controllers\CreditRequestController.cs" />
+    <Compile Include="CustomAttributes\GreaterThanAttribute.cs" />
     <Compile Include="CustomAttributes\InvalidModelStateAttribute.cs" />
     <Compile Include="CustomAttributes\SumRangeAttribute.cs" />
-    <Compile Include="DataObjects\Error.cs" />
-    <Compile Include="DataObjects\Message.cs" />
     <Compile Include="DataObjects\Requests\CreditRequest\AddCreditRequest.cs" />
     <Compile Include="DataObjects\Requests\CreditRequest\SetStatusRequest.cs" />
     <Compile Include="DataObjects\Requests\CustomerDeposit\AddDepositRequest.cs" />
@@ -242,7 +240,6 @@
     <Compile Include="DataObjects\Responses\Account\GetRoleResponse.cs" />
     <Compile Include="DataObjects\Responses\CreditRequest\GetUnconfirmedCreditResponse.cs" />
     <Compile Include="DataObjects\Responses\CreditRequest\GetСonfirmedCreditResponse.cs" />
-    <Compile Include="DataObjects\Responses\ResponseBase.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
