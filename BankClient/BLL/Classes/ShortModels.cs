@@ -1,7 +1,7 @@
 ﻿using System;
 using Core.Enums;
 
-namespace BankServerApi.Models
+namespace BLL.Classes
 {
     public class ShortCustomerCredit
     {

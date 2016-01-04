@@ -1,10 +1,12 @@
 ﻿using System.Web.Http;
+using AutoMapper;
 using BLL.Classes;
 using BLL.Interfaces;
 using BLL.Models;
 
 namespace ClientApi.Controllers
 {
+    [CheckToken]
     public class DepositController : ApiController
     {
         private readonly IDepositService _depositService;
@@ -16,11 +18,12 @@ namespace ClientApi.Controllers
         }
 
         // GET api/deposit
-        public CustomPagedList<DomainDeposit> Get(int? page = null)
+        public CustomPagedList<ShortDeposit> Get(int? page = null)
         {
             const int pageSize = 10;
             var pageNumber = page ?? 1;
-            return _depositService.GetAll(pageNumber, pageSize);
+            var result = Mapper.Map<CustomPagedList<ShortDeposit>>(_depositService.GetAll(pageNumber, pageSize));
+            return result;
         }
 
         // GET api/deposit/5

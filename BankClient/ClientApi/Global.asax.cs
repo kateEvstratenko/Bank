@@ -17,6 +17,7 @@ namespace ClientApi
             //BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutofacConfig.Configure();
             BLL.AutoMapper.AutoMapperConfiguration.Register();
+            AutomapperConfig.Configure();
         }
     }
 }

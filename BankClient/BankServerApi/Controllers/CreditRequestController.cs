@@ -19,7 +19,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 namespace BankServerApi.Controllers
 {
     [RoutePrefix("api/CreditRequest")]
-    [CheckToken(Order = 0)]
+//    [CheckToken(Order = 0)]
     public class CreditRequestController : ApiController
     {
         private readonly UserManager<AppUser> _userManager = Startup.UserManagerFactory();
@@ -33,7 +33,7 @@ namespace BankServerApi.Controllers
 
         [HttpPost]
         [Route("Add")]
-        [CheckRole(Order = 1, Roles = new[] { AppRoles.Operator })]
+//        [CheckRole(Order = 1, Roles = new[] { AppRoles.Operator })]
         public ResponseBase Add(AddCreditRequest request)
         {
             try

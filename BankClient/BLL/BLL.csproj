@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="Classes\CustomPagedList.cs" />
+    <Compile Include="Classes\ShortModels.cs" />
     <Compile Include="Helpers\EnumerableHelper.cs" />
     <Compile Include="Helpers\ParsedTokenHelper.cs" />
     <Compile Include="Interfaces\IBillService.cs" />

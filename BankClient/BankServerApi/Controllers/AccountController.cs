@@ -76,7 +76,7 @@ namespace BankServerApi.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.ToString());
             }
         }
 
@@ -85,8 +85,15 @@ namespace BankServerApi.Controllers
         public IHttpActionResult Logout()
         {
             //            Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
-            _iAuthenticationService.SignOut(Request.Headers.First(p => p.Key.ToLower() == "token").Value.First());
-            return Ok();
+            try
+            {
+                _iAuthenticationService.SignOut(Request.Headers.First(p => p.Key.ToLower() == "token").Value.First());
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
         }
 
         [Route("GetRole")]

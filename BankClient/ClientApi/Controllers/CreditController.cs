@@ -1,11 +1,13 @@
 ﻿using System.Web.Http;
+using AutoMapper;
+using BankServerApi.Models;
 using BLL.Classes;
 using BLL.Interfaces;
 using BLL.Models;
 
 namespace ClientApi.Controllers
 {
-    //    [CheckToken]
+    [CheckToken]
     public class CreditController : ApiController
     {
         private readonly ICreditService creditService;
@@ -17,11 +19,12 @@ namespace ClientApi.Controllers
         }
 
         // GET api/credit
-        public CustomPagedList<DomainCredit> Get(int? page = null)
+        public CustomPagedList<ShortCredit> Get(int? page = null)
         {
             const int pageSize = 10;
             var pageNumber = page ?? 1;
-            return creditService.GetAll(pageNumber, pageSize);
+            var result = Mapper.Map<CustomPagedList<ShortCredit>>(creditService.GetAll(pageNumber, pageSize));
+            return result;
         }
 
         // GET api/credit/5

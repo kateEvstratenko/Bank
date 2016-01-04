@@ -8,7 +8,7 @@ using System;
 
 namespace BankServerApi.Controllers
 {
-//    [CheckToken]
+    [CheckToken]
     public class CalculationCreditController : ApiController
     {
         private readonly ICalculationCreditService calculationCreditService;

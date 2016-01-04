@@ -34,26 +34,38 @@ namespace BankServerApi.Models
     public class RegisterEmployeeModel
     {
         [Required]
+        [Display(Name = "Имя пользователя")]   
         public string UserName { get; set; }
+
         [Required]
+        [Display(Name = "Адрес электронной почты")]   
+        [EmailAddress(ErrorMessage = "Неверный формат адреса электронной почты")]
         public string Email { get; set; }
+
         [Required]
+        [Display(Name = "Имя")]   
         public string Firstname { get; set; }
+
         [Required]
+        [Display(Name = "Фамилия")]   
         public string Lastname { get; set; }
+
+        [Display(Name = "Отчество")]       
         public string Patronymic { get; set; }
+
         [Required]
+        [Display(Name = "Роль")]
         public AppRoles Role { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} должен содержать не менее {2} символов.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Подтверждение пароля")]
+        [Compare("Password", ErrorMessage = "Пароли не совпадают.")]
         public string ConfirmPassword { get; set; }
     }
 

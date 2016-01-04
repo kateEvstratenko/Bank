@@ -8,10 +8,11 @@ namespace BankServerApi.Models.CalculationModels
     public class CalculationCreditModelForPaymentPlan
     {
         [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}")]
         public double Sum { get; set; }
 
         [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
+        [Range(1, int.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}")]
         public int MonthPeriod { get; set; }
 
         [Required]
