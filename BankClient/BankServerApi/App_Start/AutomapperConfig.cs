@@ -38,10 +38,10 @@ namespace BankServerApi
 
             Mapper.CreateMap<CustomPagedList<CreditRequest>, CustomPagedList<DomainCreditRequest>>();
             Mapper.CreateMap<CustomPagedList<DomainCreditRequest>, CustomPagedList<ShortCreditRequest>>();
-            
 
-            Mapper.CreateMap<DomainCustomer, CreditRequestCustomer>().ReverseMap();
-            Mapper.CreateMap<DomainAddress, CreditRequestAddress>().ReverseMap();
+
+            Mapper.CreateMap<DomainCustomer, CustomerBindingModel>().ReverseMap();
+            Mapper.CreateMap<DomainAddress, AddressBindingModel>().ReverseMap();
             Mapper.CreateMap<Credit, ShortCredit>().ReverseMap();
             Mapper.CreateMap<Deposit, ShortDeposit>().ReverseMap();
             Mapper.CreateMap<Customer, ShortCustomer>().ReverseMap();

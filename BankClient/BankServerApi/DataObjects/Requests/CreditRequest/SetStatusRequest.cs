@@ -17,7 +17,7 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
         [Display(Name = "ИД заявки на кредит")]
         public int CreditRequestId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "lalala")]
         [Display(Name = "Статус")]
         public CreditRequestStatusInfo CreditRequestStatusInfo { get; set; }
 

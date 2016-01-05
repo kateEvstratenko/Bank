@@ -17,80 +17,81 @@ namespace ClientApi.Models
     {
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Display(Name = "Текущий пароль")]
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 8)]
+        [StringLength(100, ErrorMessage = "Поле {0} должно содержать не менее {2} символов.", MinimumLength = 8)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "Новый пароль")]
         public string NewPassword { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "Подтверждение пароля")]
+        [Compare("NewPassword", ErrorMessage = "Пароли не совпадают.")]
         public string ConfirmPassword { get; set; }
     }
 
     public class ChangeEmailBindingModel
     {
         [Required]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [Display(Name = "Новый адрес электронной почты")]
+        [EmailAddress(ErrorMessage = "Невалидный адрес электронной почты.")]
         public string NewEmail { get; set; }
 
         [Required]
-        [Display(Name = "Confirm new email")]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
-        [Compare("NewEmail", ErrorMessage = "The new email and confirmation email do not match.")]
+        [Display(Name = "Подтверждение адреса электронной почты")]
+//        [EmailAddress(ErrorMessage = "Невалидный адрес электронной почты.")]
+        [Compare("NewEmail", ErrorMessage = "Новый адрес и подтверждение адреса не совпадают.")]
         public string ConfirmEmail { get; set; }
     }
 
     public class RegisterBindingModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "Имя пользователя")]   
         public string UserName { get; set; }
 
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [Display(Name = "Адрес электронной почты")]
+        [EmailAddress(ErrorMessage = "Неверный формат адреса электронной почты")]
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "First name")]
-        public string FirstName { get; set; }
+        [Display(Name = "Имя")]
+        public string Firstname { get; set; }
 
         [Required]
-        [Display(Name = "Last name")]
-        public string LastName { get; set; }
+        [Display(Name = "Фамилия")]
+        public string Lastname { get; set; }
 
-        [Display(Name = "Patronymic")]
+        [Display(Name = "Отчество")]
         public string Patronymic { get; set; }
 
         [Required]
-        [Display(Name = "Date of birth")]
+        [Display(Name = "Дата рождения")]
         public DateTime DateOfBirth { get; set; }
 
         [Required]
-        [Display(Name = "Document type")]
+        [Display(Name = "Тип документа, удостоверяющего личность")]
         public DocumentType DocumentType { get; set; }
 
-        [Display(Name = "Identification number")]
+        [Display(Name = "Идентификационный номер")]
         public string IdentificationNumber { get; set; }
 
         [Required]
         public RegistreUserAddressViewModel Address { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 8)]
+        [StringLength(100, ErrorMessage = "{0} должен содержать не менее {2} символов.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Подтверждение пароля")]
+        [Compare("Password", ErrorMessage = "Пароли не совпадают.")]
         public string ConfirmPassword { get; set; }
     }
 

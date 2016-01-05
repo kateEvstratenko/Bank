@@ -13,7 +13,7 @@ namespace BankServerApi.Controllers
             _iCustomerService = iCustomerService;
         }
 
-        public ShortCustomer Get([FromUri]string documentNum)
+        public ShortCustomer Get(string documentNum)
         {
             return _iCustomerService.GetByDocumentNumber(documentNum);
         }

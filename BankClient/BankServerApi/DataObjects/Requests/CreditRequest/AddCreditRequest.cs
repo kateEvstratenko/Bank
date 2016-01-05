@@ -57,7 +57,7 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
         //Customer
         [Required]
         [Display(Name = "Клиент")]
-        public CreditRequestCustomer Customer { get; set; }
+        public CustomerBindingModel Customer { get; set; }
         //        public DateTime DateOfBirth { get; set; }
         //        public DocumentType DocumentType { get; set; }
         //        public string DocumentNumber { get; set; }
@@ -66,7 +66,7 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
         //        public DomainBankClient BankClient { get; set; }
     }
 
-    public class CreditRequestCustomer
+    public class CustomerBindingModel
     {
         [Required]
         [Display(Name = "Имя")]
@@ -99,10 +99,10 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
 
         [Required]
         [Display(Name = "Адрес")]
-        public CreditRequestAddress Address { get; set; }
+        public AddressBindingModel Address { get; set; }
     }
 
-    public class CreditRequestAddress
+    public class AddressBindingModel
     {
         [Required]
         [Display(Name = "Страна")]
