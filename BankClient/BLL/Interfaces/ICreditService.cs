@@ -1,6 +1,6 @@
-﻿using BLL.Classes;
+﻿using System.Collections.Generic;
+using BLL.Classes;
 using BLL.Models;
-using System.Linq;
 
 namespace BLL.Interfaces
 {
@@ -11,5 +11,6 @@ namespace BLL.Interfaces
         void Update(DomainCredit credit);
         DomainCredit Get(int id);
         CustomPagedList<DomainCredit> GetAll(int pageNumber, int pageSize);
+        List<ShortCredit> GetAll();
     }
 }

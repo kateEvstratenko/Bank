@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Collections.Generic;
+using System.Web.Http;
 using AutoMapper;
 using BLL.Classes;
 using BLL.Interfaces;
@@ -6,7 +7,7 @@ using BLL.Models;
 
 namespace ClientApi.Controllers
 {
-    [CheckToken]
+//    [CheckToken]
     public class CreditController : ApiController
     {
         private readonly ICreditService creditService;
@@ -18,8 +19,8 @@ namespace ClientApi.Controllers
         }
 
         // GET api/credit
-        [Route("Get")]
-        public CustomPagedList<ShortCredit> Get(int? page = null)
+//        [Route("Get")]
+        public CustomPagedList<ShortCredit> Get([FromUri]int? page = null)
         {
             const int pageSize = 10;
             var pageNumber = page ?? 1;
@@ -27,7 +28,14 @@ namespace ClientApi.Controllers
             return result;
         }
 
-        [Route("GetById")]
+        [Route("GetAll")]
+        public List<ShortCredit> GetAll()
+        {
+            var result = creditService.GetAll();
+            return result;
+        }
+
+//        [Route("GetById")]
         // GET api/credit/5
         public DomainCredit Get(int id)
         {

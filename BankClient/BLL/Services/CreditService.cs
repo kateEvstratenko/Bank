@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using BLL.Classes;
 using BLL.Helpers;
 using BLL.Interfaces;
@@ -38,6 +40,12 @@ namespace BLL.Services
         {
             var credits = Uow.CreditRepository.GetAll();
             var domainCredits = Mapper.Map<CustomPagedList<DomainCredit>>(credits.ToCustomPagedList(pageNumber, pageSize));
+            return domainCredits;
+        }
+        public List<ShortCredit> GetAll()
+        {
+            var credits = Uow.CreditRepository.GetAll().ToList();
+            var domainCredits = Mapper.Map<List<ShortCredit>>(credits);
             return domainCredits;
         }
     }

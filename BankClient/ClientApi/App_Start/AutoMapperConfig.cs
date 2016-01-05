@@ -29,6 +29,9 @@ namespace ClientApi
 
             Mapper.CreateMap<CustomPagedList<CreditRequest>, CustomPagedList<DomainCreditRequest>>();
             Mapper.CreateMap<CustomPagedList<DomainCreditRequest>, CustomPagedList<ShortCreditRequest>>();
+
+            Mapper.CreateMap<Credit, ShortCredit>().ReverseMap();
+            Mapper.CreateMap<Deposit, ShortDeposit>().ReverseMap();
         }
     }
 }

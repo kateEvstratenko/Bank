@@ -30,6 +30,13 @@ namespace BankServerApi.Controllers
             return result;
         }
 
+        [Route("GetAll")]
+        public List<ShortDeposit> GetAll()
+        {
+            var result = _depositService.GetAll();
+            return result;
+        }
+
         // GET api/deposit/5
         public DomainDeposit Get(int id)
         {

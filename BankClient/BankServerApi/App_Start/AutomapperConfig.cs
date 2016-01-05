@@ -40,6 +40,8 @@ namespace BankServerApi
 
             Mapper.CreateMap<DomainCustomer, CreditRequestCustomer>().ReverseMap();
             Mapper.CreateMap<DomainAddress, CreditRequestAddress>().ReverseMap();
+            Mapper.CreateMap<Credit, ShortCredit>().ReverseMap();
+            Mapper.CreateMap<Deposit, ShortDeposit>().ReverseMap();
         }
     }
 }   

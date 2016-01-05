@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using BLL.Classes;
 using BLL.Helpers;
 using BLL.Interfaces;
@@ -38,6 +40,12 @@ namespace BLL.Services
         {
             var deposits = Uow.DepositRepository.GetAll();
             var domainDeposits = Mapper.Map<CustomPagedList<DomainDeposit>>(deposits.ToCustomPagedList(pageNumber, pageSize));
+            return domainDeposits;
+        }
+        public List<ShortDeposit> GetAll()
+        {
+            var deposits = Uow.DepositRepository.GetAll().ToList();
+            var domainDeposits = Mapper.Map<List<ShortDeposit>>(deposits);
             return domainDeposits;
         }
     }

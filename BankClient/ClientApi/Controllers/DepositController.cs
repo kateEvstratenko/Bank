@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Collections.Generic;
+using System.Web.Http;
 using AutoMapper;
 using BLL.Classes;
 using BLL.Interfaces;
@@ -6,7 +7,7 @@ using BLL.Models;
 
 namespace ClientApi.Controllers
 {
-    [CheckToken]
+//    [CheckToken]
     public class DepositController : ApiController
     {
         private readonly IDepositService _depositService;
@@ -18,8 +19,8 @@ namespace ClientApi.Controllers
         }
 
         // GET api/deposit
-        [Route("Get")]
-        public CustomPagedList<ShortDeposit> Get(int? page = null)
+//        [Route("Get")]
+        public CustomPagedList<ShortDeposit> Get([FromUri]int? page = null)
         {
             const int pageSize = 10;
             var pageNumber = page ?? 1;
@@ -27,8 +28,15 @@ namespace ClientApi.Controllers
             return result;
         }
 
+        [Route("GetAll")]
+        public List<ShortDeposit> GetAll()
+        {
+            var result = _depositService.GetAll();
+            return result;
+        }
+
         // GET api/deposit/5
-        [Route("GetById")]
+//        [Route("GetById")]
         public DomainDeposit Get(int id)
         {
             return _depositService.Get(id);

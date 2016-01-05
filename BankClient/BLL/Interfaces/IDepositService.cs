@@ -11,5 +11,6 @@ namespace BLL.Interfaces
         void Update(DomainDeposit deposit);
         DomainDeposit Get(int id);
         CustomPagedList<DomainDeposit> GetAll(int pageNumber, int pageSize);
+        List<ShortDeposit> GetAll();
     }
 }

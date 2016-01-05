@@ -7,7 +7,7 @@ using ClientApi.Models.CalculationModels;
 
 namespace ClientApi.Controllers
 {
-    [CheckToken]
+//    [CheckToken]
     public class CalculationCreditController : ApiController
     {
         private readonly ICalculationCreditService calculationCreditService;
