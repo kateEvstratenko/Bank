@@ -71,4 +71,27 @@ namespace BLL.Classes
         public int CustomerId { get; set; }
         public int CreditId { get; set; }
     }
+
+    public class ShortCustomer
+    {
+        public int Id { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public string Patronymic { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public DocumentType DocumentType { get; set; }
+        public string DocumentNumber { get; set; }
+        public string IdentificationNumber { get; set; }
+        public ShortAddress Address { get; set; }
+    }
+
+    public class ShortAddress
+    {
+        public int Id { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
+        public string Street { get; set; }
+        public string House { get; set; }
+        public int? Flat { get; set; }
+    }
 }

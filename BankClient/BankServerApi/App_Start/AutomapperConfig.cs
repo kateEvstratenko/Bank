@@ -21,6 +21,8 @@ namespace BankServerApi
             Mapper.CreateMap<DomainCustomerCredit, ShortCustomerCredit>();
             Mapper.CreateMap<DomainCredit, ShortCredit>();
             Mapper.CreateMap<DomainDeposit, ShortDeposit>();
+            Mapper.CreateMap<DomainCustomer, ShortCustomer>();
+            Mapper.CreateMap<DomainAddress, ShortAddress>();
 
             Mapper.CreateMap<CustomPagedList<CustomerCredit>, CustomPagedList<DomainCustomerCredit>>();
             Mapper.CreateMap<CustomPagedList<DomainCustomerCredit>, CustomPagedList<ShortCustomerCredit>>();
@@ -42,6 +44,8 @@ namespace BankServerApi
             Mapper.CreateMap<DomainAddress, CreditRequestAddress>().ReverseMap();
             Mapper.CreateMap<Credit, ShortCredit>().ReverseMap();
             Mapper.CreateMap<Deposit, ShortDeposit>().ReverseMap();
+            Mapper.CreateMap<Customer, ShortCustomer>().ReverseMap();
+            Mapper.CreateMap<Address, ShortAddress>().ReverseMap();
         }
     }
 }   

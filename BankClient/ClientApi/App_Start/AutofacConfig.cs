@@ -38,6 +38,7 @@ namespace ClientApi
             builder.RegisterType<CustomerCreditService>().As<ICustomerCreditService>();
             builder.RegisterType<CustomerDepositService>().As<ICustomerDepositService>();
             builder.RegisterType<BillService>().As<IBillService>();
+            builder.RegisterType<CustomerService>().As<ICustomerService>();
             //            builder.RegisterType<DailyCalculateService>().AsSelf().SingleInstance();
 
             builder.RegisterType<AppUserRepository>().As<IAppUserRepository>();

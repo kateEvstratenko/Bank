@@ -93,6 +93,7 @@
     <Compile Include="Interfaces\ICreditService.cs" />
     <Compile Include="Interfaces\ICustomerCreditService.cs" />
     <Compile Include="Interfaces\ICustomerDepositService.cs" />
+    <Compile Include="Interfaces\ICustomerService.cs" />
     <Compile Include="Interfaces\IDepositService.cs" />
     <Compile Include="Interfaces\IEncryptorService.cs" />
     <Compile Include="Models\DomainAddress.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Models\DomainToken.cs" />
     <Compile Include="Interfaces\IAuthenticationService.cs" />
     <Compile Include="Services\BaseDocService.cs" />
+    <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\CalculationDebtService.cs" />
     <Compile Include="Services\CreditDocService.cs" />
     <Compile Include="Services\AppRoleManagerFactory.cs" />
