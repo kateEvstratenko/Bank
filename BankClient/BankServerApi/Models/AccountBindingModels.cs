@@ -1,5 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Core.Enums;
+using DAL.Entities;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BankServerApi.Models
 {
@@ -99,5 +102,14 @@ namespace BankServerApi.Models
         [Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+    }
+
+    public class ShortAppUser : IdentityUser, IBaseEntity
+    {
+        int IBaseEntity.Id { get; set; }
+        public int? CustomerId { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public string Patronymic { get; set; }
     }
 }

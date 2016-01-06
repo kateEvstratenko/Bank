@@ -14,6 +14,7 @@ using BankServerApi.Models;
 using BankServerApi.Providers;
 using BankServerApi.Results;
 using BLL;
+using BLL.Classes;
 using BLL.Helpers;
 using BLL.Interfaces;
 using BLL.Models;
@@ -457,10 +458,28 @@ namespace BankServerApi.Controllers
         [CheckToken(Order = 0)]
         [CheckRole(Order = 1, Roles = new[] { AppRoles.Admin })]
         [HttpDelete]
+        [Route("Delete")]
         public void Delete(string id)
         {
             var appUser = UserManager.FindById(id);
             UserManager.Delete(appUser);
+        }
+
+        [CheckToken(Order = 0)]
+        [CheckRole(Order = 1, Roles = new[] { AppRoles.Admin })]
+        [Route("GetAll")]
+        public CustomPagedList<ShortAppUser> GetAll([FromUri]int? page = null)
+        {
+            var pageNumber = page ?? 1;
+            const int pageSize = 10;
+
+            var appUsers = Mapper.Map<CustomPagedList<ShortAppUser>>(UserManager.Users
+                .Where(u => u.Roles.Count > 0 && UserManager.IsInRole(u.Id, AppRoles.Admin.ToString()))
+                .OrderBy(x => x.Lastname)
+                .ThenBy(x => x.Firstname)
+                .OrderBy(x => x.Patronymic)
+                .ToCustomPagedList(pageNumber, pageSize));
+            return appUsers;
         }
 
         protected override void Dispose(bool disposing)

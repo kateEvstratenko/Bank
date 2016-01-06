@@ -38,6 +38,8 @@ namespace BankServerApi
 
             Mapper.CreateMap<CustomPagedList<CreditRequest>, CustomPagedList<DomainCreditRequest>>();
             Mapper.CreateMap<CustomPagedList<DomainCreditRequest>, CustomPagedList<ShortCreditRequest>>();
+           
+            Mapper.CreateMap<CustomPagedList<AppUser>, CustomPagedList<ShortAppUser>>();
 
 
             Mapper.CreateMap<DomainCustomer, CustomerBindingModel>().ReverseMap();
@@ -46,6 +48,7 @@ namespace BankServerApi
             Mapper.CreateMap<Deposit, ShortDeposit>().ReverseMap();
             Mapper.CreateMap<Customer, ShortCustomer>().ReverseMap();
             Mapper.CreateMap<Address, ShortAddress>().ReverseMap();
+            Mapper.CreateMap<AppUser, ShortAppUser>().ReverseMap();
         }
     }
 }   
