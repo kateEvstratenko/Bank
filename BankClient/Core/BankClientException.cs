@@ -59,5 +59,10 @@ namespace Core
         {
             return new BankClientException(11, "Can't set status for this credit request.");
         }
+
+        public static BankClientException ThrowNotPayment()
+        {
+            return new BankClientException(12, "Срок приема платежа еще не наступил или платежей не существует.");
+        }
     }
 }

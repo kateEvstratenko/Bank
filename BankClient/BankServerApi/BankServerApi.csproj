@@ -241,6 +241,8 @@
     <Compile Include="DataObjects\Requests\CustomerDeposit\AddDepositRequest.cs" />
     <Compile Include="DataObjects\Requests\Payment\AddPaymentRequest.cs" />
     <Compile Include="DataObjects\Responses\Account\GetRoleResponse.cs" />
+    <Compile Include="DataObjects\Responses\CreditPayment\SuccessfulCreditPaymentResponse.cs" />
+    <Compile Include="DataObjects\Responses\CreditPayment\UnsuccessfulCreditPaymentResponse.cs" />
     <Compile Include="DataObjects\Responses\CreditRequest\GetUnconfirmedCreditResponse.cs" />
     <Compile Include="DataObjects\Responses\CreditRequest\GetСonfirmedCreditResponse.cs" />
     <Compile Include="Global.asax.cs">

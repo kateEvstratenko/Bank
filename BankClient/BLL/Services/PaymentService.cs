@@ -25,14 +25,24 @@ namespace BLL.Services
                 .CreditPaymentPlanItems
                 .FirstOrDefault(x => !x.IsPaid && startPay > x.StartDate);
 
+            if (currentPaymentPlan == null)
+            {
+                throw BankClientException.ThrowNotPayment();
+            }
+
+            var sourceBill = customerCredit.Bill;
+            var destinationBill = _iUnitOfWork.BillRepository
+                .GetByNumber(ConfigurationManager.AppSettings.Get("BankBillNumber"));
+
             var payment = CalculatePayment(currentPaymentPlan, sum);
-            payment.SourceBillId = customerCredit.BillId;
-            payment.DestinationBillId = _iUnitOfWork.BillRepository
-                .GetByNumber(ConfigurationManager.AppSettings.Get("BankBillNumber")).Id;
-            // TODO: payment.DestinationBillId = getBillByNumber(ProjectConstants.BankBill);
-            //
-            // We need to add same bills and a method for search a bill by its unique number.
-            // Also we need to store the bill of bank somewhere, that we can get it quickly. For example in Project constants..
+            payment.SourceBillId = sourceBill.Id;
+            payment.DestinationBillId = destinationBill.Id;
+
+            _iUnitOfWork.CreditPaymentRepository.Add(payment);
+
+            currentPaymentPlan.IsPaid = isPaid(currentPaymentPlan, payment);
+
+            _iUnitOfWork.SaveChanges();
 
         }
 
@@ -63,9 +73,25 @@ namespace BLL.Services
                 DelayMainSum = mainDebtSum,
                 PercentSum = percentSum,
                 DelayPercentSum = percentDebtSum,
+                CreditPaymentPlanItemId = plannedPayment.Id,
                 Currency = Currency.Blr,
                 DateTime = DateTime.Now
             };
+        }
+
+        private bool isPaid(CreditPaymentPlanItem plannedPayment, CreditPayment realPayment)
+        {
+            var isPaidMainSum = plannedPayment.MainSum == realPayment.MainSum &&
+                    plannedPayment.PercentSum == realPayment.PercentSum;
+            var isPaidDebtSum = true;
+
+            if (plannedPayment.Debt != null)
+            {
+                isPaidDebtSum = plannedPayment.Debt.MainSum == realPayment.DelayMainSum &&
+                    plannedPayment.Debt.PercentSum == realPayment.DelayPercentSum;
+            }
+
+            return isPaidMainSum && isPaidDebtSum;
         }
 
         private void CalculateSum(double plannedSum, out double currentSum, ref double sum)
