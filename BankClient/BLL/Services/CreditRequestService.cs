@@ -17,14 +17,16 @@ namespace BLL.Services
     {
         private readonly IUnitOfWork _iUnitOfWork;
         private readonly IImageService _iImageService;
+        private readonly ICustomerService _iCustomerService;
 
-        public CreditRequestService(IUnitOfWork iUnitOfWork, IImageService iImageService)
+        public CreditRequestService(IUnitOfWork iUnitOfWork, IImageService iImageService, ICustomerService iCustomerService)
         {
             _iUnitOfWork = iUnitOfWork;
             _iImageService = iImageService;
+            _iCustomerService = iCustomerService;
         }
 
-        public void Add(DomainCreditRequest creditRequest, byte[] militaryId, byte[] incomeCertificate, string baseUrl)
+        public void Add(DomainCreditRequest creditRequest, byte[] militaryId, byte[] incomeCertificate, string email, string baseUrl)
         {
             var customer = creditRequest.Customer;//_iUnitOfWork.CustomerRepository.GetCustomerByUserId(userId);
             var customerDb = _iUnitOfWork.CustomerRepository.GetAll()
@@ -32,16 +34,17 @@ namespace BLL.Services
 
             if (customerDb == null)
             {
-                customerDb = Mapper.Map<Customer>(customer);
-                _iUnitOfWork.CustomerRepository.Add(customerDb);
-                _iUnitOfWork.SaveChanges();
+                var id = _iCustomerService.Register(customer, email);
+                creditRequest.CustomerId = id;
+            }
+            else
+            {
+                creditRequest.CustomerId = customerDb.Id;
             }
 
-            creditRequest.CustomerId = customerDb.Id;
-
-            var militaryPath = _iImageService.SaveImageFromByteArray(militaryId, baseUrl, customerDb.Id, ImageType.MilitaryId);
+            var militaryPath = _iImageService.SaveImageFromByteArray(militaryId, baseUrl, creditRequest.CustomerId, ImageType.MilitaryId);
             creditRequest.MilitaryIdPath = militaryPath;
-            var incomeSertificatePath = _iImageService.SaveImageFromByteArray(incomeCertificate, baseUrl, customerDb.Id, ImageType.IncomeCertificate);
+            var incomeSertificatePath = _iImageService.SaveImageFromByteArray(incomeCertificate, baseUrl, creditRequest.CustomerId, ImageType.IncomeCertificate);
             creditRequest.IncomeCertificatePath = incomeSertificatePath;
             
             var creditRequestDal = Mapper.Map<CreditRequest>(creditRequest);

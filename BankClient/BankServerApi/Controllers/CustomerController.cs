@@ -13,9 +13,9 @@ namespace BankServerApi.Controllers
             _iCustomerService = iCustomerService;
         }
 
-        public ShortCustomer Get(string documentNum)
+        public ShortCustomer Get(string identificationNum)
         {
-            return _iCustomerService.GetByDocumentNumber(documentNum);
+            return _iCustomerService.GetByIdentificationNumber(identificationNum);
         }
     }
 }

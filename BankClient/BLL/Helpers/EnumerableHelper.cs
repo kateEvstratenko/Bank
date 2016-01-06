@@ -6,7 +6,7 @@ namespace BLL.Helpers
 {
     public static class EnumerableHelper
     {
-        public static CustomPagedList<T> ToCustomPagedList<T>(this IQueryable<T> items, int pageNumber, int pageSize) where T: IBaseEntity
+        public static CustomPagedList<T> ToCustomPagedList<T>(this IQueryable<T> items, int pageNumber, int pageSize) where T: class, IBaseEntity
         {
             var maxEndIndex = (pageNumber - 1) * pageSize + pageSize;
             var resultItems = items.OrderBy(x => x.Id).Skip((pageNumber - 1) * pageSize).Take(pageSize);

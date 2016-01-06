@@ -77,10 +77,12 @@ namespace ClientApi.Models
         [Display(Name = "Тип документа, удостоверяющего личность")]
         public DocumentType DocumentType { get; set; }
 
+        [Required]
         [Display(Name = "Идентификационный номер")]
         public string IdentificationNumber { get; set; }
 
         [Required]
+        [Display(Name = "Адрес")]
         public RegistreUserAddressViewModel Address { get; set; }
 
         [Required]
@@ -93,6 +95,10 @@ namespace ClientApi.Models
         [Display(Name = "Подтверждение пароля")]
         [Compare("Password", ErrorMessage = "Пароли не совпадают.")]
         public string ConfirmPassword { get; set; }
+
+//        [Required]
+        [Display(Name = "Суперсекретный код")]
+        public string Code { get; set; }
     }
 
     public class RegisterExternalBindingModel

@@ -1,9 +1,11 @@
 ﻿using BLL.Classes;
+using BLL.Models;
 
 namespace BLL.Interfaces
 {
     public interface ICustomerService
     {
-        ShortCustomer GetByDocumentNumber(string number);
+        int Register(DomainCustomer customer, string email);
+        ShortCustomer GetByIdentificationNumber(string number);
     }
 }

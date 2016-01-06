@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BLL.Classes;
 using BLL.Models;
+using ClientApi.Models;
 using ClientApi.Models.CalculationModels;
 using DAL.Entities;
 
@@ -36,6 +37,9 @@ namespace ClientApi
             Mapper.CreateMap<Deposit, ShortDeposit>().ReverseMap();
             Mapper.CreateMap<Customer, ShortCustomer>().ReverseMap();
             Mapper.CreateMap<Address, ShortAddress>().ReverseMap();
+
+            Mapper.CreateMap<RegisterBindingModel, Customer>().ReverseMap();
+            Mapper.CreateMap<RegistreUserAddressViewModel, Address>().ReverseMap();
         }
     }
 }

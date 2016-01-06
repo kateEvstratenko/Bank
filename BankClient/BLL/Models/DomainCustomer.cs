@@ -17,6 +17,7 @@ namespace BLL.Models
         public DocumentType DocumentType { get; set; }
         public string DocumentNumber { get; set; }
         public string IdentificationNumber { get; set; }
+        public string SecretCode { get; set; }
         public DomainAddress Address { get; set; }
         public DomainBankClient BankClient { get; set; }
         public IList<DomainBill> Bills { get; set; }

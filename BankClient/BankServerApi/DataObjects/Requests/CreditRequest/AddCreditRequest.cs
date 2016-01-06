@@ -41,7 +41,7 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
         [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}.")]   
         public double OtherPayments { get; set; }
 
-        [Required]
+//        [Required]
         [Display(Name = "Копия военного билета")]
         public byte[] MilitaryId { get; set; }
 
@@ -58,6 +58,11 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
         [Required]
         [Display(Name = "Клиент")]
         public CustomerBindingModel Customer { get; set; }
+
+        [Required]
+        [Display(Name = "Адрес электронной почты")]
+        [EmailAddress(ErrorMessage = "Неверный формат адреса электронной почты")]
+        public string Email { get; set; }
         //        public DateTime DateOfBirth { get; set; }
         //        public DocumentType DocumentType { get; set; }
         //        public string DocumentNumber { get; set; }

@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Net;
 using System.Net.Mail;
+using System.Runtime.CompilerServices;
 using BLL.Interfaces;
 
 namespace BLL.Services
@@ -33,6 +34,13 @@ namespace BLL.Services
         {
             var smtpClient = GetSmtpClient();
             var mail = GetChangeEmailMailMessage(userId, newEmail, baseUrl);
+            smtpClient.Send(mail);
+        }
+
+        public void SendSuperSecretCode(string email, string code)
+        {
+            var smtpClient = GetSmtpClient();
+            var mail = GetSuperSecretMessage(email, code);
             smtpClient.Send(mail);
         }
 
@@ -100,6 +108,24 @@ namespace BLL.Services
         private string GenerateLockoutMailBody(string login)
         {
             return String.Format("Количество неудачных попыток ввода пароля пользователя с именем {0} превышено. Попробуйте снова через 15 минут.", login);
+        }
+
+        private MailMessage GetSuperSecretMessage(string email, string code)
+        {
+            var mail = new MailMessage
+            {
+                Subject = "Суперсекретный код для регистрации",
+                Body = GetSuperSecretMessageBody(code),
+                IsBodyHtml = true,
+                From = new MailAddress(EmailSenderUserName, "ThreeFatties")
+            };
+            mail.To.Add(new MailAddress(email));
+            return mail;
+        }
+
+        private string GetSuperSecretMessageBody(string code)
+        {
+            return String.Format("Ваш суперсекретный код для регистрации и просмотра профиля: {0}.", code);
         }
     }
 }

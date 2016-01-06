@@ -10,7 +10,8 @@ namespace DAL.Entities
         public DateTime DateOfBirth { get; set; }
         public DocumentType DocumentType { get; set; }
         public string DocumentNumber { get; set; }
-        public string IdentificationNumber { get; set; } 
+        public string IdentificationNumber { get; set; }
+        public string SecretCode { get; set; }
         public virtual Address Address { get; set; }
         public virtual BankClient BankClient { get; set; }
         public virtual ICollection<Bill> Bills { get; set; }

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
+using AutoMapper;
 using BLL;
 using BLL.Helpers;
 using BLL.Interfaces;
@@ -386,21 +387,30 @@ namespace ClientApi.Controllers
                 UserName = request.UserName
             };
 
-            var customer = _iUnitOfWork.CustomerRepository.GetAll()
-                .FirstOrDefault(c => c.IdentificationNumber == request.IdentificationNumber);
+            var customer = _iUnitOfWork.CustomerRepository.GetAll().FirstOrDefault(c => c.IdentificationNumber == request.IdentificationNumber);
             if (customer != null)
             {
-                user.CustomerId = customer.Id;
+                if (request.Code != customer.SecretCode)
+                {
+                    return BadRequest("Неверный секретный код.");
+                }         
+            }
+            else
+            {
+                customer = Mapper.Map<Customer>(request);
+                _iUnitOfWork.CustomerRepository.Add(customer);
+                _iUnitOfWork.SaveChanges();          
             }
 
-            IdentityResult result = await UserManager.CreateAsync(user, request.Password);
+            user.CustomerId = customer.Id;     
+            var result = await UserManager.CreateAsync(user, request.Password);
             if (result.Succeeded)
             {
                 UserManager.AddToRole(user.Id, AppRoles.User.ToString());
                 var baseUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
                 _iEmailSender.SendVerifyToEmail(user.Email, user.Id, baseUrl);
             }
-            IHttpActionResult errorResult = GetErrorResult(result);
+            var errorResult = GetErrorResult(result);
 
             if (errorResult != null)
             {
@@ -448,39 +458,39 @@ namespace ClientApi.Controllers
             return Ok();
         }
 
-        [AllowAnonymous]
-        [HttpGet]
-        [Route("ConfirmEmail")]
-        public async Task<bool> ConfirmEmail(string token, string email)
-        {
-            var user = UserManager.FindById(token);
-            if (user == null)
-            {
-                return false;
-            }
-            if (user.Email != email)
-            {
-                return false;
-            }
-            user.EmailConfirmed = true;
-            await UserManager.UpdateAsync(user);
-            return true;
-        }
-
-        [AllowAnonymous]
-        [HttpGet]
-        [Route("ConfirmChangeEmail")]
-        public async Task<bool> ConfirmChangeEmail(string token, string email)
-        {
-            var user = UserManager.FindById(token);
-            if (user == null)
-            {
-                return false;
-            }
-            user.Email = email;
-            await UserManager.UpdateAsync(user);
-            return true;
-        }
+//        [AllowAnonymous]
+//        [HttpGet]
+//        [Route("ConfirmEmail")]
+//        public async Task<bool> ConfirmEmail(string token, string email)
+//        {
+//            var user = UserManager.FindById(token);
+//            if (user == null)
+//            {
+//                return false;
+//            }
+//            if (user.Email != email)
+//            {
+//                return false;
+//            }
+//            user.EmailConfirmed = true;
+//            await UserManager.UpdateAsync(user);
+//            return true;
+//        }
+//
+//        [AllowAnonymous]
+//        [HttpGet]
+//        [Route("ConfirmChangeEmail")]
+//        public async Task<bool> ConfirmChangeEmail(string token, string email)
+//        {
+//            var user = UserManager.FindById(token);
+//            if (user == null)
+//            {
+//                return false;
+//            }
+//            user.Email = email;
+//            await UserManager.UpdateAsync(user);
+//            return true;
+//        }
 
         protected override void Dispose(bool disposing)
         {

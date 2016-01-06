@@ -11,6 +11,8 @@
     <AssemblyName>DAL</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -182,6 +184,10 @@
     <Compile Include="Migrations\201512112027080_customerIdToBill.Designer.cs">
       <DependentUpon>201512112027080_customerIdToBill.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601061109478_SecretCodeAdded.cs" />
+    <Compile Include="Migrations\201601061109478_SecretCodeAdded.Designer.cs">
+      <DependentUpon>201601061109478_SecretCodeAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
@@ -253,6 +259,9 @@
     <EmbeddedResource Include="Migrations\201512112027080_customerIdToBill.resx">
       <DependentUpon>201512112027080_customerIdToBill.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601061109478_SecretCodeAdded.resx">
+      <DependentUpon>201601061109478_SecretCodeAdded.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">
@@ -261,6 +270,13 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

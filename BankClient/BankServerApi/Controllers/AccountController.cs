@@ -18,6 +18,7 @@ using BLL.Helpers;
 using BLL.Interfaces;
 using BLL.Models;
 using Core;
+using Core.Enums;
 using DAL.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -451,6 +452,15 @@ namespace BankServerApi.Controllers
             user.EmailConfirmed = true;
             await UserManager.UpdateAsync(user);
             return true;
+        }
+
+        [CheckToken(Order = 0)]
+        [CheckRole(Order = 1, Roles = new[] { AppRoles.Admin })]
+        [HttpDelete]
+        public void Delete(string id)
+        {
+            var appUser = UserManager.FindById(id);
+            UserManager.Delete(appUser);
         }
 
         protected override void Dispose(bool disposing)
