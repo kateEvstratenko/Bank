@@ -211,6 +211,7 @@
     <Compile Include="CheckTokenAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CalculationCreditController.cs" />
+    <Compile Include="Controllers\CreditPaymentPlanItemController.cs" />
     <Compile Include="Controllers\DepositController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\UserCreditController.cs" />

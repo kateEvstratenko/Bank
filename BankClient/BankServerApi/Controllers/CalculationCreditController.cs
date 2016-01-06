@@ -42,7 +42,7 @@ namespace BankServerApi.Controllers
             return Ok(solvency);
         }
 
-        // GET /api/calculationcredit/solvencyrate?creditid=ID&monthperiod=MONTH_COUNT&incomesum=INCOME&utilitiespayments=UTILSUM&otherpayments=OTHERSUM
+        // GET /api/calculationcredit/maxsum?creditid=ID&monthperiod=MONTH_COUNT&incomesum=INCOME&utilitiespayments=UTILSUM&otherpayments=OTHERSUM
         [Route("api/calculationcredit/maxsum")]
         public IHttpActionResult GetMaxCreditSum([FromUri]CalculationMaxCreditSumModel query)
         {
@@ -52,7 +52,7 @@ namespace BankServerApi.Controllers
             return Ok(maxSum);
         }
 
-        // GET /api/calculationcredit/solvencyrate?sum=SUM&creditid=ID&monthperiod=MONTH_COUNT&utilitiespayments=UTILSUM&otherpayments=OTHERSUM
+        // GET /api/calculationcredit/income?sum=SUM&creditid=ID&monthperiod=MONTH_COUNT&utilitiespayments=UTILSUM&otherpayments=OTHERSUM
         [Route("api/calculationcredit/income")]
         public IHttpActionResult GetIncomeSum([FromUri]CalculationIncomeSumModel query)
         {

@@ -15,7 +15,7 @@ namespace DAL.Entities
         public int MaxMonthPeriod { get; set; }
         public int PaymentTypeId { get; set; }
         public virtual PaymentType PaymentType { get; set; }
-        public ICollection<CreditRequest> CreditRequests { get; set; }
-        public ICollection<CustomerCredit> CustomerCredits { get; set; }
+        public virtual ICollection<CreditRequest> CreditRequests { get; set; }
+        public virtual ICollection<CustomerCredit> CustomerCredits { get; set; }
     }
 }

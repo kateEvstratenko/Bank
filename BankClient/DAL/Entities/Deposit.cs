@@ -13,7 +13,7 @@ namespace DAL.Entities
         public double MaxSum { get; set; }
         public int MinMonthPeriod { get; set; }
         public int MaxMonthPeriod { get; set; }
-        public ICollection<DepositRequest> DepositRequests { get; set; }
-        public ICollection<CustomerDeposit> CustomerDeposits { get; set; }
+        public virtual ICollection<DepositRequest> DepositRequests { get; set; }
+        public virtual ICollection<CustomerDeposit> CustomerDeposits { get; set; }
     }
 }

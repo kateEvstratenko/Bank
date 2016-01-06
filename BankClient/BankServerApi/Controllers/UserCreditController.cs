@@ -6,6 +6,7 @@ using BLL.Interfaces;
 
 namespace BankServerApi.Controllers
 {
+    [RoutePrefix("api/CustomerCredit")]
     public class CustomerCreditController : ApiController
     {
         private readonly ICustomerCreditService _customerCreditService;
@@ -25,9 +26,10 @@ namespace BankServerApi.Controllers
             return _customerCreditService.GetAll().Where(c => c.CustomerId == customerId).ToList();
         }
 
-        public IHttpActionResult Add(int creditRequestId)
+        [HttpPost]
+        public IHttpActionResult Add([FromBody]int id)
         {
-            _customerCreditService.Add(creditRequestId);
+            _customerCreditService.Add(id);
             return Ok();
         }
 

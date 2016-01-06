@@ -86,6 +86,7 @@
     <Compile Include="Entities\BankClient.cs" />
     <Compile Include="Entities\CreditPaymentPlanItem.cs" />
     <Compile Include="Entities\CreditRequestStatus.cs" />
+    <Compile Include="Entities\Debt.cs" />
     <Compile Include="Entities\Token.cs" />
     <Compile Include="Entities\Bill.cs" />
     <Compile Include="Entities\Credit.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Entities\CustomerCredit.cs" />
     <Compile Include="Entities\CustomerDeposit.cs" />
     <Compile Include="Entities\AppUser.cs" />
+    <Compile Include="Interfaces\ICreditPaymentPlanItemRepository.cs" />
     <Compile Include="Interfaces\ICustomerCreditRepository.cs" />
     <Compile Include="Interfaces\ICustomerRepository.cs" />
     <Compile Include="Interfaces\IAppUserRepository.cs" />
@@ -161,9 +163,22 @@
     <Compile Include="Migrations\201512012018597_PaymentsPlanItemAdded.Designer.cs">
       <DependentUpon>201512012018597_PaymentsPlanItemAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512061538164_RelationshipForPaymentAndPaymentPlanAdded.cs" />
+    <Compile Include="Migrations\201512061538164_RelationshipForPaymentAndPaymentPlanAdded.Designer.cs">
+      <DependentUpon>201512061538164_RelationshipForPaymentAndPaymentPlanAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512061553098_RemoveRelatinshipCustomerCreditWithPayments.cs" />
+    <Compile Include="Migrations\201512061553098_RemoveRelatinshipCustomerCreditWithPayments.Designer.cs">
+      <DependentUpon>201512061553098_RemoveRelatinshipCustomerCreditWithPayments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512061608525_AddDebts.cs" />
+    <Compile Include="Migrations\201512061608525_AddDebts.Designer.cs">
+      <DependentUpon>201512061608525_AddDebts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
+    <Compile Include="Repositories\CreditPaymentPlanItemRepository.cs" />
     <Compile Include="Repositories\CreditRepository.cs" />
     <Compile Include="Repositories\CustomerCreditRepository.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />
@@ -216,6 +231,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512012018597_PaymentsPlanItemAdded.resx">
       <DependentUpon>201512012018597_PaymentsPlanItemAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512061538164_RelationshipForPaymentAndPaymentPlanAdded.resx">
+      <DependentUpon>201512061538164_RelationshipForPaymentAndPaymentPlanAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512061553098_RemoveRelatinshipCustomerCreditWithPayments.resx">
+      <DependentUpon>201512061553098_RemoveRelatinshipCustomerCreditWithPayments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512061608525_AddDebts.resx">
+      <DependentUpon>201512061608525_AddDebts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

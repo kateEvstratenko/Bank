@@ -52,6 +52,7 @@ namespace BLL.AutoMapper
             #endregion
 
             Mapper.CreateMap<CreditPaymentPlanItem, DomainCreditPaymentPlanItem>().ReverseMap();
+            Mapper.CreateMap<Debt, DomainDebt>().ReverseMap();
         }
     }
 }

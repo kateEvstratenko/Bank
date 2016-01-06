@@ -21,14 +21,14 @@ namespace BLL.Services
                 CreditSum =  creditRequest.Sum,
                 Currency = creditRequest.Currency,
                 CustomerId = creditRequest.CustomerId,
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now + TimeSpan.FromDays(30*creditRequest.MonthCount),
+                StartDate = DateTime.Now.Date,
+                EndDate = DateTime.Now.Date.AddMonths(creditRequest.MonthCount),
                 ContractNumber = GenerateContractNumber()
                 //todo billId add
             };
 
             var paymentPlan = new CalculationCreditService().CalculatePaymentPlan(credit.CreditSum,
-                credit.Credit.PercentRate, creditRequest.MonthCount, credit.StartDate).ToList();
+                creditRequest.Credit.PercentRate, creditRequest.MonthCount, credit.StartDate).ToList();
             credit.CreditPaymentPlanItems = paymentPlan;
 
             Uow.CustomerCreditRepository.Add(Mapper.Map<CustomerCredit>(credit));

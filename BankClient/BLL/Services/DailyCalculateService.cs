@@ -37,7 +37,7 @@ namespace BLL.Services
 
         private static void ReCalculatePenalty(CreditPaymentPlanItem payment)
         {
-            payment.DelaySum += payment.MainSum * Penalty;
+            //payment.DelaySum += payment.MainSum * Penalty;
         }
     }
 }

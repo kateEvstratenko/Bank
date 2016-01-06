@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="Interfaces\ICalculationCreditService.cs" />
+    <Compile Include="Interfaces\ICalculationDebtService.cs" />
     <Compile Include="Interfaces\ICreditRequestService.cs" />
     <Compile Include="Interfaces\ICreditService.cs" />
     <Compile Include="Interfaces\ICustomerCreditService.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Models\DomainBankClient.cs" />
     <Compile Include="Models\DomainCreditPaymentPlanItem.cs" />
     <Compile Include="Models\DomainCreditRequestStatus.cs" />
+    <Compile Include="Models\DomainDebt.cs" />
     <Compile Include="Models\IDomainBaseEntity.cs" />
     <Compile Include="Models\DomainBill.cs" />
     <Compile Include="Models\DomainCredit.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="Models\DomainPaymentType.cs" />
     <Compile Include="Models\DomainToken.cs" />
     <Compile Include="Interfaces\IAuthenticationService.cs" />
+    <Compile Include="Services\CalculationDebtService.cs" />
     <Compile Include="Services\DocService.cs" />
     <Compile Include="Services\AppRoleManagerFactory.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
