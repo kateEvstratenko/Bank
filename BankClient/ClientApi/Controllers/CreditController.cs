@@ -8,6 +8,7 @@ using BLL.Models;
 namespace ClientApi.Controllers
 {
 //    [CheckToken]
+    [RoutePrefix("api/Credit")]
     public class CreditController : ApiController
     {
         private readonly ICreditService creditService;

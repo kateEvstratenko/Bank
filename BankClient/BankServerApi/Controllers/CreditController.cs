@@ -9,6 +9,7 @@ using BLL.Interfaces;
 namespace BankServerApi.Controllers
 {
     [CheckToken]
+    [RoutePrefix("api/Credit")]
     public class CreditController : ApiController
     {
         private readonly ICreditService creditService;
