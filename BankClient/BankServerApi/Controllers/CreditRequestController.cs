@@ -37,8 +37,9 @@ namespace BankServerApi.Controllers
             {
 //                var baseUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
                 var baseUrl = System.Web.Hosting.HostingEnvironment.MapPath("~/");
+                var militaryArr = request.MilitaryId != null ? Convert.FromBase64String(request.MilitaryId) : null;
                 _iCreditRequestService.Add(Mapper.Map<DomainCreditRequest>(request), 
-                    Convert.FromBase64String(request.MilitaryId), Convert.FromBase64String(request.IncomeCertificate),
+                    militaryArr, Convert.FromBase64String(request.IncomeCertificate),
                     request.Email, baseUrl);
                 return Ok();
             }

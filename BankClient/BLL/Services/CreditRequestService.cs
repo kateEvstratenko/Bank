@@ -43,8 +43,12 @@ namespace BLL.Services
             }
             creditRequest.Credit = Mapper.Map<DomainCredit>(_iUnitOfWork.CreditRepository.Get(creditRequest.CreditId));
 
-            var militaryPath = _iImageService.SaveImageFromByteArray(militaryId, baseUrl, creditRequest.CustomerId, ImageType.MilitaryId);
-            creditRequest.MilitaryIdPath = militaryPath;
+            if (militaryId != null)
+            {
+                var militaryPath = _iImageService.SaveImageFromByteArray(militaryId, baseUrl, creditRequest.CustomerId,
+                    ImageType.MilitaryId);
+                creditRequest.MilitaryIdPath = militaryPath;
+            }
             var incomeSertificatePath = _iImageService.SaveImageFromByteArray(incomeCertificate, baseUrl, creditRequest.CustomerId, ImageType.IncomeCertificate);
             creditRequest.IncomeCertificatePath = incomeSertificatePath;
             
