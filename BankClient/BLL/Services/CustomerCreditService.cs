@@ -85,6 +85,16 @@ namespace BLL.Services
             return domainCredits;
         }
 
+        public DomainCustomerCredit GetByContractNumber(string contractNumber)
+        {
+            var userCredit = Uow.CustomerCreditRepository.GetByContractNumber(contractNumber);
+            if (userCredit == null)
+            {
+                throw BankClientException.ThrowUserCreditNotFound();
+            }
+            return Mapper.Map<DomainCustomerCredit>(userCredit);
+        }
+
         private string GenerateContractNumber()
         {
             return RandomHelper.GetRandomString(10);

@@ -11,6 +11,7 @@ namespace DAL.Interfaces
         ICustomerCreditRepository CustomerCreditRepository { get; }
         ICustomerDepositRepository CustomerDepositRepository { get; }
         ICreditPaymentPlanItemRepository CreditPaymentPlanItemRepository { get; }
+        ICreditPaymentRepository CreditPaymentRepository { get; }
         IBillRepository BillRepository { get; }
         void SaveChanges();
     }

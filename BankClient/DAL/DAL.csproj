@@ -112,6 +112,7 @@
     <Compile Include="Interfaces\IAppUserRepository.cs" />
     <Compile Include="Interfaces\ICreditRepository.cs" />
     <Compile Include="Interfaces\IDepositRepository.cs" />
+    <Compile Include="Interfaces\ICreditPaymentRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ICreditRequestRepository.cs" />
     <Compile Include="Interfaces\ITokenRepository.cs" />
@@ -199,6 +200,7 @@
     <Compile Include="Repositories\CustomerRepository.cs" />
     <Compile Include="Repositories\CreditRequestRepository.cs" />
     <Compile Include="Repositories\DepositRepository.cs" />
+    <Compile Include="Repositories\CreditPaymentRepository.cs" />
     <Compile Include="Repositories\TokenRepository.cs" />
     <Compile Include="Repositories\PersonRepository.cs" />
     <Compile Include="UnitOfWork.cs" />

@@ -1,7 +1,8 @@
 ﻿using System.Web.Http;
-using BankServerApi.DataObjects.Requests.Payment;
 using BLL.Interfaces;
 using Core.Enums;
+using Core;
+using BankServerApi.DataObjects.Requests.Payment;
 
 namespace BankServerApi.Controllers
 {
@@ -21,8 +22,16 @@ namespace BankServerApi.Controllers
         [CheckRole(Order = 1, Roles = new[] { AppRoles.Cashier })]
         public IHttpActionResult Add(AddPaymentRequest request)
         {
-            _paymentService.Add(request.ContractNumber, request.Sum);
-            return Ok();
+            try 
+            {
+                _paymentService.Add(request.ContractNumber, request.Sum);
+                return Ok();
+            }
+            catch(BankClientException ex)
+            {
+                var content = ResponseBase.Unsuccessful(ex);
+                return Content<ResponseBase>(System.Net.HttpStatusCode.BadRequest, content);
+            }
         }
     }
 }

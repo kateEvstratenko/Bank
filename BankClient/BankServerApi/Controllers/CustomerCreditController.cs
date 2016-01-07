@@ -11,6 +11,7 @@ using BLL.Helpers;
 using BLL.Models;
 using BLL.Interfaces;
 using PagedList;
+using Core;
 
 namespace BankServerApi.Controllers
 {
@@ -42,6 +43,23 @@ namespace BankServerApi.Controllers
             var result = Mapper.Map<CustomPagedList<ShortCustomerCredit>>
                 (_customerCreditService.GetAll(customerId, pageNumber, pageSize));
             return result;
+        }
+
+        [HttpGet]
+        [Route("GetByContractNumber")]
+        public IHttpActionResult GetByContractNumber(string contractNumber)
+        {
+            try
+            {
+                var customerCredit = _customerCreditService.GetByContractNumber(contractNumber);
+                return Ok(customerCredit);
+            }
+            catch (BankClientException ex)
+            {
+                var content = ResponseBase.Unsuccessful(ex);
+                return Content<ResponseBase>(System.Net.HttpStatusCode.BadRequest, content);
+            }
+            
         }
 
         [HttpPost]

@@ -72,6 +72,20 @@ namespace BLL.Classes
         public int CreditId { get; set; }
     }
 
+    public class ShortCreditPayment
+    {
+        public int Id { get; set; }
+        public double MainSum { get; set; }
+        public double PercentSum { get; set; }
+        public double DelayMainSum { get; set; }
+        public double DelayPercentSum { get; set; }
+        public Currency Currency { get; set; }
+        public DateTime DateTime { get; set; }
+        public int CreditPaymentPlanItemId { get; set; }
+        public int SourceBillId { get; set; }
+        public int DestinationBillId { get; set; }
+    }
+
     public class ShortCustomer
     {
         public int Id { get; set; }
