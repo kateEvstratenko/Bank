@@ -11,7 +11,7 @@ namespace TestConsole
         static void Main(string[] args)
         {
 
-            new CreditRequestDocService().FillConcreteContract(new DomainCreditRequest()
+            /*new CreditRequestDocService().FillConcreteContract(new DomainCreditRequest()
             {
                 Credit = new DomainCredit()
                 {
@@ -71,7 +71,14 @@ namespace TestConsole
                     Name = "Прозрачный",
                     InterestRate = 30
                 }
-            });
+            });*/
+
+            var s = new CalculationDepositService();
+            var p = s.CalculateCapitalizationPlan(10000000, 24, 13, new DateTime(2016, 1, 31));
+            foreach(var pp in p)
+            {
+                Console.WriteLine(pp.MainSum + " " + pp.PercentSum + " " + pp.StartDate);
+            }
         }
     }
 }

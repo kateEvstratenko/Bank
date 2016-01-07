@@ -90,6 +90,7 @@
     <Compile Include="Interfaces\IBillService.cs" />
     <Compile Include="Interfaces\ICalculationCreditService.cs" />
     <Compile Include="Interfaces\ICalculationDebtService.cs" />
+    <Compile Include="Interfaces\ICalculationDepositService.cs" />
     <Compile Include="Interfaces\ICreditRequestService.cs" />
     <Compile Include="Interfaces\ICreditService.cs" />
     <Compile Include="Interfaces\ICustomerCreditService.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Models\DomainCreditPaymentPlanItem.cs" />
     <Compile Include="Models\DomainCreditRequestStatus.cs" />
     <Compile Include="Models\DomainDebt.cs" />
+    <Compile Include="Models\DomainDepositCapitalizationItem.cs" />
     <Compile Include="Models\IDomainBaseEntity.cs" />
     <Compile Include="Models\DomainBill.cs" />
     <Compile Include="Models\DomainCredit.cs" />
@@ -118,6 +120,7 @@
     <Compile Include="Models\DomainToken.cs" />
     <Compile Include="Interfaces\IAuthenticationService.cs" />
     <Compile Include="Services\BaseDocService.cs" />
+    <Compile Include="Services\CalculationDepositService.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\CalculationDebtService.cs" />
     <Compile Include="Services\CreditDocService.cs" />
