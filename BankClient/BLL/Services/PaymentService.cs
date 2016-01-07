@@ -17,6 +17,7 @@ namespace BLL.Services
             _iUnitOfWork = iUnitOfWork;
         }
 
+        //платеж по кредиту
         public void Add(string contractNumber, double sum)
         {
             var startPay = DateTime.Now.AddDays(ProjectConstants.DayCountForStartPay);
@@ -30,12 +31,12 @@ namespace BLL.Services
                 throw BankClientException.ThrowNotPayment();
             }
 
-            var sourceBill = customerCredit.Bill;
+//            var sourceBill = customerCredit.Bill;
             var destinationBill = _iUnitOfWork.BillRepository
                 .GetByNumber(ConfigurationManager.AppSettings.Get("BankBillNumber"));
-
+            destinationBill.Sum += sum;
             var payment = CalculatePayment(currentPaymentPlan, sum);
-            payment.SourceBillId = sourceBill.Id;
+//            payment.SourceBillId = sourceBill.Id;
             payment.DestinationBillId = destinationBill.Id;
 
             _iUnitOfWork.CreditPaymentRepository.Add(payment);

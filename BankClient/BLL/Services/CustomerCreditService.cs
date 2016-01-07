@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Linq;
 using AutoMapper;
 using BLL.Classes;
@@ -29,9 +30,12 @@ namespace BLL.Services
                 Bill = new DomainBill()
                 {
                     Number = GenerateBillNumber(),
-                    CustomerId = creditRequest.CustomerId
+                    CustomerId = creditRequest.CustomerId,
+                    Sum = creditRequest.Sum
                 }
             };
+            var bankBill = Uow.BillRepository.GetByNumber(ConfigurationManager.AppSettings.Get("BankBillNumber"));
+            bankBill.Sum -= creditRequest.Sum;
 
             var paymentPlan = new CalculationCreditService().CalculatePaymentPlan(credit.CreditSum,
                 creditRequest.Credit.PercentRate, creditRequest.MonthCount, credit.StartDate).ToList();

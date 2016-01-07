@@ -10,6 +10,7 @@ namespace DAL.Entities
         [Index]
         [StringLength(200)]
         public string Number { get; set; }
+        public double Sum { get; set; }
         public int? CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual ICollection<CustomerCredit> CustomerCredits { get; set; }

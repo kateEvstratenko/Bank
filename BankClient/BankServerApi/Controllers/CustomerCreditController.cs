@@ -63,6 +63,7 @@ namespace BankServerApi.Controllers
         }
 
         [HttpPost]
+        // id - creditRequestId
         public IHttpActionResult Add([FromBody]int id)
         {
             _customerCreditService.Add(id);
