@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Web.Http;
 using System.Web.Http.Dependencies;
+using System.Web.Http.Filters;
 using Autofac;
 using Autofac.Integration.WebApi;
 using BLL.Interfaces;
@@ -56,12 +57,17 @@ namespace BankServerApi
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<BankContext>().AsSelf();
+//            builder.RegisterType<OrderedFilterProvider>().As<IFilterProvider>().InstancePerLifetimeScope();
 
 
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
             CustomDependencyResolver.Resolver = config.DependencyResolver;
+
+
+
+            
         }
     }
 }

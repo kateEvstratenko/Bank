@@ -12,7 +12,7 @@ using Core;
 
 namespace BankServerApi.Controllers
 {
-    [CheckToken]
+    [CheckAppToken]
     public class DepositController : ApiController
     {
         private readonly IDepositService _depositService;

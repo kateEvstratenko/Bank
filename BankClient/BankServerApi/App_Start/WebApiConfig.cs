@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.Filters;
 using BankServerApi.CustomAttributes;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
@@ -38,6 +39,12 @@ namespace BankServerApi
                 headers: "*",
                 methods: "*");
             config.EnableCors(cors);
+
+            // Custom action filter provider which does ordering
+//            config.Services.Add(typeof(IFilterProvider), new OrderedFilterProvider());
+
+//            config.Services.Replace(typeof(IFilterProvider), new System.Web.Http.Filters.ConfigurationFilterProvider());
+//            config.Services.Add(typeof(IFilterProvider), new OrderedFilterProvider());
         }
     }
 }

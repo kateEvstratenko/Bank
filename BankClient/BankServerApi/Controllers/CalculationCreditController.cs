@@ -9,7 +9,7 @@ using Core;
 
 namespace BankServerApi.Controllers
 {
-    [CheckToken]
+    [CheckAppToken]
     public class CalculationCreditController : ApiController
     {
         private readonly ICalculationCreditService calculationCreditService;

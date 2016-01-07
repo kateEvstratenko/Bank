@@ -10,7 +10,7 @@ using Core;
 
 namespace BankServerApi
 {
-    public class CheckTokenAttribute : ActionFilterAttribute
+    public class CheckAppTokenAttribute : ActionFilterAttribute, IOrderedFilter
     {
         public int Order { get; set; }
         public override void OnActionExecuting(HttpActionContext actionContext)

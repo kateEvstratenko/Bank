@@ -8,7 +8,7 @@ using BankServerApi.DataObjects.Requests.Payment;
 namespace BankServerApi.Controllers
 {
     [RoutePrefix("api/Payment")]
-    [CheckToken(Order = 0)]
+    [CheckAppToken(Order = 0)]
     public class PaymentController : ApiController
     {
         private readonly IPaymentService _paymentService;

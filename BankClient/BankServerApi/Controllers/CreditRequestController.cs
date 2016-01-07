@@ -17,7 +17,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 namespace BankServerApi.Controllers
 {
     [RoutePrefix("api/CreditRequest")]
-    [CheckToken(Order = 0)]
+    [CheckAppToken(Order = 0)]
     public class CreditRequestController : ApiController
     {
         private readonly UserManager<AppUser> _userManager = Startup.UserManagerFactory();

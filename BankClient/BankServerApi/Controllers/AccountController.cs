@@ -107,7 +107,7 @@ namespace BankServerApi.Controllers
         }
 
         [Route("GetRole")]
-        [CheckToken]
+        [CheckAppToken]
         public IHttpActionResult GetRole()
         {
             try
@@ -484,7 +484,7 @@ namespace BankServerApi.Controllers
 //            return true;
 //        }
 
-        [CheckToken(Order = 0)]
+        [CheckAppToken(Order = 0)]
         [CheckRole(Order = 1, Roles = new[] { AppRoles.Admin })]
         [HttpDelete]
         [Route("Delete")]
@@ -506,9 +506,11 @@ namespace BankServerApi.Controllers
             }
         }
 
-        [CheckToken(Order = 0)]
+        
+        [CheckAppToken(Order = 0)]
         [CheckRole(Order = 1, Roles = new[] { AppRoles.Admin })]
         [Route("GetAll")]
+//        [AllowAnonymous]
         public IHttpActionResult GetAll([FromUri]int? page = null)
         {
             try
@@ -516,11 +518,12 @@ namespace BankServerApi.Controllers
                 var pageNumber = page ?? 1;
                 const int pageSize = 10;
 
-                var appUsers = Mapper.Map<CustomPagedList<ShortAppUser>>(UserManager.Users
+                var appUsers = Mapper.Map<CustomPagedList<ShortAppUser>>(UserManager.Users.ToList()
                     .Where(u => u.Roles.Count > 0 && UserManager.IsInRole(u.Id, AppRoles.Admin.ToString()))
                     .OrderBy(x => x.Lastname)
                     .ThenBy(x => x.Firstname)
                     .OrderBy(x => x.Patronymic)
+                    .AsQueryable()
                     .ToCustomPagedList(pageNumber, pageSize));
                 return Ok(appUsers);
             }
