@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Linq;
 using AutoMapper;
 using BLL.Classes;
@@ -31,8 +32,12 @@ namespace BLL.Services
             deposit.Bill = new DomainBill
             {
                 Number = GenerateBillNumber(),
-                CustomerId = customerDb.Id
+                CustomerId = customerDb.Id,
+                Sum = deposit.InitialSum
             };
+            var bankBill = Uow.BillRepository
+                .GetByNumber(ConfigurationManager.AppSettings.Get("BankBillNumber"));
+            bankBill.Sum += deposit.InitialSum;
 
             Uow.CustomerDepositRepository.Add(Mapper.Map<CustomerDeposit>(deposit));
             Uow.SaveChanges();
