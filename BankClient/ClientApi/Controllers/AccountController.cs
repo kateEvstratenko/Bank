@@ -17,6 +17,7 @@ using BLL.Interfaces;
 using ClientApi.Models;
 using ClientApi.Providers;
 using ClientApi.Results;
+using Core;
 using Core.Enums;
 using DAL.Entities;
 using DAL.Interfaces;
@@ -79,9 +80,13 @@ namespace ClientApi.Controllers
             {
                 return Ok(_iAuthenticationService.SignIn(request.UserName, request.Password));
             }
-            catch (Exception ex)
+            catch (BankClientException ex)
             {
                 return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
             }
         }
 
@@ -89,9 +94,20 @@ namespace ClientApi.Controllers
         [Route("Logout")]
         public IHttpActionResult Logout()
         {
-            //Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
-            _iAuthenticationService.SignOut(Request.Headers.First(p => p.Key.ToLower() == "token").Value.First());
-            return Ok();
+            try
+            {
+                //Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+                _iAuthenticationService.SignOut(Request.Headers.First(p => p.Key.ToLower() == "token").Value.First());
+                return Ok();
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
@@ -140,22 +156,33 @@ namespace ClientApi.Controllers
         [AllowAnonymous]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var tokenObj = new ParsedTokenHelper().GetParsedToken(Request.Properties);
+                IdentityResult result = await UserManager.ChangePasswordAsync(tokenObj.UserId, model.OldPassword,
+                    model.NewPassword);
+                IHttpActionResult errorResult = GetErrorResult(result);
+
+                if (errorResult != null)
+                {
+                    return errorResult;
+                }
+
+                return Ok();
             }
-
-            var tokenObj = new ParsedTokenHelper().GetParsedToken(Request.Properties);
-            IdentityResult result = await UserManager.ChangePasswordAsync(tokenObj.UserId, model.OldPassword,
-                model.NewPassword);
-            IHttpActionResult errorResult = GetErrorResult(result);
-
-            if (errorResult != null)
+            catch (BankClientException ex)
             {
-                return errorResult;
+                return BadRequest(ex.Message);
             }
-
-            return Ok();
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         [CheckToken]
@@ -163,25 +190,36 @@ namespace ClientApi.Controllers
         [AllowAnonymous]
         public IHttpActionResult ChangeEmail(ChangeEmailBindingModel model)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
-            }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
-            var tokenObj = new ParsedTokenHelper().GetParsedToken(Request.Properties);
-            var user = UserManager.FindById(tokenObj.UserId);
-            if (user != null && user.Email == model.NewEmail)
-            {
-                return BadRequest("Current email is equal to entered.");
-            }
-            if (UserManager.FindByEmail(model.NewEmail) != null)
-            {
-                return BadRequest("User with specified email is already registered.");
-            }
-            var baseUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
-            _iAuthenticationService.ChangeEmail(tokenObj.UserId, model.NewEmail, baseUrl);
+                var tokenObj = new ParsedTokenHelper().GetParsedToken(Request.Properties);
+                var user = UserManager.FindById(tokenObj.UserId);
+                if (user != null && user.Email == model.NewEmail)
+                {
+                    return BadRequest("Current email is equal to entered.");
+                }
+                if (UserManager.FindByEmail(model.NewEmail) != null)
+                {
+                    return BadRequest("User with specified email is already registered.");
+                }
+                var baseUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
+                _iAuthenticationService.ChangeEmail(tokenObj.UserId, model.NewEmail, baseUrl);
 
-            return Ok();
+                return Ok();
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // POST api/Account/SetPassword
@@ -376,48 +414,61 @@ namespace ClientApi.Controllers
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel request)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
-            }
-
-            var user = new AppUser()
-            {
-                Email = request.Email,
-                UserName = request.UserName
-            };
-
-            var customer = _iUnitOfWork.CustomerRepository.GetAll().FirstOrDefault(c => c.IdentificationNumber == request.IdentificationNumber);
-            if (customer != null)
-            {
-                if (request.Code != customer.SecretCode)
+                if (!ModelState.IsValid)
                 {
-                    return BadRequest("Неверный секретный код.");
-                }         
-            }
-            else
-            {
-                customer = Mapper.Map<Customer>(request);
-                _iUnitOfWork.CustomerRepository.Add(customer);
-                _iUnitOfWork.SaveChanges();          
-            }
+                    return BadRequest(ModelState);
+                }
 
-            user.CustomerId = customer.Id;     
-            var result = await UserManager.CreateAsync(user, request.Password);
-            if (result.Succeeded)
-            {
-                UserManager.AddToRole(user.Id, AppRoles.User.ToString());
-                var baseUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
-                _iEmailSender.SendVerifyToEmail(user.Email, user.Id, baseUrl);
-            }
-            var errorResult = GetErrorResult(result);
+                var user = new AppUser()
+                {
+                    Email = request.Email,
+                    UserName = request.UserName
+                };
 
-            if (errorResult != null)
-            {
-                return errorResult;
-            }
+                var customer =
+                    _iUnitOfWork.CustomerRepository.GetAll()
+                        .FirstOrDefault(c => c.IdentificationNumber == request.IdentificationNumber);
+                if (customer != null)
+                {
+                    if (request.Code != customer.SecretCode)
+                    {
+                        return BadRequest("Неверный секретный код.");
+                    }
+                }
+                else
+                {
+                    customer = Mapper.Map<Customer>(request);
+                    _iUnitOfWork.CustomerRepository.Add(customer);
+                    _iUnitOfWork.SaveChanges();
+                }
 
-            return Ok();
+                user.CustomerId = customer.Id;
+                var result = await UserManager.CreateAsync(user, request.Password);
+                if (result.Succeeded)
+                {
+                    UserManager.AddToRole(user.Id, AppRoles.User.ToString());
+                    var baseUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
+                    _iEmailSender.SendVerifyToEmail(user.Email, user.Id, baseUrl);
+                }
+                var errorResult = GetErrorResult(result);
+
+                if (errorResult != null)
+                {
+                    return errorResult;
+                }
+
+                return Ok();
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // POST api/Account/RegisterExternal

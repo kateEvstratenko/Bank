@@ -30,7 +30,7 @@ namespace ClientApi.Controllers
             var user = UserManager.FindById(token);
             if (user == null)
             {
-               return View(false);
+                return View(false);
             }
             if (user.Email != email)
             {

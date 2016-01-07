@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Http.Results;
 using AutoMapper;
 using BLL.Classes;
 using BLL.Interfaces;
 using BLL.Models;
+using Core;
 
 namespace ClientApi.Controllers
 {
@@ -21,26 +24,59 @@ namespace ClientApi.Controllers
 
         // GET api/credit
 //        [Route("Get")]
-        public CustomPagedList<ShortCredit> Get([FromUri]int? page = null)
+        public IHttpActionResult Get([FromUri]int? page = null)
         {
-            const int pageSize = 10;
-            var pageNumber = page ?? 1;
-            var result = Mapper.Map<CustomPagedList<ShortCredit>>(creditService.GetAll(pageNumber, pageSize));
-            return result;
+            try
+            {
+                const int pageSize = 10;
+                var pageNumber = page ?? 1;
+                var result = Mapper.Map<CustomPagedList<ShortCredit>>(creditService.GetAll(pageNumber, pageSize));
+                return Ok(result);
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         [Route("GetAll")]
-        public List<ShortCredit> GetAll()
+        public IHttpActionResult GetAll()
         {
-            var result = creditService.GetAll();
-            return result;
+            try
+            {
+                var result = creditService.GetAll();
+                return Ok(result);
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
 //        [Route("GetById")]
         // GET api/credit/5
-        public DomainCredit Get(int id)
+        public IHttpActionResult Get(int id)
         {
-            return creditService.Get(id);
+            try
+            {
+                return Ok(creditService.Get(id));
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }

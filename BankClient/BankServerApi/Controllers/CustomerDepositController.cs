@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Web.Http;
 using AutoMapper;
 using BankServerApi.DataObjects.Requests.CustomerDeposit;
-using BankServerApi.Models;
 using BLL.Classes;
-using BLL.Models;
 using BLL.Interfaces;
+using BLL.Models;
+using Core;
 using Core.Enums;
 
 namespace BankServerApi.Controllers
@@ -21,18 +21,44 @@ namespace BankServerApi.Controllers
             _customerDepositService = customerDepositService;
         }
 
-        public CustomPagedList<ShortCustomerDeposit> Get(int? page = null)
+        public IHttpActionResult Get(int? page = null)
         {
-            const int pageSize = 10;
-            var pageNumber = page ?? 1;
-            return Mapper.Map<CustomPagedList<ShortCustomerDeposit>>(_customerDepositService.GetAll(pageNumber, pageSize));
+            try
+            {
+                const int pageSize = 10;
+                var pageNumber = page ?? 1;
+                return Ok(
+                    Mapper.Map<CustomPagedList<ShortCustomerDeposit>>(_customerDepositService.GetAll(pageNumber,
+                        pageSize)));
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
-        public CustomPagedList<ShortCustomerDeposit> GetByCustomerId(int customerId, int? page = null)
+        public IHttpActionResult GetByCustomerId(int customerId, int? page = null)
         {
-            const int pageSize = 10;
-            var pageNumber = page ?? 1;
-            return Mapper.Map<CustomPagedList<ShortCustomerDeposit>>(_customerDepositService.GetAll(customerId, pageNumber, pageSize));
+            try
+            {
+                const int pageSize = 10;
+                var pageNumber = page ?? 1;
+                return Ok(
+                    Mapper.Map<CustomPagedList<ShortCustomerDeposit>>(_customerDepositService.GetAll(customerId,
+                        pageNumber, pageSize)));
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         [HttpPost]
@@ -40,14 +66,36 @@ namespace BankServerApi.Controllers
         [CheckRole(Order = 1, Roles = new[] { AppRoles.Operator })]
         public IHttpActionResult Add(AddDepositRequest request)
         {
-            _customerDepositService.Add(Mapper.Map<DomainCustomerDeposit>(request));
-            return Ok();
+            try
+            {
+                _customerDepositService.Add(Mapper.Map<DomainCustomerDeposit>(request));
+                return Ok();
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         public IHttpActionResult Delete(int id)
         {
-            _customerDepositService.Delete(id);
-            return Ok();
+            try
+            {
+                _customerDepositService.Delete(id);
+                return Ok();
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }

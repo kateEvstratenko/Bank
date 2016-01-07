@@ -5,6 +5,7 @@ using BLL.Models;
 using BLL.Interfaces;
 using BankServerApi.Models.CalculationModels;
 using System;
+using Core;
 
 namespace BankServerApi.Controllers
 {
@@ -26,41 +27,88 @@ namespace BankServerApi.Controllers
         [Route("api/calculationcredit/paymentsplan")]
         public IHttpActionResult GetPaymentPlan([FromUri]CalculationCreditModelForPaymentPlan query)
         {
-            var credit = creditService.Get(query.CreditId);
-            var payments = calculationCreditService
-                .CalculatePaymentPlan(query.Sum, credit.PercentRate, query.MonthPeriod, query.StartDate);
-            var viewPayments = Mapper.Map<IEnumerable<DomainCreditPaymentPlanItem>, List<CreditPaymentPlanViewModel>>(payments);
-            return Ok(viewPayments);
+            try
+            {
+                var credit = creditService.Get(query.CreditId);
+                var payments = calculationCreditService
+                    .CalculatePaymentPlan(query.Sum, credit.PercentRate, query.MonthPeriod, query.StartDate);
+                var viewPayments =
+                    Mapper.Map<IEnumerable<DomainCreditPaymentPlanItem>, List<CreditPaymentPlanViewModel>>(payments);
+                return Ok(viewPayments);
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // GET /api/calculationcredit/solvencyrate?sum=SUM&creditid=ID&monthperiod=MONTH_COUNT&incomesum=INCOME&utilitiespayments=UTILSUM&otherpayments=OTHERSUM
         [Route("api/calculationcredit/solvencyrate")]
         public IHttpActionResult GetSolvencyRate([FromUri]CalculationCreditModel query)
         {
-            var credit = creditService.Get(query.CreditId);
-            var solvency = calculationCreditService.CalculateSolvencyRate(query.Sum, credit.PercentRate, query.MonthPeriod,
-                query.IncomeSum, query.OtherCreditPayments, query.UtilitiesPayments, query.OtherPayments);
-            return Ok(solvency);
+            try
+            {
+                var credit = creditService.Get(query.CreditId);
+                var solvency = calculationCreditService.CalculateSolvencyRate(query.Sum, credit.PercentRate,
+                    query.MonthPeriod,
+                    query.IncomeSum, query.OtherCreditPayments, query.UtilitiesPayments, query.OtherPayments);
+                return Ok(solvency);
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // GET /api/calculationcredit/maxsum?creditid=ID&monthperiod=MONTH_COUNT&incomesum=INCOME&utilitiespayments=UTILSUM&otherpayments=OTHERSUM
         [Route("api/calculationcredit/maxsum")]
         public IHttpActionResult GetMaxCreditSum([FromUri]CalculationMaxCreditSumModel query)
         {
-            var credit = creditService.Get(query.CreditId);
-            var maxSum = calculationCreditService.CalculateMaxCreditSum(credit.PercentRate, query.MonthPeriod,
-                query.IncomeSum, query.OtherCreditPayments, query.UtilitiesPayments, query.OtherPayments);
-            return Ok(maxSum);
+            try
+            {
+                var credit = creditService.Get(query.CreditId);
+                var maxSum = calculationCreditService.CalculateMaxCreditSum(credit.PercentRate, query.MonthPeriod,
+                    query.IncomeSum, query.OtherCreditPayments, query.UtilitiesPayments, query.OtherPayments);
+                return Ok(maxSum);
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // GET /api/calculationcredit/income?sum=SUM&creditid=ID&monthperiod=MONTH_COUNT&utilitiespayments=UTILSUM&otherpayments=OTHERSUM
         [Route("api/calculationcredit/income")]
         public IHttpActionResult GetIncomeSum([FromUri]CalculationIncomeSumModel query)
         {
-            var credit = creditService.Get(query.CreditId);
-            var incomeSum = calculationCreditService.CalculateIncomeForCredit(query.Sum, credit.PercentRate, query.MonthPeriod,
-                query.OtherCreditPayments, query.UtilitiesPayments, query.OtherPayments);
-            return Ok(incomeSum);
+            try
+            {
+                var credit = creditService.Get(query.CreditId);
+                var incomeSum = calculationCreditService.CalculateIncomeForCredit(query.Sum, credit.PercentRate,
+                    query.MonthPeriod,
+                    query.OtherCreditPayments, query.UtilitiesPayments, query.OtherPayments);
+                return Ok(incomeSum);
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }

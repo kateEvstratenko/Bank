@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using BLL.Interfaces;
 using Core.Enums;
 using Core;
@@ -27,10 +28,13 @@ namespace BankServerApi.Controllers
                 _paymentService.Add(request.ContractNumber, request.Sum);
                 return Ok();
             }
-            catch(BankClientException ex)
+            catch (BankClientException ex)
             {
-                var content = ResponseBase.Unsuccessful(ex);
-                return Content<ResponseBase>(System.Net.HttpStatusCode.BadRequest, content);
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
             }
         }
     }

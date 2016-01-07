@@ -1,6 +1,8 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using BLL.Classes;
 using BLL.Interfaces;
+using Core;
 
 namespace BankServerApi.Controllers
 {
@@ -13,9 +15,20 @@ namespace BankServerApi.Controllers
             _iCustomerService = iCustomerService;
         }
 
-        public ShortCustomer Get(string identificationNum)
+        public IHttpActionResult Get(string identificationNum)
         {
-            return _iCustomerService.GetByIdentificationNumber(identificationNum);
+            try
+            {
+                return Ok(_iCustomerService.GetByIdentificationNumber(identificationNum));
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }
