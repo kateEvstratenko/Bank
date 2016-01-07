@@ -17,7 +17,6 @@ using Microsoft.AspNet.Identity.EntityFramework;
 namespace BankServerApi.Controllers
 {
     [RoutePrefix("api/CreditRequest")]
-    [CheckAppToken(Order = 0)]
     public class CreditRequestController : ApiController
     {
         private readonly UserManager<AppUser> _userManager = Startup.UserManagerFactory();
@@ -31,12 +30,13 @@ namespace BankServerApi.Controllers
 
         [HttpPost]
         [Route("Add")]
-        [CheckRole(Order = 1, Roles = new[] { AppRoles.Operator })]
+        [CheckAppToken(Roles = new[] { AppRoles.Operator })]
         public IHttpActionResult Add(AddCreditRequest request)
         {
             try
             {
-                var baseUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
+//                var baseUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
+                var baseUrl = System.Web.Hosting.HostingEnvironment.MapPath("~/");
                 _iCreditRequestService.Add(Mapper.Map<DomainCreditRequest>(request), 
                     Convert.FromBase64String(request.MilitaryId), Convert.FromBase64String(request.IncomeCertificate),
                     request.Email, baseUrl);
@@ -58,7 +58,7 @@ namespace BankServerApi.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("GetUnconfirmed")]
-        [CheckRole(Order = 1, Roles = new[] { AppRoles.CreditCommitteeMember, AppRoles.Security })]
+        [CheckAppToken(Roles = new[] { AppRoles.CreditCommitteeMember, AppRoles.Security })]
         public IHttpActionResult GetUnconfirmed(int? page = null)
         {
             try
@@ -91,7 +91,7 @@ namespace BankServerApi.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("GetСonfirmed")]
-        [CheckRole(Order = 1, Roles = new[] { AppRoles.CreditCommitteeMember, AppRoles.Security })]
+        [CheckAppToken(Roles = new[] { AppRoles.CreditCommitteeMember, AppRoles.Security })]
         public IHttpActionResult GetСonfirmed(int? page = null)
         {
             try
@@ -123,7 +123,7 @@ namespace BankServerApi.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("GetUnconfirmedByChief")]
-        [CheckRole(Order = 1, Roles = new[] { AppRoles.CreditDepartmentChief })]
+        [CheckAppToken(Roles = new[] { AppRoles.CreditDepartmentChief })]
         public IHttpActionResult GetUnconfirmedByChief(int? page = null)
         {
             try
@@ -156,7 +156,7 @@ namespace BankServerApi.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("GetСonfirmedByChief")]
-        [CheckRole(Order = 1, Roles = new[] { AppRoles.CreditDepartmentChief })]
+        [CheckAppToken(Roles = new[] { AppRoles.CreditDepartmentChief })]
         public IHttpActionResult GetСonfirmedByChief(int? page = null)
         {
             try
@@ -185,7 +185,7 @@ namespace BankServerApi.Controllers
 
         [HttpPost]
         [Route("SetStatus")]
-        [CheckRole(Order = 1, Roles = new[] { AppRoles.CreditCommitteeMember, AppRoles.CreditDepartmentChief, AppRoles.Security })]
+        [CheckAppToken(Roles = new[] { AppRoles.CreditCommitteeMember, AppRoles.CreditDepartmentChief, AppRoles.Security })]
         public IHttpActionResult SetStatus(SetStatusRequest request)
         {
             try

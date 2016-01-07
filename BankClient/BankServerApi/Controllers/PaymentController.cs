@@ -8,7 +8,6 @@ using BankServerApi.DataObjects.Requests.Payment;
 namespace BankServerApi.Controllers
 {
     [RoutePrefix("api/Payment")]
-    [CheckAppToken(Order = 0)]
     public class PaymentController : ApiController
     {
         private readonly IPaymentService _paymentService;
@@ -19,8 +18,8 @@ namespace BankServerApi.Controllers
         }
 
         [HttpPost]
+        [CheckAppToken(Roles = new[] { AppRoles.Cashier })]
         [Route("Add")]
-        [CheckRole(Order = 1, Roles = new[] { AppRoles.Cashier })]
         public IHttpActionResult Add(AddPaymentRequest request)
         {
             try 

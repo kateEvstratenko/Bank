@@ -10,25 +10,26 @@
 //namespace ClientApi.Controllers
 //{
 ////    [CheckToken]
-//    public class CalculationCreditController : ApiController
+//    public class CalculationDepositController : ApiController
 //    {
-//        private readonly ICalculationCreditService calculationCreditService;
+//        private readonly ICalculationDepositService calculationDepositService;
 //
-//        private readonly ICreditService creditService;
+//        private readonly IDepositService depositService;
 //
-//        public CalculationCreditController(ICalculationCreditService iCalculationCreditService, ICreditService iCreditService)
+//        public CalculationDepositController(ICalculationDepositService iCalculationDepositService, IDepositService iDepositService)
 //            :base()
 //        {
-//            calculationCreditService = iCalculationCreditService;
-//            creditService = iCreditService;
+//            calculationDepositService = iCalculationDepositService;
+//            depositService = iDepositService;
 //        }
 //
 //        // GET /api/calculationcredit/paymentsplan?sum=SUM&creditid=ID&monthperiod=MONTH_COUNT&startdate=11-01-2015
 //        [Route("api/calculationcredit/paymentsplan")]
-//        public IHttpActionResult GetPaymentPlan([FromUri]CalculationCreditModelForPaymentPlan query)
+//        public IHttpActionResult GetCapitalizationPlan([FromUri]CalculationCreditModelForPaymentPlan query)
 //        {
 //            try
 //            {
+//                calculationDepositService.CalculateCapitalizationPlan(query.Sum)
 //                var credit = creditService.Get(query.CreditId);
 //                var payments = calculationCreditService
 //                    .CalculatePaymentPlan(query.Sum, credit.PercentRate, query.MonthPeriod, query.StartDate);

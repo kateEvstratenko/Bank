@@ -5,14 +5,18 @@ using System.Net.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using BankServerApi.DataObjects.Responses;
+using BLL.Helpers;
 using BLL.Interfaces;
 using Core;
+using Core.Enums;
+using Microsoft.AspNet.Identity;
 
 namespace BankServerApi
 {
-    public class CheckAppTokenAttribute : ActionFilterAttribute, IOrderedFilter
+    public class CheckAppTokenAttribute : ActionFilterAttribute
     {
-        public int Order { get; set; }
+//        public int Order { get; set; }
+        public AppRoles[] Roles { get; set; }
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
             try
@@ -25,11 +29,21 @@ namespace BankServerApi
                 {
                     throw BankClientException.ThrowAutofacError("AuthenticationService is null");
                 }
-//                var requestParams = ((AuthenticatedRequest)actionContext.ActionArguments.First().Value);
                 var token = actionContext.Request.Headers.First(p => p.Key.ToLower() == "token").Value.First();
                 var parsedToken = authenticationService.CheckToken(token);
                 actionContext.Request.Properties.Add("tokenObj", parsedToken);
-//                requestParams.TokenObj = parsedToken;
+
+                if (Roles != null)
+                {
+                    var userManager = Startup.UserManagerFactory();
+                    var tokenObj = new ParsedTokenHelper().GetParsedToken(actionContext.Request.Properties);
+                    var userId = tokenObj.UserId;
+                    if (Roles.Any(role => userManager.IsInRole(userId, role.ToString())))
+                    {
+                        return;
+                    }
+                    actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
+                }
             }
 
             catch (TokenExpiredException)

@@ -11,7 +11,6 @@ using Core.Enums;
 namespace BankServerApi.Controllers
 {
     [RoutePrefix("api/CustomerDeposit")]
-    [CheckAppToken(Order = 0)]
     public class CustomerDepositController : ApiController
     {
         private readonly ICustomerDepositService _customerDepositService;
@@ -21,6 +20,7 @@ namespace BankServerApi.Controllers
             _customerDepositService = customerDepositService;
         }
 
+        [CheckAppToken]
         public IHttpActionResult Get(int? page = null)
         {
             try
@@ -41,6 +41,7 @@ namespace BankServerApi.Controllers
             }
         }
 
+        [CheckAppToken]
         public IHttpActionResult GetByCustomerId(int customerId, int? page = null)
         {
             try
@@ -63,7 +64,7 @@ namespace BankServerApi.Controllers
 
         [HttpPost]
         [Route("Add")]
-        [CheckRole(Order = 1, Roles = new[] { AppRoles.Operator })]
+        [CheckAppToken(Roles = new[] { AppRoles.Operator })]
         public IHttpActionResult Add(AddDepositRequest request)
         {
             try
@@ -81,6 +82,7 @@ namespace BankServerApi.Controllers
             }
         }
 
+        [CheckAppToken]
         public IHttpActionResult Delete(int id)
         {
             try

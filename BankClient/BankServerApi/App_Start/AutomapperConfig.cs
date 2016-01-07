@@ -16,6 +16,7 @@ namespace BankServerApi
             Mapper.CreateMap<CreditBindingModel, DomainCredit>();
             Mapper.CreateMap<DepositBindingModel, DomainDeposit>();
             Mapper.CreateMap<AddCreditRequest, DomainCreditRequest>();
+            Mapper.CreateMap<CreditRequestStatus, DomainCreditRequestStatus>().ReverseMap();
 
             Mapper.CreateMap<DomainCreditPaymentPlanItem, CreditPaymentPlanViewModel>();
             Mapper.CreateMap<DomainCustomerCredit, ShortCustomerCredit>();

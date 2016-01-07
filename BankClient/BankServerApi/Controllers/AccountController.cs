@@ -484,8 +484,7 @@ namespace BankServerApi.Controllers
 //            return true;
 //        }
 
-        [CheckAppToken(Order = 0)]
-        [CheckRole(Order = 1, Roles = new[] { AppRoles.Admin })]
+        [CheckAppToken(Roles = new[] { AppRoles.Admin })]
         [HttpDelete]
         [Route("Delete")]
         public IHttpActionResult Delete(string id)
@@ -506,9 +505,7 @@ namespace BankServerApi.Controllers
             }
         }
 
-        
-        [CheckAppToken(Order = 0)]
-        [CheckRole(Order = 1, Roles = new[] { AppRoles.Admin })]
+        [CheckAppToken(Roles = new[] { AppRoles.Admin })]
         [Route("GetAll")]
 //        [AllowAnonymous]
         public IHttpActionResult GetAll([FromUri]int? page = null)

@@ -18,21 +18,27 @@ namespace BLL.Services
             {
                 var image = Image.FromStream(ms);
                 var path = imageType == ImageType.MilitaryId
-                    ? GetMilitaryIdPath(baseUrl, userId)
-                    : GetIncomeCertificatePath(baseUrl, userId);
-                image.Save(path, ImageFormat.Jpeg);
-                return path;
+                    ? GetMilitaryIdPath(baseUrl)
+                    : GetIncomeCertificatePath(baseUrl);
+                if (!File.Exists(path))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(path));
+                }
+
+                var fullPath = string.Format("{0}/{1}_{2}.jpg", path, userId, Guid.NewGuid());
+                image.Save(fullPath, ImageFormat.Jpeg);
+                return fullPath;
             }           
         }
 
-        private string GetMilitaryIdPath(string baseUrl, int userId)
+        private string GetMilitaryIdPath(string baseUrl)
         {
-            return String.Format("{0}/{1}/{2}_{3}", baseUrl, MilitaryPath, userId, Guid.NewGuid());
+            return String.Format(@"{0}Content\{1}\", baseUrl, MilitaryPath);
         }
 
-        private string GetIncomeCertificatePath(string baseUrl, int userId)
+        private string GetIncomeCertificatePath(string baseUrl)
         {
-            return String.Format("{0}/{1}/{2}_{3}", baseUrl, IncomeCertificatesPath, userId, Guid.NewGuid());
+            return String.Format(@"{0}Content\{1}\", baseUrl, IncomeCertificatesPath);
         }
     }
 }
