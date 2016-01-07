@@ -64,5 +64,10 @@ namespace Core
         {
             return new BankClientException(12, "Срок приема платежа еще не наступил или платежей не существует.");
         }
+
+        public static BankClientException ThrowUserCreditNotFound()
+        {
+            return new BankClientException(13, "Кредита с таким номером договора не существует.");
+        }
     }
 }

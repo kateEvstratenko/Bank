@@ -1,14 +1,13 @@
 ﻿using System.Web.Http;
-using BankServerApi.DataObjects.Requests.Payment;
 using BLL.Interfaces;
 using Core.Enums;
 using Core;
-using BankServerApi.DataObjects.Responses.CreditPayment;
+using BankServerApi.DataObjects.Requests.Payment;
 
 namespace BankServerApi.Controllers
 {
     [RoutePrefix("api/Payment")]
-    //[CheckToken(Order = 0)]
+    [CheckToken(Order = 0)]
     public class PaymentController : ApiController
     {
         private readonly IPaymentService _paymentService;
@@ -20,7 +19,7 @@ namespace BankServerApi.Controllers
 
         [HttpPost]
         [Route("Add")]
-        //CheckRole(Order = 1, Roles = new[] { AppRoles.Cashier })]
+        [CheckRole(Order = 1, Roles = new[] { AppRoles.Cashier })]
         public IHttpActionResult Add(AddPaymentRequest request)
         {
             try 
@@ -30,7 +29,7 @@ namespace BankServerApi.Controllers
             }
             catch(BankClientException ex)
             {
-                var content = ResponseBase.Unsuccessful<UnsuccessfulCreditPaymentResponse>(ex);
+                var content = ResponseBase.Unsuccessful(ex);
                 return Content<ResponseBase>(System.Net.HttpStatusCode.BadRequest, content);
             }
         }
