@@ -69,7 +69,9 @@ namespace BLL.Classes
         public string MilitaryIdPath { get; set; }
         public string IncomeCertificatePath { get; set; }
         public int CustomerId { get; set; }
+        public ShortCustomer Customer { get; set; }
         public int CreditId { get; set; }
+        public ShortCredit Credit { get; set; }
     }
 
     public class ShortCreditPayment
