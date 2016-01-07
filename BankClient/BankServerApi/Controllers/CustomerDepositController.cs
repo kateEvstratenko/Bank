@@ -11,7 +11,7 @@ using Core.Enums;
 namespace BankServerApi.Controllers
 {
     [RoutePrefix("api/CustomerDeposit")]
-    [CheckToken(Order = 0)]
+    [CheckAppToken(Order = 0)]
     public class CustomerDepositController : ApiController
     {
         private readonly ICustomerDepositService _customerDepositService;

@@ -6,7 +6,7 @@ using Core;
 
 namespace BankServerApi.Controllers
 {
-    [CheckToken]
+    [CheckAppToken]
     public class CustomerController : ApiController
     {
         private readonly ICustomerService _iCustomerService;

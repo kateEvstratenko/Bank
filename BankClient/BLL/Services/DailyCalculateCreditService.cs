@@ -4,11 +4,11 @@ using BLL.Interfaces;
 
 namespace BLL.Services
 {
-    public class DailyCalculateService
+    public class DailyCalculateCreditService
     {
         private Timer _timer;
 
-        public DailyCalculateService()
+        public DailyCalculateCreditService()
         {
             var dateNow = DateTime.Now;
             var mitnight = dateNow.AddDays(1).Date;

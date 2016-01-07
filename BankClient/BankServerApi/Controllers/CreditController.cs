@@ -9,7 +9,7 @@ using Core;
 
 namespace BankServerApi.Controllers
 {
-    [CheckToken]
+    [CheckAppToken]
     [RoutePrefix("api/Credit")]
     public class CreditController : ApiController
     {

@@ -129,7 +129,8 @@
     <Compile Include="Services\CustomDependencyResolver.cs" />
     <Compile Include="Services\CustomerDepositService.cs" />
     <Compile Include="Services\CustomerCreditService.cs" />
-    <Compile Include="Services\DailyCalculateService.cs" />
+    <Compile Include="Services\DailyCalculateDepositService.cs" />
+    <Compile Include="Services\DailyCalculateCreditService.cs" />
     <Compile Include="Services\CreditService.cs" />
     <Compile Include="Services\CreditRequestService.cs" />
     <Compile Include="Interfaces\IPaymentService.cs" />
