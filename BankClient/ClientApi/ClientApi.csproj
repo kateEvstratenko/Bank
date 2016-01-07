@@ -189,6 +189,7 @@
     <Compile Include="CheckRoleAttribute.cs" />
     <Compile Include="CheckTokenAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CalculationDepositController.cs" />
     <Compile Include="Controllers\CalculationCreditController.cs" />
     <Compile Include="Controllers\CreditController.cs" />
     <Compile Include="Controllers\CustomerCreditController.cs" />

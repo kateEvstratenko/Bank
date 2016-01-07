@@ -11,7 +11,7 @@ namespace BLL.Interfaces
     {
         double CalculatePercentSum(double sum, double percent, DateTime date);
         double AddPercentToMainSum(double mainSum, double percentSum);
-        public IEnumerable<DomainDepositCapitalizationItem> CalculateCapitalizationPlan(
+        IEnumerable<DomainDepositCapitalizationItem> CalculateCapitalizationPlan(
             double sum,
             double percentRate,
             int monthPeriod,

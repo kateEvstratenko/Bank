@@ -43,11 +43,11 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
 
 //        [Required]
         [Display(Name = "Копия военного билета")]
-        public byte[] MilitaryId { get; set; }
+        public string MilitaryId { get; set; }
 
         [Required]
         [Display(Name = "Копия справки о доходах")]
-        public byte[] IncomeCertificate { get; set; }
+        public string IncomeCertificate { get; set; }
 
         [Required(ErrorMessage = "Требуется поле")]
         [Display(Name = "ИД кредита")]

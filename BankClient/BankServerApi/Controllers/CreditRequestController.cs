@@ -37,7 +37,9 @@ namespace BankServerApi.Controllers
             try
             {
                 var baseUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
-                _iCreditRequestService.Add(Mapper.Map<DomainCreditRequest>(request), request.MilitaryId, request.IncomeCertificate, request.Email, baseUrl);
+                _iCreditRequestService.Add(Mapper.Map<DomainCreditRequest>(request), 
+                    Convert.FromBase64String(request.MilitaryId), Convert.FromBase64String(request.IncomeCertificate),
+                    request.Email, baseUrl);
                 return Ok();
             }
             catch (BankClientException ex)
