@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using BankServerApi.Models;
@@ -7,6 +8,7 @@ using BLL.Classes;
 using BLL.Helpers;
 using BLL.Models;
 using BLL.Interfaces;
+using Core;
 
 namespace BankServerApi.Controllers
 {
@@ -22,49 +24,115 @@ namespace BankServerApi.Controllers
         }
 
         // GET api/deposit
-        public CustomPagedList<ShortDeposit> Get(int? page = null)
+        public IHttpActionResult Get(int? page = null)
         {
-            const int pageSize = 10;
-            var pageNumber = page ?? 1;
-            var result = Mapper.Map<CustomPagedList<ShortDeposit>>(_depositService.GetAll(pageNumber, pageSize));
-            return result;
+            try
+            {
+                const int pageSize = 10;
+                var pageNumber = page ?? 1;
+                var result = Mapper.Map<CustomPagedList<ShortDeposit>>(_depositService.GetAll(pageNumber, pageSize));
+                return Ok(result);
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         [Route("GetAll")]
-        public List<ShortDeposit> GetAll()
+        public IHttpActionResult GetAll()
         {
-            var result = _depositService.GetAll();
-            return result;
+            try
+            {
+                var result = _depositService.GetAll();
+                return Ok(result);
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // GET api/deposit/5
-        public DomainDeposit Get(int id)
+        public IHttpActionResult Get(int id)
         {
-            return _depositService.Get(id);
+            try
+            {
+                return Ok(_depositService.Get(id));
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // POST api/deposit
         public IHttpActionResult Post([FromBody]DepositBindingModel depositModel)
         {
-            var deposit = Mapper.Map<DomainDeposit>(depositModel);
-            _depositService.Add(deposit);
-            return Ok();
+            try
+            {
+                var deposit = Mapper.Map<DomainDeposit>(depositModel);
+                _depositService.Add(deposit);
+                return Ok();
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // PUT api/deposit/5
         public IHttpActionResult Put(int id, [FromBody]DepositBindingModel depositModel)
         {
-            var deposit = Mapper.Map<DomainDeposit>(depositModel);
-            deposit.Id = id;
-            _depositService.Update(deposit);
-            return Ok();
+            try
+            {
+                var deposit = Mapper.Map<DomainDeposit>(depositModel);
+                deposit.Id = id;
+                _depositService.Update(deposit);
+                return Ok();
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // DELETE api/deposit/5
         public IHttpActionResult Delete(int id)
         {
-            _depositService.Delete(id);
-            return Ok();
+            try
+            {
+                _depositService.Delete(id);
+                return Ok();
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }

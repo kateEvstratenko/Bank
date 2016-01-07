@@ -1,5 +1,7 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using BLL.Interfaces;
+using Core;
 
 namespace BankServerApi.Controllers
 {
@@ -16,8 +18,19 @@ namespace BankServerApi.Controllers
 
         public IHttpActionResult Get()
         {
-            calculationDebtService.CheckPayments();
-            return Ok();
+            try
+            {
+                calculationDebtService.CheckPayments();
+                return Ok();
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }

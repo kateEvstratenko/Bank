@@ -76,9 +76,13 @@ namespace BankServerApi.Controllers
             {
                 return Ok(_iAuthenticationService.SignInEmployee(request.UserName, request.Password));
             }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception ex)
             {
-                return BadRequest(ex.ToString());
+                return InternalServerError(ex);
             }
         }
 
@@ -92,37 +96,39 @@ namespace BankServerApi.Controllers
                 _iAuthenticationService.SignOut(Request.Headers.First(p => p.Key.ToLower() == "token").Value.First());
                 return Ok();
             }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception ex)
             {
-                return BadRequest(ex.ToString());
+                return InternalServerError(ex);
             }
         }
 
         [Route("GetRole")]
         [CheckToken]
-        public GetRoleResponse GetRole()
+        public IHttpActionResult GetRole()
         {
             try
             {
                 var tokenObj = new ParsedTokenHelper().GetParsedToken(Request.Properties);
                 var role = UserManager.GetRoles(tokenObj.UserId).FirstOrDefault();
-                return new GetRoleResponse()
+                return Ok(new GetRoleResponse()
                 {
                     Role = role
-                };
+                });
             }
             catch (BankClientException ex)
             {
-                return ResponseBase.Unsuccessful<GetRoleResponse>(ex);
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                return ResponseBase.Unsuccessful<GetRoleResponse>(ex);
+                return InternalServerError(ex);
             }
         }
-
-
-
+        
         // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
         [Route("ManageInfo")]
         public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
@@ -167,21 +173,33 @@ namespace BankServerApi.Controllers
         [Route("ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                IdentityResult result =
+                    await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
+                        model.NewPassword);
+                IHttpActionResult errorResult = GetErrorResult(result);
+
+                if (errorResult != null)
+                {
+                    return errorResult;
+                }
+
+                return Ok();
             }
-
-            IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
-                model.NewPassword);
-            IHttpActionResult errorResult = GetErrorResult(result);
-
-            if (errorResult != null)
+            catch (BankClientException ex)
             {
-                return errorResult;
+                return BadRequest(ex.Message);
             }
-
-            return Ok();
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // POST api/Account/SetPassword
@@ -376,27 +394,38 @@ namespace BankServerApi.Controllers
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterEmployeeModel request)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
-            }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
-            var employee = Mapper.Map<AppUser>(request);
-            IdentityResult result = await UserManager.CreateAsync(employee, request.Password);
-            if (result.Succeeded)
+                var employee = Mapper.Map<AppUser>(request);
+                IdentityResult result = await UserManager.CreateAsync(employee, request.Password);
+                if (result.Succeeded)
+                {
+                    UserManager.AddToRole(employee.Id, request.Role.ToString());
+                    //                var baseUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
+                    //                _iEmailSender.SendVerifyToEmail(employee.Email, employee.Id, baseUrl);
+                }
+                IHttpActionResult errorResult = GetErrorResult(result);
+
+                if (errorResult != null)
+                {
+                    return errorResult;
+                }
+
+                return Ok();
+            }
+            catch (BankClientException ex)
             {
-                UserManager.AddToRole(employee.Id, request.Role.ToString());
-                //                var baseUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
-                //                _iEmailSender.SendVerifyToEmail(employee.Email, employee.Id, baseUrl);
+                return BadRequest(ex.Message);
             }
-            IHttpActionResult errorResult = GetErrorResult(result);
-
-            if (errorResult != null)
+            catch (Exception ex)
             {
-                return errorResult;
+                return InternalServerError(ex);
             }
-
-            return Ok();
         }
 
         // POST api/Account/RegisterExternal
@@ -437,49 +466,72 @@ namespace BankServerApi.Controllers
             return Ok();
         }
 
-        [AllowAnonymous]
-        [HttpGet]
-        public async Task<bool> ConfirmEmail(string token, string email)
-        {
-            var user = UserManager.FindById(token);
-            if (user == null)
-            {
-                return false;
-            }
-            if (user.Email != email)
-            {
-                return false;
-            }
-            user.EmailConfirmed = true;
-            await UserManager.UpdateAsync(user);
-            return true;
-        }
+//        [AllowAnonymous]
+//        [HttpGet]
+//        public async Task<bool> ConfirmEmail(string token, string email)
+//        {
+//            var user = UserManager.FindById(token);
+//            if (user == null)
+//            {
+//                return false;
+//            }
+//            if (user.Email != email)
+//            {
+//                return false;
+//            }
+//            user.EmailConfirmed = true;
+//            await UserManager.UpdateAsync(user);
+//            return true;
+//        }
 
         [CheckToken(Order = 0)]
         [CheckRole(Order = 1, Roles = new[] { AppRoles.Admin })]
         [HttpDelete]
         [Route("Delete")]
-        public void Delete(string id)
+        public IHttpActionResult Delete(string id)
         {
-            var appUser = UserManager.FindById(id);
-            UserManager.Delete(appUser);
+            try
+            {
+                var appUser = UserManager.FindById(id);
+                UserManager.Delete(appUser);
+                return Ok();
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         [CheckToken(Order = 0)]
         [CheckRole(Order = 1, Roles = new[] { AppRoles.Admin })]
         [Route("GetAll")]
-        public CustomPagedList<ShortAppUser> GetAll([FromUri]int? page = null)
+        public IHttpActionResult GetAll([FromUri]int? page = null)
         {
-            var pageNumber = page ?? 1;
-            const int pageSize = 10;
+            try
+            {
+                var pageNumber = page ?? 1;
+                const int pageSize = 10;
 
-            var appUsers = Mapper.Map<CustomPagedList<ShortAppUser>>(UserManager.Users
-                .Where(u => u.Roles.Count > 0 && UserManager.IsInRole(u.Id, AppRoles.Admin.ToString()))
-                .OrderBy(x => x.Lastname)
-                .ThenBy(x => x.Firstname)
-                .OrderBy(x => x.Patronymic)
-                .ToCustomPagedList(pageNumber, pageSize));
-            return appUsers;
+                var appUsers = Mapper.Map<CustomPagedList<ShortAppUser>>(UserManager.Users
+                    .Where(u => u.Roles.Count > 0 && UserManager.IsInRole(u.Id, AppRoles.Admin.ToString()))
+                    .OrderBy(x => x.Lastname)
+                    .ThenBy(x => x.Firstname)
+                    .OrderBy(x => x.Patronymic)
+                    .ToCustomPagedList(pageNumber, pageSize));
+                return Ok(appUsers);
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         protected override void Dispose(bool disposing)
