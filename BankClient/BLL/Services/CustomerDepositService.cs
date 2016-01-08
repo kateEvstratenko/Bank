@@ -7,6 +7,7 @@ using BLL.Helpers;
 using BLL.Interfaces;
 using BLL.Models;
 using Core;
+using Core.Enums;
 using DAL.Interfaces;
 using DAL.Entities;
 
@@ -35,11 +36,20 @@ namespace BLL.Services
                 CustomerId = customerDb.Id,
                 Sum = deposit.InitialSum
             };
+
+            Uow.CustomerDepositRepository.Add(Mapper.Map<CustomerDeposit>(deposit));
+            Uow.SaveChanges();
+
+            deposit.DepositPayments.Add(new DomainDepositPayment()
+            {
+                Currency = Currency.Blr,
+                DateTime = GlobalValues.BankDateTime,
+                Sum = deposit.InitialSum,
+                DestinationBillId = deposit.BillId
+            });
             var bankBill = Uow.BillRepository
                 .GetByNumber(ConfigurationManager.AppSettings.Get("BankBillNumber"));
             bankBill.Sum += deposit.InitialSum;
-
-            Uow.CustomerDepositRepository.Add(Mapper.Map<CustomerDeposit>(deposit));
             Uow.SaveChanges();
 
             new DepositDocService().FillConcreteContract(deposit);

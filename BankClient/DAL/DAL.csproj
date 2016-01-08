@@ -197,6 +197,10 @@
     <Compile Include="Migrations\201601072342003_FIOToCustomerAdded.Designer.cs">
       <DependentUpon>201601072342003_FIOToCustomerAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601080204087_creditAndCreditRequestRelationShip.cs" />
+    <Compile Include="Migrations\201601080204087_creditAndCreditRequestRelationShip.Designer.cs">
+      <DependentUpon>201601080204087_creditAndCreditRequestRelationShip.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
@@ -277,6 +281,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601072342003_FIOToCustomerAdded.resx">
       <DependentUpon>201601072342003_FIOToCustomerAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601080204087_creditAndCreditRequestRelationShip.resx">
+      <DependentUpon>201601080204087_creditAndCreditRequestRelationShip.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

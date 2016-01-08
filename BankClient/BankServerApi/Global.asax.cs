@@ -12,7 +12,7 @@ namespace BankServerApi
 {
     public class WebApiApplication : HttpApplication
     {
-        private DailyCalculateCreditService _dailyCalculateCreditService;
+        private DailyCalculateService _dailyCalculateService;
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -29,7 +29,7 @@ namespace BankServerApi
             AuthManagerService.UserManager = Startup.UserManagerFactory();
             AuthManagerService.RoleManager = Startup.RoleManagerFactory();
 
-            _dailyCalculateCreditService = new DailyCalculateCreditService();
+            _dailyCalculateService = new DailyCalculateService();
 
             BeginRequest += Application_BeginRequest;
         }

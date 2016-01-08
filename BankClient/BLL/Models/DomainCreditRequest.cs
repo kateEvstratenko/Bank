@@ -21,5 +21,6 @@ namespace BLL.Models
         public DomainCustomer Customer { get; set; }
         public DomainCredit Credit { get; set; }
         public IList<DomainCreditRequestStatus> CreditRequestStatuses { get; set; }
+        public IList<DomainCustomerCredit> CustomerCredits { get; set; }
     }
 }

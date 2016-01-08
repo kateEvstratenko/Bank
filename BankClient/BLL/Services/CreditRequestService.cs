@@ -108,7 +108,7 @@ namespace BLL.Services
             var creditRequest = _iUnitOfWork.CreditRequestRepository.Get(creditRequestId);
 
             //не выдали ли уже кредит
-            if (creditRequest.Credit != null)
+            if (creditRequest.CustomerCredits.Any())
             {
                 throw BankClientException.ThrowCannotSetStatus();
             }

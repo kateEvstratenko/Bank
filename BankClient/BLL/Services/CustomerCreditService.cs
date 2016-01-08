@@ -32,7 +32,8 @@ namespace BLL.Services
                     Number = GenerateBillNumber(),
                     CustomerId = creditRequest.CustomerId,
                     Sum = creditRequest.Sum
-                }
+                },
+                CreditRequestId = creditRequestId
             };
             var bankBill = Uow.BillRepository.GetByNumber(ConfigurationManager.AppSettings.Get("BankBillNumber"));
             bankBill.Sum -= creditRequest.Sum;

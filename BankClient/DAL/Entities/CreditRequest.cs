@@ -21,5 +21,6 @@ namespace DAL.Entities
         public virtual Customer Customer { get; set; }
         public virtual Credit Credit { get; set; }
         public virtual ICollection<CreditRequestStatus> CreditRequestStatuses { get; set; }
+        public virtual ICollection<CustomerCredit> CustomerCredits { get; set; }
     }
 }

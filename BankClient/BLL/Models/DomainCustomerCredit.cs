@@ -17,9 +17,11 @@ namespace BLL.Models
         public DateTime EndDate { get; set; }
         public int CustomerId { get; set; }
         public int CreditId { get; set; }
+        public int CreditRequestId { get; set; }
         public int BillId { get; set; }
         public DomainCustomer Customer { get; set; }
         public DomainCredit Credit { get; set; }
+        public DomainCreditRequest CreditRequest { get; set; }
         public DomainBill Bill { get; set; }
         public List<DomainCreditPaymentPlanItem> CreditPaymentPlanItems { get; set; }
     }
