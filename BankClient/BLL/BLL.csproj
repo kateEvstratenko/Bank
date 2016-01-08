@@ -121,6 +121,7 @@
     <Compile Include="Models\DomainToken.cs" />
     <Compile Include="Interfaces\IAuthenticationService.cs" />
     <Compile Include="Services\BaseDocService.cs" />
+    <Compile Include="Services\CalculationDepositPercentService.cs" />
     <Compile Include="Services\CalculationDepositService.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\CalculationDebtService.cs" />

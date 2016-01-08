@@ -20,10 +20,10 @@ namespace BLL.Services
         {
             using (var scope = CustomDependencyResolver.Resolver.BeginScope())
             {
-                var calculationDepositService = scope.GetService(typeof(ICalculationDepositService)) as ICalculationDepositService;
-                if (calculationDepositService != null)
+                var calculationDepositPercentService = scope.GetService(typeof(ICalculationDepositPercentService)) as ICalculationDepositPercentService;
+                if (calculationDepositPercentService != null)
                 {
-//                    calculationDepositService.;
+                    calculationDepositPercentService.AddPercents();
                 }
             }
         }
