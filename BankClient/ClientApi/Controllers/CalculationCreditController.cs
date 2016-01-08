@@ -25,7 +25,7 @@ namespace ClientApi.Controllers
 
         // GET /api/calculationcredit/paymentsplan?sum=SUM&creditid=ID&monthperiod=MONTH_COUNT&startdate=11-01-2015
         [Route("api/calculationcredit/paymentsplan")]
-        public IHttpActionResult GetPaymentPlan([FromUri]DepositModelForCapitalizationPlan query)
+        public IHttpActionResult GetPaymentPlan([FromUri]CalculationCreditModelForPaymentPlan query)
         {
             try
             {

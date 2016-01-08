@@ -90,6 +90,7 @@
     <Compile Include="Interfaces\IBillService.cs" />
     <Compile Include="Interfaces\ICalculationCreditService.cs" />
     <Compile Include="Interfaces\ICalculationDebtService.cs" />
+    <Compile Include="Interfaces\ICalculationDepositPercentService.cs" />
     <Compile Include="Interfaces\ICalculationDepositService.cs" />
     <Compile Include="Interfaces\ICreditRequestService.cs" />
     <Compile Include="Interfaces\ICreditService.cs" />
