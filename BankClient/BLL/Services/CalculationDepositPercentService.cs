@@ -12,7 +12,7 @@ namespace BLL.Services
 {
     public static class GlobalValues
     {
-        public static DateTime BankDateTime = DateTime.Now;
+        public static DateTime BankDateTime = DateTime.Now.Date;
     }
 
     public class CalculationDepositPercentService : BaseService, ICalculationDepositPercentService
@@ -28,7 +28,7 @@ namespace BLL.Services
 
         public void AddPercents()
         {
-            var deposits = Uow.CustomerDepositRepository.GetAll().Include(x => x.DepositPayments).ToList();
+            var deposits = Uow.CustomerDepositRepository.GetAll().Where(x => !x.IsPaid).Include(x => x.DepositPayments).ToList();
             foreach (var customerDeposit in deposits)
             {
                 var date = customerDeposit.DepositPayments.Last().DateTime;
@@ -42,7 +42,7 @@ namespace BLL.Services
                 if (nextPayment.Date == GlobalValues.BankDateTime.Date)
                 {
                     var percentSum = _iCalculationDepositService.CalculatePercentSum(customerDeposit.Bill.Sum, customerDeposit.Deposit.InterestRate, date);
-                    _iCalculationDepositService.AddPercentToMainSum(customerDeposit.Bill.Sum, percentSum);
+                    customerDeposit.Bill.Sum = _iCalculationDepositService.AddPercentToMainSum(customerDeposit.Bill.Sum, percentSum);
                     customerDeposit.DepositPayments.Add(new DepositPayment()
                     {
                         Currency = Currency.Blr,

@@ -29,7 +29,7 @@ namespace BLL.Services
                 Uow.SaveChanges();
             }
 
-            deposit.StartDate = DateTime.Now.Date;
+            deposit.StartDate = GlobalValues.BankDateTime;
             deposit.ContractNumber = GenerateContractNumber();
             deposit.Bill = new DomainBill
             {
@@ -43,7 +43,7 @@ namespace BLL.Services
                 new DomainDepositPayment()
                 {
                     Currency = Currency.Blr,
-                    DateTime = GlobalValues.BankDateTime,
+                    DateTime = deposit.StartDate,
                     Sum = deposit.InitialSum,
                     DestinationBill = deposit.Bill
                 }
