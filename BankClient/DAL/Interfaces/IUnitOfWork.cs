@@ -1,3 +1,5 @@
+using DAL.Entities;
+
 namespace DAL.Interfaces
 {
     public interface IUnitOfWork
@@ -14,5 +16,6 @@ namespace DAL.Interfaces
         ICreditPaymentRepository CreditPaymentRepository { get; }
         IBillRepository BillRepository { get; }
         void SaveChanges();
+        void Reload<T>(T entity) where T : class, IBaseEntity;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using AutoMapper;
@@ -37,21 +38,27 @@ namespace BLL.Services
                 Sum = deposit.InitialSum
             };
 
-            Uow.CustomerDepositRepository.Add(Mapper.Map<CustomerDeposit>(deposit));
-            Uow.SaveChanges();
-
-            deposit.DepositPayments.Add(new DomainDepositPayment()
+            deposit.DepositPayments = new List<DomainDepositPayment>()
             {
-                Currency = Currency.Blr,
-                DateTime = GlobalValues.BankDateTime,
-                Sum = deposit.InitialSum,
-                DestinationBillId = deposit.BillId
-            });
+                new DomainDepositPayment()
+                {
+                    Currency = Currency.Blr,
+                    DateTime = GlobalValues.BankDateTime,
+                    Sum = deposit.InitialSum,
+                    DestinationBill = deposit.Bill
+                }
+            };
             var bankBill = Uow.BillRepository
                 .GetByNumber(ConfigurationManager.AppSettings.Get("BankBillNumber"));
             bankBill.Sum += deposit.InitialSum;
-            Uow.SaveChanges();
 
+            var dbDeposit = Mapper.Map<CustomerDeposit>(deposit);
+            Uow.CustomerDepositRepository.Add(dbDeposit);
+            Uow.SaveChanges();
+            
+//            Uow.Reload(dbDeposit);
+//            deposit = Mapper.Map<DomainCustomerDeposit>(Uow.DepositRepository.Get(dbDeposit.Id));
+            deposit.Deposit = Mapper.Map<DomainDeposit>(Uow.DepositRepository.Get(deposit.DepositId));
             new DepositDocService().FillConcreteContract(deposit);
         }
 

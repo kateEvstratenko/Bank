@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BankServerApi.DataObjects.Requests.CreditRequest;
+using BankServerApi.DataObjects.Requests.CustomerDeposit;
 using BankServerApi.Models;
 using BankServerApi.Models.CalculationModels;
 using BLL.Classes;
@@ -16,6 +17,7 @@ namespace BankServerApi
             Mapper.CreateMap<CreditBindingModel, DomainCredit>();
             Mapper.CreateMap<DepositBindingModel, DomainDeposit>();
             Mapper.CreateMap<AddCreditRequest, DomainCreditRequest>();
+            Mapper.CreateMap<AddDepositRequest, DomainCustomerDeposit>();
             Mapper.CreateMap<CreditRequestStatus, DomainCreditRequestStatus>().ReverseMap();
 
             Mapper.CreateMap<DomainCreditPaymentPlanItem, CreditPaymentPlanViewModel>();

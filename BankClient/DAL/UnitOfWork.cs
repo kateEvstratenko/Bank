@@ -1,3 +1,4 @@
+using DAL.Entities;
 using DAL.Interfaces;
 using DAL.Repositories;
 
@@ -81,6 +82,11 @@ namespace DAL
         public void SaveChanges()
         {
             _context.SaveChanges();
+        }
+
+        public void Reload<T>(T entity) where T:class, IBaseEntity
+        {
+            _context.Entry(entity).Reload();
         }
     }
 }
