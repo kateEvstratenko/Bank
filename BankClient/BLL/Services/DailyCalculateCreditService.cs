@@ -11,19 +11,39 @@ namespace BLL.Services
         public DailyCalculateCreditService()
         {
             var dateNow = DateTime.Now;
-            var mitnight = dateNow.AddDays(1).Date;
+            var mitnight = dateNow.AddMinutes(1);
             var dueTime = (mitnight - dateNow).Ticks;
-            _timer = new Timer(CheckPayments, null, new TimeSpan(dueTime), TimeSpan.FromDays(1));
+            _timer = new Timer(Check, null, new TimeSpan(dueTime), TimeSpan.FromMinutes(1));
         }
 
-        private void CheckPayments(object state)
+        private void Check(object state)
+        {
+            GlobalValues.BankDateTime = GlobalValues.BankDateTime.AddDays(1);
+            CheckCreditPayments();
+            CheckDepositPercents();
+        }
+
+        private void CheckCreditPayments()
         {
             using (var scope = CustomDependencyResolver.Resolver.BeginScope())
             {
-                var calculationDebtService = scope.GetService(typeof (ICalculationDebtService)) as ICalculationDebtService;
+                var calculationDebtService = scope.GetService(typeof(ICalculationDebtService)) as ICalculationDebtService;
                 if (calculationDebtService != null)
                 {
                     calculationDebtService.CheckPayments();
+                }
+            }
+        }
+
+        private void CheckDepositPercents()
+        {
+            using (var scope = CustomDependencyResolver.Resolver.BeginScope())
+            {
+                var calculationDepositPercentService =
+                    scope.GetService(typeof (ICalculationDepositPercentService)) as ICalculationDepositPercentService;
+                if (calculationDepositPercentService != null)
+                {
+                    calculationDepositPercentService.AddPercents();
                 }
             }
         }

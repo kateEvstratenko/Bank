@@ -8,6 +8,11 @@ using DAL.Interfaces;
 
 namespace BLL.Services
 {
+    public static class GlobalValues
+    {
+        public static DateTime BankDateTime { get; set; }
+    }
+
     public class CalculationDepositPercentService : BaseService, ICalculationDepositPercentService
     {
         private const double _fineForMainDebt = ProjectConstants.FineForMainDebt / 100;
@@ -17,7 +22,7 @@ namespace BLL.Services
         public void AddPercents()
         {
             var dateNow = DateTime.Now;
-//            Uow.CustomerDepositRepository.GetAll().Where(d => d.DepositPayments.Select(u => u.))
+//            Uow.CustomerDepositRepository.GetAll().Where(x => x.DepositPayments.LastOrDefault())
         }
 
         public void CheckPayments()
