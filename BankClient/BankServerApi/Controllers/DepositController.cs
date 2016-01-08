@@ -13,6 +13,7 @@ using Core;
 namespace BankServerApi.Controllers
 {
     [CheckAppToken]
+    [RoutePrefix("api/Deposit")]
     public class DepositController : ApiController
     {
         private readonly IDepositService _depositService;
