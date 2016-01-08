@@ -86,7 +86,7 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
         [Display(Name = "Фамилия")]
         public string Lastname { get; set; }
 
-        [Required]
+//        [Required]
         [Display(Name = "Отчество")]
         public string Patronymic { get; set; }
 

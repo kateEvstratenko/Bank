@@ -51,7 +51,7 @@ namespace BLL.Services
             }
             var incomeSertificatePath = _iImageService.SaveImageFromByteArray(incomeCertificate, baseUrl, creditRequest.CustomerId, ImageType.IncomeCertificate);
             creditRequest.IncomeCertificatePath = incomeSertificatePath;
-            
+
             var creditRequestDal = Mapper.Map<CreditRequest>(creditRequest);
             creditRequestDal.Credit = null;
             creditRequestDal.Customer = null;
@@ -88,6 +88,8 @@ namespace BLL.Services
         {
             return Mapper.Map<CustomPagedList<DomainCreditRequest>>(
                 _iUnitOfWork.CreditRequestRepository.GetAll()
+                .Where(cr => cr.CreditRequestStatuses.Any(s => AuthManagerService.UserManager.IsInRole(s.AppUserId, AppRoles.Security.ToString()))
+                && cr.CreditRequestStatuses.Any(s => AuthManagerService.UserManager.IsInRole(s.AppUserId, AppRoles.CreditCommitteeMember.ToString())))
                 .Where(cr => !cr.CreditRequestStatuses
                     .SelectMany(s => s.AppUser.Roles)
                     .Select(r => r.RoleId)
