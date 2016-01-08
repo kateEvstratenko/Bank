@@ -196,6 +196,7 @@
     <Compile Include="Controllers\CustomerDepositController.cs" />
     <Compile Include="Controllers\DepositController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
+    <Compile Include="Controllers\TimeController.cs" />
     <Compile Include="CustomAttributes\DateGreaterThanAttribute.cs" />
     <Compile Include="CustomAttributes\GreaterThanAttribute.cs" />
     <Compile Include="CustomAttributes\InvalidModelStateAttribute.cs" />

@@ -233,6 +233,7 @@
     <Compile Include="Controllers\CustomerCreditController.cs" />
     <Compile Include="Controllers\CreditController.cs" />
     <Compile Include="Controllers\CreditRequestController.cs" />
+    <Compile Include="Controllers\TimeController.cs" />
     <Compile Include="CustomAttributes\GreaterThanAttribute.cs" />
     <Compile Include="CustomAttributes\InvalidModelStateAttribute.cs" />
     <Compile Include="CustomAttributes\SumRangeAttribute.cs" />

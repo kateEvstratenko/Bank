@@ -44,7 +44,7 @@ namespace BLL.Services
 
         private IEnumerable<CustomerCredit> GetOverdueCredits()
         {
-            var now = DateTime.Now;
+            var now = GlobalValues.BankDateTime;
             return Uow.CustomerCreditRepository
                 .GetAll()
                 .Where(x => x.CreditPaymentPlanItems.Any(item => !item.IsPaid && now > item.StartDate))
@@ -53,7 +53,7 @@ namespace BLL.Services
 
         private IEnumerable<CreditPaymentPlanItem> GetOverduePayments(CustomerCredit credit)
         {
-            var now = DateTime.Now;
+            var now = GlobalValues.BankDateTime;
             return credit.CreditPaymentPlanItems
                 .Where(item => !item.IsPaid && now > item.StartDate)
                 .ToList();
