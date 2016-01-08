@@ -102,9 +102,11 @@ namespace BLL.Services
         {
             return Mapper.Map<CustomPagedList<DomainCreditRequest>>(
                 _iUnitOfWork.CreditRequestRepository.GetAll()
-                    .Where(cr => cr.CreditRequestStatuses
-                        .Select(s => s.AppUserId)
-                        .Contains(appUserId) && cr.Credit == null).ToCustomPagedList(pageNumber, pageSize));
+                .Where(c => !c.CustomerCredits.Any())
+//                    .Where(cr => cr.CreditRequestStatuses
+//                        .Select(s => s.AppUserId)
+//                        .Contains(appUserId) && cr.Credit == null)
+                        .ToCustomPagedList(pageNumber, pageSize));
         }
 
         public void SetStatus(string userId, int creditRequestId, CreditRequestStatusInfo statusInfo, string message)

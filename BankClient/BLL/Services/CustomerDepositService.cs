@@ -85,14 +85,14 @@ namespace BLL.Services
         public CustomPagedList<DomainCustomerDeposit> GetAll(int pageNumber, int pageSize)
         {
             var deposits = Uow.CustomerDepositRepository.GetAll();
-            var domainDeposits = Mapper.Map<CustomPagedList<DomainCustomerDeposit>>(deposits);
+            var domainDeposits = Mapper.Map<CustomPagedList<DomainCustomerDeposit>>(deposits.ToCustomPagedList(pageNumber, pageSize));
             return domainDeposits;
         }
 
         public CustomPagedList<DomainCustomerDeposit> GetAll(int customerId, int pageNumber, int pageSize)
         {
             var deposits = Uow.CustomerDepositRepository.GetAll().Where(d => d.CustomerId == customerId);
-            var domainDeposits = Mapper.Map<CustomPagedList<DomainCustomerDeposit>>(deposits);
+            var domainDeposits = Mapper.Map<CustomPagedList<DomainCustomerDeposit>>(deposits.ToCustomPagedList(pageNumber, pageSize));
             return domainDeposits;
         }
 
