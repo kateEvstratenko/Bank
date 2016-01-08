@@ -9,7 +9,7 @@ namespace BLL.Interfaces
     {
         void Add(DomainCreditRequest creditRequest, byte[] militaryId, byte[] incomeCertificate, string email, string baseUrl);
         CustomPagedList<DomainCreditRequest> GetUnconfirmed(IdentityRole role, int pageNumber, int pageSize);
-        CustomPagedList<DomainCreditRequest> Get—onfirmed(string appUserId, IdentityRole chiefRole, int pageNumber, int pageSize);
+        CustomPagedList<DomainCreditRequest> GetConfirmed(string appUserId, IdentityRole chiefRole, int pageNumber, int pageSize);
         CustomPagedList<DomainCreditRequest> GetUnconfirmedByChief(IdentityRole role, int pageNumber, int pageSize);
         CustomPagedList<DomainCreditRequest> GetConfirmedByChief(string appUserId, int pageNumber, int pageSize);
         void SetStatus(string userId, int creditRequestId, CreditRequestStatusInfo statusInfo, string message);

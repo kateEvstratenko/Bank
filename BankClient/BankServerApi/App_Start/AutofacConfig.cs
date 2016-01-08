@@ -41,6 +41,8 @@ namespace BankServerApi
             builder.RegisterType<BillService>().As<IBillService>();
             builder.RegisterType<CustomerService>().As<ICustomerService>();
             builder.RegisterType<PaymentService>().As<IPaymentService>();
+            builder.RegisterType<CalculationDepositPercentService>().As<ICalculationDepositPercentService>();
+            builder.RegisterType<CalculationDepositService>().As<ICalculationDepositService>();
             //            builder.RegisterType<DailyCalculateService>().AsSelf().SingleInstance();
 
             builder.RegisterType<AppUserRepository>().As<IAppUserRepository>();

@@ -91,9 +91,9 @@ namespace BankServerApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Route("GetСonfirmed")]
+        [Route("GetConfirmed")]
         [CheckAppToken(Roles = new[] { AppRoles.CreditCommitteeMember, AppRoles.Security })]
-        public IHttpActionResult GetСonfirmed(int? page = null)
+        public IHttpActionResult GetConfirmed(int? page = null)
         {
             try
             {
@@ -102,8 +102,8 @@ namespace BankServerApi.Controllers
 
                 const int pageSize = 10;
                 var pageNumber = page ?? 1;
-                var сonfirmedCreditRequests = _iCreditRequestService.GetСonfirmed(tokenObj.UserId, chiefRole, pageNumber, pageSize);
-                return Ok(new GetСonfirmedCreditResponse()
+                var сonfirmedCreditRequests = _iCreditRequestService.GetConfirmed(tokenObj.UserId, chiefRole, pageNumber, pageSize);
+                return Ok(new GetConfirmedCreditResponse()
                 {
                     CreditRequests = Mapper.Map<CustomPagedList<ShortCreditRequest>>(сonfirmedCreditRequests)
                 });
@@ -156,9 +156,9 @@ namespace BankServerApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Route("GetСonfirmedByChief")]
+        [Route("GetConfirmedByChief")]
         [CheckAppToken(Roles = new[] { AppRoles.CreditDepartmentChief })]
-        public IHttpActionResult GetСonfirmedByChief(int? page = null)
+        public IHttpActionResult GetConfirmedByChief(int? page = null)
         {
             try
             {
@@ -167,7 +167,7 @@ namespace BankServerApi.Controllers
                 const int pageSize = 10;
                 var pageNumber = page ?? 1;
                 var сonfirmedCreditRequests = _iCreditRequestService.GetConfirmedByChief(tokenObj.UserId, pageNumber, pageSize);
-                return Ok(new GetСonfirmedCreditResponse()
+                return Ok(new GetConfirmedCreditResponse()
                 {
                     CreditRequests = Mapper.Map<CustomPagedList<ShortCreditRequest>>(сonfirmedCreditRequests)
                 });

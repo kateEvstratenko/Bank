@@ -71,7 +71,7 @@ namespace BLL.Services
                     .Contains(role.Id)).ToCustomPagedList(pageNumber, pageSize));
         }
 
-        public CustomPagedList<DomainCreditRequest> GetСonfirmed(string appUserId, IdentityRole chiefRole, int pageNumber, int pageSize)
+        public CustomPagedList<DomainCreditRequest> GetConfirmed(string appUserId, IdentityRole chiefRole, int pageNumber, int pageSize)
         {
             return Mapper.Map<CustomPagedList<DomainCreditRequest>>(
                 _iUnitOfWork.CreditRequestRepository.GetAll()
