@@ -45,6 +45,8 @@ namespace BLL.Services
             Uow.CustomerCreditRepository.Add(Mapper.Map<CustomerCredit>(credit));
             Uow.SaveChanges();
 
+            credit.Customer = Mapper.Map<DomainCustomer>(Uow.CustomerRepository.Get(credit.CustomerId));
+            credit.Credit = Mapper.Map<DomainCredit>(Uow.CreditRepository.Get(credit.CreditId));
             new CreditDocService().FillConcreteContract(credit);
         }
         public void Delete(int id)
