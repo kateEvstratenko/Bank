@@ -205,5 +205,24 @@ namespace BankServerApi.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        [Route("GetContract")]
+        public IHttpActionResult GetContract([FromUri]int id)
+        {
+            try
+            {
+                var baseLocalhostUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
+                var contract = _iCreditRequestService.GetContract(id, baseLocalhostUrl);
+                return Ok(contract);
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
     }
 }

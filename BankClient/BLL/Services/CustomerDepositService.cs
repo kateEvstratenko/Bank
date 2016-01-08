@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using AutoMapper;
@@ -9,8 +8,8 @@ using BLL.Interfaces;
 using BLL.Models;
 using Core;
 using Core.Enums;
-using DAL.Interfaces;
 using DAL.Entities;
+using DAL.Interfaces;
 
 namespace BLL.Services
 {
@@ -107,6 +106,11 @@ namespace BLL.Services
             var domainDeposits = Mapper.Map<CustomPagedList<DomainCustomerDeposit>>(deposits.ToCustomPagedList(pageNumber, pageSize));
 
             return domainDeposits;
+        }
+
+        public string GetContract(string contractNumber, string baseUrl)
+        {
+            return string.Format("{0}/Content/DepositContracts/{1}.docx", baseUrl, contractNumber);
         }
 
         private string GenerateContractNumber()

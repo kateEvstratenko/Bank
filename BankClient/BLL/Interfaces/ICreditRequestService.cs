@@ -13,5 +13,6 @@ namespace BLL.Interfaces
         CustomPagedList<DomainCreditRequest> GetUnconfirmedByChief(IdentityRole role, int pageNumber, int pageSize);
         CustomPagedList<DomainCreditRequest> GetConfirmedByChief(string appUserId, int pageNumber, int pageSize);
         void SetStatus(string userId, int creditRequestId, CreditRequestStatusInfo statusInfo, string message);
+        string GetContract(int id, string baseUrl);
     }
 }

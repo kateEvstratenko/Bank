@@ -145,5 +145,10 @@ namespace BLL.Services
             }
             _iUnitOfWork.SaveChanges();
         }
+
+        public string GetContract(int id, string baseUrl)
+        {
+            return string.Format("{0}/Content/CreditRequestContracts/{1}.docx", baseUrl, id);
+        }
     }
 }

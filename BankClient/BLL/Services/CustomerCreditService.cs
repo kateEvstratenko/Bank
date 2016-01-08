@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using AutoMapper;
 using BLL.Classes;
@@ -7,6 +8,7 @@ using BLL.Helpers;
 using BLL.Interfaces;
 using BLL.Models;
 using Core;
+using Core.Enums;
 using DAL.Interfaces;
 using DAL.Entities;
 
@@ -100,6 +102,11 @@ namespace BLL.Services
                 throw BankClientException.ThrowUserCreditNotFound();
             }
             return Mapper.Map<DomainCustomerCredit>(userCredit);
+        }
+
+        public string GetContract(string contractNumber, string baseUrl)
+        {
+            return string.Format("{0}/Content/CreditContracts/{1}.docx", baseUrl, contractNumber);
         }
 
         private string GenerateContractNumber()
