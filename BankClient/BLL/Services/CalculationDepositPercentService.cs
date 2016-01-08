@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using BLL.Interfaces;
 using Core;
@@ -17,12 +18,28 @@ namespace BLL.Services
     {
         private const double _fineForMainDebt = ProjectConstants.FineForMainDebt / 100;
         private const double _fineForPercentDebt = ProjectConstants.FineForPercentDebt / 100;
-        public CalculationDepositPercentService(IUnitOfWork uow) : base(uow) { }
+        private ICalculationDepositService _iCalculationDepositService;
+
+        public CalculationDepositPercentService(IUnitOfWork uow,
+            ICalculationDepositService iCalculationDepositService) : base(uow)
+        {
+            _iCalculationDepositService = iCalculationDepositService;
+        }
 
         public void AddPercents()
         {
             var dateNow = DateTime.Now;
-//            Uow.CustomerDepositRepository.GetAll().Where(x => x.DepositPayments.LastOrDefault())
+            var deposits = Uow.CustomerDepositRepository.GetAll().Include(x => x.DepositPayments).ToList();
+            foreach (var deposit in deposits)
+            {
+                var date = deposit.DepositPayments.Last().DateTime;
+                var daysInMonth = DateTime.DaysInMonth(date.Year, date.Month);
+                var nextPayment = date.AddDays(daysInMonth);
+                if (nextPayment.Date == GlobalValues.BankDateTime.Date)
+                {
+//                    deposit.Bill.Sum
+                }
+            }
         }
 
         public void CheckPayments()

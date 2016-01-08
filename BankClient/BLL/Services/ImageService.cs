@@ -25,8 +25,8 @@ namespace BLL.Services
                     Directory.CreateDirectory(Path.GetDirectoryName(path));
                 }
 
-                var fullPath = string.Format(@"{0}{1}_{2}.jpg", path, userId, Guid.NewGuid());
-                image.Save(fullPath, ImageFormat.Jpeg);
+                var fullPath = string.Format(@"{0}{1}_{2}.png", path, userId, Guid.NewGuid());
+                image.Save(fullPath, ImageFormat.Png);
                 return fullPath;
             }           
         }
