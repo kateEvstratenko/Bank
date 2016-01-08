@@ -35,12 +35,12 @@ namespace BankServerApi.Controllers
         {
             try
             {
-//                var baseUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
+                var baseLocalhostUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
                 var baseUrl = System.Web.Hosting.HostingEnvironment.MapPath("~/");
                 var militaryArr = request.MilitaryId != null ? Convert.FromBase64String(request.MilitaryId) : null;
                 _iCreditRequestService.Add(Mapper.Map<DomainCreditRequest>(request), 
                     militaryArr, Convert.FromBase64String(request.IncomeCertificate),
-                    request.Email, baseUrl);
+                    request.Email, baseUrl, baseLocalhostUrl);
                 return Ok();
             }
             catch (BankClientException ex)

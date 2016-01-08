@@ -26,7 +26,7 @@ namespace BLL.Services
             _iCustomerService = iCustomerService;
         }
 
-        public void Add(DomainCreditRequest creditRequest, byte[] militaryId, byte[] incomeCertificate, string email, string baseUrl)
+        public void Add(DomainCreditRequest creditRequest, byte[] militaryId, byte[] incomeCertificate, string email, string baseUrl, string baseLocalhostUrl)
         {
             var customer = creditRequest.Customer;//_iUnitOfWork.CustomerRepository.GetCustomerByUserId(userId);
             var customerDb = _iUnitOfWork.CustomerRepository.GetAll()
@@ -46,10 +46,10 @@ namespace BLL.Services
             if (militaryId != null)
             {
                 var militaryPath = _iImageService.SaveImageFromByteArray(militaryId, baseUrl, creditRequest.CustomerId,
-                    ImageType.MilitaryId);
+                    ImageType.MilitaryId, baseLocalhostUrl);
                 creditRequest.MilitaryIdPath = militaryPath;
             }
-            var incomeSertificatePath = _iImageService.SaveImageFromByteArray(incomeCertificate, baseUrl, creditRequest.CustomerId, ImageType.IncomeCertificate);
+            var incomeSertificatePath = _iImageService.SaveImageFromByteArray(incomeCertificate, baseUrl, creditRequest.CustomerId, ImageType.IncomeCertificate, baseLocalhostUrl);
             creditRequest.IncomeCertificatePath = incomeSertificatePath;
 
             var creditRequestDal = Mapper.Map<CreditRequest>(creditRequest);
