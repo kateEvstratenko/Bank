@@ -87,13 +87,15 @@ namespace BLL.Services
         public CustomPagedList<DomainCreditRequest> GetUnconfirmedByChief(IdentityRole role, int pageNumber, int pageSize)
         {
             return Mapper.Map<CustomPagedList<DomainCreditRequest>>(
-                _iUnitOfWork.CreditRequestRepository.GetAll()
+                _iUnitOfWork.CreditRequestRepository.GetAll().ToList()
                 .Where(cr => cr.CreditRequestStatuses.Any(s => AuthManagerService.UserManager.IsInRole(s.AppUserId, AppRoles.Security.ToString()))
                 && cr.CreditRequestStatuses.Any(s => AuthManagerService.UserManager.IsInRole(s.AppUserId, AppRoles.CreditCommitteeMember.ToString())))
                 .Where(cr => !cr.CreditRequestStatuses
                     .SelectMany(s => s.AppUser.Roles)
                     .Select(r => r.RoleId)
-                    .Contains(role.Id)).ToCustomPagedList(pageNumber, pageSize));
+                    .Contains(role.Id))
+                    .AsQueryable()
+                    .ToCustomPagedList(pageNumber, pageSize));
         }
 
         public CustomPagedList<DomainCreditRequest> GetConfirmedByChief(string appUserId, int pageNumber, int pageSize)

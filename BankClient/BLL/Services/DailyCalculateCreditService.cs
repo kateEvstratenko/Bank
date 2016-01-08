@@ -13,7 +13,7 @@ namespace BLL.Services
             var dateNow = DateTime.Now;
             var mitnight = dateNow.AddMinutes(1);
             var dueTime = (mitnight - dateNow).Ticks;
-            _timer = new Timer(Check, null, new TimeSpan(dueTime), TimeSpan.FromMinutes(1));
+//            _timer = new Timer(Check, null, new TimeSpan(dueTime), TimeSpan.FromMinutes(1));
         }
 
         private void Check(object state)
