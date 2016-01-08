@@ -100,11 +100,12 @@ namespace BLL.Services
 
         public CustomPagedList<DomainCreditRequest> GetConfirmedByChief(string appUserId, int pageNumber, int pageSize)
         {
+            var chiefRoleName = AppRoles.CreditDepartmentChief.ToString();
             return Mapper.Map<CustomPagedList<DomainCreditRequest>>(
                 _iUnitOfWork.CreditRequestRepository.GetAll()
-                    .Where(cr => cr.CreditRequestStatuses
-                        .Select(s => s.AppUserId)
-                        .Contains(appUserId) && cr.Credit == null).ToCustomPagedList(pageNumber, pageSize));
+                .Where(c => !c.CustomerCredits.Any()).ToList()
+                .Where(c => c.CreditRequestStatuses.Any(s => AuthManagerService.UserManager.IsInRole(s.AppUserId, chiefRoleName)))
+                .AsQueryable().ToCustomPagedList(pageNumber, pageSize));
         }
 
         public void SetStatus(string userId, int creditRequestId, CreditRequestStatusInfo statusInfo, string message)

@@ -157,7 +157,7 @@ namespace BankServerApi.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("GetConfirmedByChief")]
-        [CheckAppToken(Roles = new[] { AppRoles.CreditDepartmentChief })]
+        [CheckAppToken(Roles = new[] { AppRoles.CreditDepartmentChief, AppRoles.Operator })]
         public IHttpActionResult GetConfirmedByChief(int? page = null)
         {
             try
