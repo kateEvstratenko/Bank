@@ -4,6 +4,12 @@ using Core.Enums;
 
 namespace DAL.Entities
 {
+    public class GlobalValues: IBaseEntity
+    {
+        public int Id { get; set; }
+        public DateTime BankDateTime { get; set; }
+    }
+
     public class Customer : IBaseEntity
     {
         public int Id { get; set; }

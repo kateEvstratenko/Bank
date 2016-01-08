@@ -12,7 +12,7 @@ namespace BLL.Services
 {
     public static class GlobalValues
     {
-        public static DateTime BankDateTime = DateTime.Now;
+        public static DateTime BankDateTime;
     }
 
     public class CalculationDepositPercentService : BaseService, ICalculationDepositPercentService

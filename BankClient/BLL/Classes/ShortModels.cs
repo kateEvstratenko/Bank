@@ -27,7 +27,9 @@ namespace BLL.Classes
         public bool IsPaid { get;set; }
 
         public int CustomerId { get; set; }
+        public ShortCustomer Customer { get; set; }
         public int DepositId { get; set; }
+        public ShortDeposit Deposit { get; set; }
         public int BillId { get; set; }
     }
 

@@ -15,6 +15,7 @@ namespace DAL.Interfaces
         ICreditPaymentPlanItemRepository CreditPaymentPlanItemRepository { get; }
         ICreditPaymentRepository CreditPaymentRepository { get; }
         IBillRepository BillRepository { get; }
+        IGlobalValuesRepository GlobalValuesRepository { get; }
         void SaveChanges();
         void Reload<T>(T entity) where T : class, IBaseEntity;
     }

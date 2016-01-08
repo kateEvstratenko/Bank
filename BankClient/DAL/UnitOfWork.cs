@@ -18,6 +18,7 @@ namespace DAL
         private ICreditPaymentPlanItemRepository _iCretitPaymentPlanItemRepository;
         private ICreditPaymentRepository _iCreditPaymentRepository;
         private IBillRepository _iBillRepository;
+        private IGlobalValuesRepository _iGlobalValuesRepository;
 
         public UnitOfWork(BankContext context)
         {
@@ -77,6 +78,11 @@ namespace DAL
         public IBillRepository BillRepository
         {
             get { return (_iBillRepository ?? (_iBillRepository = new BillRepository(_context))); }
+        }
+
+        public IGlobalValuesRepository GlobalValuesRepository
+        {
+            get { return (_iGlobalValuesRepository ?? (_iGlobalValuesRepository = new GlobalValuesRepository(_context))); }
         }
 
         public void SaveChanges()
