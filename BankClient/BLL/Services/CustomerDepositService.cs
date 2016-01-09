@@ -16,11 +16,15 @@ namespace BLL.Services
     public class CustomerDepositService : BaseService, ICustomerDepositService
     {
         public CustomerDepositService(IUnitOfWork uow) : base(uow) { }
-        public void Add(DomainCustomerDeposit deposit)
+        public void Add(DomainCustomerDeposit customerDeposit, int monthCount)
         {
-            var customer = deposit.Customer;//_iUnitOfWork.CustomerRepository.GetCustomerByUserId(userId);
+            var domainDeposit = Mapper.Map<DomainDeposit>(Uow.DepositRepository.Get(customerDeposit.DepositId));
+            Validate(customerDeposit, domainDeposit, monthCount);
+
+            customerDeposit.EndDate = customerDeposit.StartDate.AddMonths(monthCount);
+            var customer = customerDeposit.Customer;//_iUnitOfWork.CustomerRepository.GetCustomerByUserId(userId);
             var customerDb = Uow.CustomerRepository.GetAll()
-                .FirstOrDefault(c => c.IdentificationNumber == deposit.Customer.IdentificationNumber);
+                .FirstOrDefault(c => c.IdentificationNumber == customerDeposit.Customer.IdentificationNumber);
             if (customerDb == null)
             {
                 customerDb = Mapper.Map<Customer>(customer);
@@ -28,37 +32,37 @@ namespace BLL.Services
                 Uow.SaveChanges();
             }
 
-            deposit.StartDate = GlobalValues.BankDateTime;
-            deposit.ContractNumber = GenerateContractNumber();
-            deposit.Bill = new DomainBill
+            customerDeposit.StartDate = GlobalValues.BankDateTime;
+            customerDeposit.ContractNumber = GenerateContractNumber();
+            customerDeposit.Bill = new DomainBill
             {
                 Number = GenerateBillNumber(),
                 CustomerId = customerDb.Id,
-                Sum = deposit.InitialSum
+                Sum = customerDeposit.InitialSum
             };
 
-            deposit.DepositPayments = new List<DomainDepositPayment>()
+            customerDeposit.DepositPayments = new List<DomainDepositPayment>()
             {
                 new DomainDepositPayment()
                 {
                     Currency = Currency.Blr,
-                    DateTime = deposit.StartDate,
-                    Sum = deposit.InitialSum,
-                    DestinationBill = deposit.Bill
+                    DateTime = customerDeposit.StartDate,
+                    Sum = customerDeposit.InitialSum,
+                    DestinationBill = customerDeposit.Bill
                 }
             };
             var bankBill = Uow.BillRepository
                 .GetByNumber(ConfigurationManager.AppSettings.Get("BankBillNumber"));
-            bankBill.Sum += deposit.InitialSum;
+            bankBill.Sum += customerDeposit.InitialSum;
 
-            var dbDeposit = Mapper.Map<CustomerDeposit>(deposit);
+            var dbDeposit = Mapper.Map<CustomerDeposit>(customerDeposit);
             Uow.CustomerDepositRepository.Add(dbDeposit);
             Uow.SaveChanges();
             
 //            Uow.Reload(dbDeposit);
 //            deposit = Mapper.Map<DomainCustomerDeposit>(Uow.DepositRepository.Get(dbDeposit.Id));
-            deposit.Deposit = Mapper.Map<DomainDeposit>(Uow.DepositRepository.Get(deposit.DepositId));
-            new DepositDocService().FillConcreteContract(deposit);
+            customerDeposit.Deposit = Mapper.Map<DomainDeposit>(Uow.DepositRepository.Get(customerDeposit.DepositId));
+            new DepositDocService().FillConcreteContract(customerDeposit);
         }
 
         public void Delete(int id)
@@ -121,6 +125,29 @@ namespace BLL.Services
         private string GenerateBillNumber()
         {
             return RandomHelper.GetRandomString(10);
+        }
+
+        private void Validate(DomainCustomerDeposit customerDeposit, DomainDeposit deposit, int monthCount)
+        {
+            if (customerDeposit.InitialSum < deposit.MinSum)
+            {
+                throw BankClientException.ThrowSumLessThanMin();
+            }
+
+            if (customerDeposit.InitialSum > deposit.MaxSum)
+            {
+                throw BankClientException.ThrowSumMoreThanMax();
+            }
+
+            if (monthCount < deposit.MinMonthPeriod)
+            {
+                throw BankClientException.ThrowMonthLessThanMin();
+            }
+
+            if (monthCount > deposit.MaxMonthPeriod)
+            {
+                throw BankClientException.ThrowMonthMoreThanMax();
+            }
         }
     }
 }

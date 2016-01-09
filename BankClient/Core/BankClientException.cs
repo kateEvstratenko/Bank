@@ -74,5 +74,25 @@ namespace Core
         {
             return new BankClientException(14, "Недостаточно средств банка для проведения операции.");
         }
+
+        public static BankClientException ThrowSumLessThanMin()
+        {
+            return new BankClientException(15, "Сумма не может быть меньше минимальной.");
+        }
+
+        public static BankClientException ThrowSumMoreThanMax()
+        {
+            return new BankClientException(16, "Сумма не может быть больше максимальной.");
+        }
+
+        public static BankClientException ThrowMonthLessThanMin()
+        {
+            return new BankClientException(17, "Количество месяцев не может быть меньше минимального.");
+        }
+
+        public static BankClientException ThrowMonthMoreThanMax()
+        {
+            return new BankClientException(18, "Количество месяцев не может быть больше максимального.");
+        }
     }
 }

@@ -28,6 +28,9 @@ namespace BLL.Services
 
         public void Add(DomainCreditRequest creditRequest, byte[] militaryId, byte[] incomeCertificate, string email, string baseUrl, string baseLocalhostUrl)
         {
+            creditRequest.Credit = Mapper.Map<DomainCredit>(_iUnitOfWork.CreditRepository.Get(creditRequest.CreditId));
+            Validate(creditRequest);
+
             var customer = creditRequest.Customer;//_iUnitOfWork.CustomerRepository.GetCustomerByUserId(userId);
             var customerDb = _iUnitOfWork.CustomerRepository.GetAll()
                 .FirstOrDefault(c => c.IdentificationNumber == creditRequest.Customer.IdentificationNumber);
@@ -41,7 +44,6 @@ namespace BLL.Services
             {
                 creditRequest.CustomerId = customerDb.Id;
             }
-            creditRequest.Credit = Mapper.Map<DomainCredit>(_iUnitOfWork.CreditRepository.Get(creditRequest.CreditId));
 
             if (militaryId != null)
             {
@@ -156,6 +158,29 @@ namespace BLL.Services
         public string GetContract(int id, string baseUrl)
         {
             return string.Format("{0}/Content/CreditRequestContracts/{1}.docx", baseUrl, id);
+        }
+
+        private void Validate(DomainCreditRequest creditRequest)
+        {
+            if (creditRequest.Sum < creditRequest.Credit.MinSum)
+            {
+                throw BankClientException.ThrowSumLessThanMin();
+            }
+
+            if (creditRequest.Sum > creditRequest.Credit.MaxSum)
+            {
+                throw BankClientException.ThrowSumMoreThanMax();
+            }
+
+            if (creditRequest.MonthCount < creditRequest.Credit.MinMonthPeriod)
+            {
+                throw BankClientException.ThrowMonthLessThanMin();
+            }
+
+            if (creditRequest.MonthCount > creditRequest.Credit.MaxMonthPeriod)
+            {
+                throw BankClientException.ThrowMonthMoreThanMax();
+            }
         }
     }
 }
