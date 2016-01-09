@@ -207,6 +207,10 @@
     <Compile Include="Migrations\201601080942034_bankDateAdded.Designer.cs">
       <DependentUpon>201601080942034_bankDateAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601091751336_IsClosedToCreditAdded.cs" />
+    <Compile Include="Migrations\201601091751336_IsClosedToCreditAdded.Designer.cs">
+      <DependentUpon>201601091751336_IsClosedToCreditAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
@@ -295,6 +299,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601080942034_bankDateAdded.resx">
       <DependentUpon>201601080942034_bankDateAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601091751336_IsClosedToCreditAdded.resx">
+      <DependentUpon>201601091751336_IsClosedToCreditAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

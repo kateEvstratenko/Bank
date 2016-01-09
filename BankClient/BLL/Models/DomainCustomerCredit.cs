@@ -15,6 +15,8 @@ namespace BLL.Models
         public Currency Currency { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public bool IsClosed { get; set; }
+
         public int CustomerId { get; set; }
         public int CreditId { get; set; }
         public int CreditRequestId { get; set; }
