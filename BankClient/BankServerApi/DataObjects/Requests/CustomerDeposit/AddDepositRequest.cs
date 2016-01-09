@@ -17,10 +17,10 @@ namespace BankServerApi.DataObjects.Requests.CustomerDeposit
         [Display(Name = "Валюта")]
         public Currency Currency { get; set; }
 
-        [Required]
-        [Display(Name = "Дата открытия депозита")]
-        [DataType(DataType.Date)]
-        public DateTime StartDate { get; set; }
+//        [Required]
+//        [Display(Name = "Дата открытия депозита")]
+//        [DataType(DataType.Date)]
+//        public DateTime StartDate { get; set; }
 
         [Required]
         [Display(Name = "Период, мес")]

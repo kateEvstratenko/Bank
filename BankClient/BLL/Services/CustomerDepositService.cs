@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using AutoMapper;
@@ -21,6 +22,7 @@ namespace BLL.Services
             var domainDeposit = Mapper.Map<DomainDeposit>(Uow.DepositRepository.Get(customerDeposit.DepositId));
             Validate(customerDeposit, domainDeposit, monthCount);
 
+            customerDeposit.StartDate = DateTime.Now;
             customerDeposit.EndDate = customerDeposit.StartDate.AddMonths(monthCount);
             var customer = customerDeposit.Customer;//_iUnitOfWork.CustomerRepository.GetCustomerByUserId(userId);
             var customerDb = Uow.CustomerRepository.GetAll()
