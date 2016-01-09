@@ -225,6 +225,7 @@
     <Compile Include="CheckTokenAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CalculationCreditController.cs" />
+    <Compile Include="Controllers\CalculationDepositController.cs" />
     <Compile Include="Controllers\CreditPaymentPlanItemController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\CustomerDepositController.cs" />
@@ -253,6 +254,7 @@
     <Compile Include="Models\CalculationModels\CalculationCreditModelForPaymentPlan.cs" />
     <Compile Include="Models\CalculationModels\CalculationIncomeSumModel.cs" />
     <Compile Include="Models\CalculationModels\CalculationMaxCreditSumModel.cs" />
+    <Compile Include="Models\CalculationModels\DepositModelForCapitalizationPlan.cs" />
     <Compile Include="Models\CreditBindingModel.cs" />
     <Compile Include="Models\CalculationModels\CreditPaymentPlanViewModel.cs" />
     <Compile Include="Models\DepositBindingModel.cs" />

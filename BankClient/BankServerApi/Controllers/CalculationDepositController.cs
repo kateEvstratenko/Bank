@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using AutoMapper;
+using BankServerApi.Models.CalculationModels;
 using BLL.Interfaces;
-using BLL.Models;
-using ClientApi.Models.CalculationModels;
 using Core;
 
-namespace ClientApi.Controllers
+namespace BankServerApi.Controllers
 {
-//    [CheckToken]
+    [CheckAppToken]
     public class CalculationDepositController : ApiController
     {
         private readonly ICalculationDepositService calculationDepositService;
-        
+
         public CalculationDepositController(ICalculationDepositService iCalculationDepositService)
             :base()
         {
