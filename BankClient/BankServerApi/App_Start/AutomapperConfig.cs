@@ -23,6 +23,7 @@ namespace BankServerApi
 
             Mapper.CreateMap<DomainCreditPaymentPlanItem, CreditPaymentPlanViewModel>();
             Mapper.CreateMap<DomainCustomerCredit, ShortCustomerCredit>();
+            Mapper.CreateMap<DomainCustomerDeposit, ShortCustomerDeposit>();
             Mapper.CreateMap<DomainCredit, ShortCredit>();
             Mapper.CreateMap<DomainCreditRequest, ShortCreditRequest>();
             Mapper.CreateMap<DomainDeposit, ShortDeposit>();
@@ -53,15 +54,7 @@ namespace BankServerApi
             Mapper.CreateMap<Deposit, ShortDeposit>().ReverseMap();
             Mapper.CreateMap<Customer, ShortCustomer>().ReverseMap();
             Mapper.CreateMap<Address, ShortAddress>().ReverseMap();
-            Mapper.CreateMap<AppUser, ShortAppUser>().AfterMap((user, shortUser) =>
-            {
-//                var role = user.Roles.FirstOrDefault();
-//                if (role != null)
-//                {
-//                    shortUser.RoleName = Rolem
-//                }
-            });
-            Mapper.CreateMap<ShortAppUser, AppUser>();
+            Mapper.CreateMap<AppUser, ShortAppUser>().ReverseMap();
         }
     }
 }   
