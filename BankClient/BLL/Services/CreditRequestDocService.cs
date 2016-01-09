@@ -56,7 +56,7 @@ namespace BLL.Services
                     var body = wordDoc.MainDocumentPart.Document.Body;
                     var runs = body.Descendants<Run>().ToList();
                     var i = 0;
-                    var dateNow = DateTime.Now;
+                    var dateNow = GlobalValues.BankDateTime;
 
                     //day & month
                     FindAndReplace(ref i, runs, DaymonthPlace, dateNow.ToString("dd MM"));//customerDeposit.StartDate.ToString("M"));

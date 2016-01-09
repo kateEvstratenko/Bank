@@ -20,7 +20,7 @@ namespace BLL.Services
         //платеж по кредиту
         public void Add(string contractNumber, double sum)
         {
-            var startPay = DateTime.Now.AddDays(ProjectConstants.DayCountForStartPay);
+            var startPay = GlobalValues.BankDateTime.AddDays(ProjectConstants.DayCountForStartPay);
             var customerCredit = _iUnitOfWork.CustomerCreditRepository.GetByContractNumber(contractNumber);
             var currentPaymentPlan = customerCredit
                 .CreditPaymentPlanItems
@@ -76,7 +76,7 @@ namespace BLL.Services
                 DelayPercentSum = percentDebtSum,
                 CreditPaymentPlanItemId = plannedPayment.Id,
                 Currency = Currency.Blr,
-                DateTime = DateTime.Now
+                DateTime = GlobalValues.BankDateTime
             };
         }
 

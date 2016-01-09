@@ -12,7 +12,7 @@ namespace BLL.Services
 
         public DailyCalculateService()
         {
-            var dateNow = DateTime.Now;
+            var dateNow = GlobalValues.BankDateTime;
             using (var scope = CustomDependencyResolver.Resolver.BeginScope())
             {
                 var uow = scope.GetService(typeof(IUnitOfWork)) as IUnitOfWork;

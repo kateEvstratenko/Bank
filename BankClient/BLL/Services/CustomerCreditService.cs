@@ -20,14 +20,15 @@ namespace BLL.Services
         public void Add(int creditRequestId)
         {
             var creditRequest = Uow.CreditRequestRepository.Get(creditRequestId);
+            var dateNow = GlobalValues.BankDateTime;
             var credit = new DomainCustomerCredit()
             {
                 CreditId = creditRequest.CreditId,
                 CreditSum = creditRequest.Sum,
                 Currency = creditRequest.Currency,
                 CustomerId = creditRequest.CustomerId,
-                StartDate = DateTime.Now.Date,
-                EndDate = DateTime.Now.Date.AddMonths(creditRequest.MonthCount),
+                StartDate = dateNow.Date,
+                EndDate = dateNow.Date.AddMonths(creditRequest.MonthCount),
                 ContractNumber = GenerateContractNumber(),
                 Bill = new DomainBill()
                 {
