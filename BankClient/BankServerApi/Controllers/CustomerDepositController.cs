@@ -69,7 +69,9 @@ namespace BankServerApi.Controllers
         {
             try
             {
-                _customerDepositService.Add(Mapper.Map<DomainCustomerDeposit>(request));
+                var domainCustomerDeposit = Mapper.Map<DomainCustomerDeposit>(request);
+                domainCustomerDeposit.EndDate = domainCustomerDeposit.StartDate.AddMonths(request.MonthCount);
+                _customerDepositService.Add(domainCustomerDeposit);
                 return Ok();
             }
             catch (BankClientException ex)

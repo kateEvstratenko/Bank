@@ -23,10 +23,9 @@ namespace BankServerApi.DataObjects.Requests.CustomerDeposit
         public DateTime StartDate { get; set; }
 
         [Required]
-        [Display(Name = "Дата закрытия депозита")]
-        [DataType(DataType.Date)]
-        [GreaterThan("StartDate", "Дата закрытия депозита не может быть раньше даты открытия.")]
-        public DateTime EndDate { get; set; }
+        [Display(Name = "Период, мес")]
+        [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}.")]
+        public int MonthCount { get; set; }
 
         [Required]
         [Display(Name = "ИД депозита")]
