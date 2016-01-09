@@ -26,12 +26,13 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using WebGrease.Css.Extensions;
 
 namespace BankServerApi.Controllers
 {
     //    [Authorize]
     [RoutePrefix("api/Account")]
-//    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    //    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
@@ -128,7 +129,7 @@ namespace BankServerApi.Controllers
                 return InternalServerError(ex);
             }
         }
-        
+
         // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
         [Route("ManageInfo")]
         public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
@@ -171,6 +172,7 @@ namespace BankServerApi.Controllers
 
         // POST api/Account/ChangePassword
         [Route("ChangePassword")]
+        [CheckAppToken]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
             try
@@ -180,9 +182,9 @@ namespace BankServerApi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                IdentityResult result =
-                    await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
-                        model.NewPassword);
+                var tokenObj = new ParsedTokenHelper().GetParsedToken(Request.Properties);
+                IdentityResult result = await UserManager.ChangePasswordAsync(tokenObj.UserId, model.OldPassword,
+                    model.NewPassword);
                 IHttpActionResult errorResult = GetErrorResult(result);
 
                 if (errorResult != null)
@@ -466,23 +468,23 @@ namespace BankServerApi.Controllers
             return Ok();
         }
 
-//        [AllowAnonymous]
-//        [HttpGet]
-//        public async Task<bool> ConfirmEmail(string token, string email)
-//        {
-//            var user = UserManager.FindById(token);
-//            if (user == null)
-//            {
-//                return false;
-//            }
-//            if (user.Email != email)
-//            {
-//                return false;
-//            }
-//            user.EmailConfirmed = true;
-//            await UserManager.UpdateAsync(user);
-//            return true;
-//        }
+        //        [AllowAnonymous]
+        //        [HttpGet]
+        //        public async Task<bool> ConfirmEmail(string token, string email)
+        //        {
+        //            var user = UserManager.FindById(token);
+        //            if (user == null)
+        //            {
+        //                return false;
+        //            }
+        //            if (user.Email != email)
+        //            {
+        //                return false;
+        //            }
+        //            user.EmailConfirmed = true;
+        //            await UserManager.UpdateAsync(user);
+        //            return true;
+        //        }
 
         [CheckAppToken(Roles = new[] { AppRoles.Admin })]
         [HttpDelete]
@@ -507,7 +509,7 @@ namespace BankServerApi.Controllers
 
         [CheckAppToken(Roles = new[] { AppRoles.Admin })]
         [Route("GetAll")]
-//        [AllowAnonymous]
+        //        [AllowAnonymous]
         public IHttpActionResult GetAll([FromUri]int? page = null)
         {
             try
@@ -515,14 +517,19 @@ namespace BankServerApi.Controllers
                 var pageNumber = page ?? 1;
                 const int pageSize = 10;
 
-                var appUsers = Mapper.Map<CustomPagedList<ShortAppUser>>(UserManager.Users.ToList()
-                    .Where(u => u.Roles.Count > 0 && UserManager.IsInRole(u.Id, AppRoles.Admin.ToString()))
+                var appUsers = UserManager.Users.ToList()
+                    .Where(u => u.Roles.Count > 0 && !UserManager.IsInRole(u.Id, AppRoles.Admin.ToString()))
                     .OrderBy(x => x.Lastname)
                     .ThenBy(x => x.Firstname)
-                    .OrderBy(x => x.Patronymic)
-                    .AsQueryable()
-                    .ToCustomPagedList(pageNumber, pageSize));
-                return Ok(appUsers);
+                    .ThenBy(x => x.Patronymic).ToList();
+                var shortAppUsers = Mapper.Map<IList<ShortAppUser>>(appUsers);
+                shortAppUsers.ForEach(u =>
+                {
+                    var roles = UserManager.GetRoles(u.Id);
+                    u.RoleName = roles.Any() ? roles.First() : "";
+                });
+                var result = Mapper.Map<CustomPagedList<ShortAppUser>>(shortAppUsers.AsQueryable().ToCustomPagedList(pageNumber, pageSize));
+                return Ok(result);
             }
             catch (BankClientException ex)
             {

@@ -182,8 +182,6 @@ namespace BankServerApi.Controllers
             }
         }
 
-
-
         [HttpPost]
         [Route("SetStatus")]
         [CheckAppToken(Roles = new[] { AppRoles.CreditCommitteeMember, AppRoles.CreditDepartmentChief, AppRoles.Security })]

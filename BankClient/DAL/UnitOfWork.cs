@@ -4,7 +4,7 @@ using DAL.Repositories;
 
 namespace DAL
 {
-    public class UnitOfWork: IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly BankContext _context;
         private IAppUserRepository _iAppUserRepository;
@@ -12,6 +12,7 @@ namespace DAL
         private IDepositRepository _iDepositRepository;
         private ITokenRepository _iTokenRepository;
         private ICreditRequestRepository _iCreditRequestRepository;
+        private ICreditRequestStatusRepository _iCreditRequestStatusRepository;
         private ICustomerRepository _iCustomerRepository;
         private ICustomerCreditRepository _iCustomerCreditRepository;
         private ICustomerDepositRepository _iCustomerDepositRepository;
@@ -32,17 +33,25 @@ namespace DAL
 
         public ICustomerRepository CustomerRepository
         {
-            get { return (_iCustomerRepository ?? (_iCustomerRepository = new CustomerRepository(_context)));}
+            get { return (_iCustomerRepository ?? (_iCustomerRepository = new CustomerRepository(_context))); }
         }
 
         public ICreditPaymentPlanItemRepository CreditPaymentPlanItemRepository
         {
-            get { return (_iCretitPaymentPlanItemRepository ?? (_iCretitPaymentPlanItemRepository = new CreditPaymentPlanItemRepository(_context)));  }
+            get { return (_iCretitPaymentPlanItemRepository ?? (_iCretitPaymentPlanItemRepository = new CreditPaymentPlanItemRepository(_context))); }
         }
 
         public ICreditPaymentRepository CreditPaymentRepository
         {
             get { return (_iCreditPaymentRepository ?? (_iCreditPaymentRepository = new CreditPaymentRepository(_context))); }
+        }
+
+        public ICreditRequestStatusRepository CreditRequestStatusRepository
+        {
+            get
+            {
+                return (_iCreditRequestStatusRepository ?? (_iCreditRequestStatusRepository = new CreditRequestStatusRepository(_context)));
+            }
         }
 
         public ICreditRepository CreditRepository
@@ -90,7 +99,7 @@ namespace DAL
             _context.SaveChanges();
         }
 
-        public void Reload<T>(T entity) where T:class, IBaseEntity
+        public void Reload<T>(T entity) where T : class, IBaseEntity
         {
             _context.Entry(entity).Reload();
         }

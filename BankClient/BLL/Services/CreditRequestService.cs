@@ -65,7 +65,7 @@ namespace BLL.Services
         {
             return Mapper.Map<CustomPagedList<DomainCreditRequest>>(
                 _iUnitOfWork.CreditRequestRepository.GetAll()
-                .Where(cr => !cr.CreditRequestStatuses
+                    .Where(cr => !cr.CreditRequestStatuses
                     .SelectMany(s => s.AppUser.Roles)
                     .Select(r => r.RoleId)
                     .Contains(role.Id)).ToCustomPagedList(pageNumber, pageSize));
@@ -131,8 +131,15 @@ namespace BLL.Services
             var existingStatus = creditRequest.CreditRequestStatuses.FirstOrDefault(cs => cs.AppUserId == userId);
             if (existingStatus != null)
             {
-                existingStatus.Info = statusInfo;
-                existingStatus.Message = message;
+                if (statusInfo == CreditRequestStatusInfo.None)
+                {
+                    _iUnitOfWork.CreditRequestStatusRepository.Delete(existingStatus.Id);
+                }
+                else
+                {
+                    existingStatus.Info = statusInfo;
+                    existingStatus.Message = message;
+                }
             }
             else
             {

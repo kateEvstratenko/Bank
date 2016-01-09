@@ -50,7 +50,8 @@ namespace BankServerApi
             builder.RegisterType<DepositRepository>().As<IDepositRepository>();
             builder.RegisterType<TokenRepository>().As<ITokenRepository>();
             builder.RegisterType<CreditRequestRepository>().As<ICreditRequestRepository>();
-            builder.RegisterType<CreditPaymentPlanItemRepository>().As<ICreditPaymentPlanItemRepository>();
+            builder.RegisterType<CreditRequestRepository>().As<ICreditRequestRepository>();
+            builder.RegisterType<CreditRequestStatusRepository>().As<ICreditRequestStatusRepository>();
             builder.RegisterType<CustomerRepository>().As<ICustomerRepository>();
             builder.RegisterType<CustomerCreditRepository>().As<ICustomerCreditRepository>();
             builder.RegisterType<CustomerDepositRepository>().As<ICustomerDepositRepository>();

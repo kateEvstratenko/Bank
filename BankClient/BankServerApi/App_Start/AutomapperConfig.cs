@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using BankServerApi.DataObjects.Requests.CreditRequest;
 using BankServerApi.DataObjects.Requests.CustomerDeposit;
 using BankServerApi.Models;
@@ -52,7 +53,15 @@ namespace BankServerApi
             Mapper.CreateMap<Deposit, ShortDeposit>().ReverseMap();
             Mapper.CreateMap<Customer, ShortCustomer>().ReverseMap();
             Mapper.CreateMap<Address, ShortAddress>().ReverseMap();
-            Mapper.CreateMap<AppUser, ShortAppUser>().ReverseMap();
+            Mapper.CreateMap<AppUser, ShortAppUser>().AfterMap((user, shortUser) =>
+            {
+//                var role = user.Roles.FirstOrDefault();
+//                if (role != null)
+//                {
+//                    shortUser.RoleName = Rolem
+//                }
+            });
+            Mapper.CreateMap<ShortAppUser, AppUser>();
         }
     }
 }   

@@ -13,27 +13,27 @@ namespace Core
 
         public static BankClientException ThrowWrongTokenPartsCount()
         {
-            return new BankClientException(2, "Tokenparts count is wrong.");
+            return new BankClientException(2, "Неверный формат токена.");
         }
 
         public static BankClientException ThrowInvalidToken()
         {
-            return new BankClientException(3, "Token is invalid.");
+            return new BankClientException(3, "Невалидный токен.");
         }
 
         public static BankClientException ThrowEmployeeIsNull()
         {
-            return new BankClientException(4, "Employee is null.");
+            return new BankClientException(4, "Сотрудника не существует.");
         }
 
         public static BankClientException ThrowInvalidCredentials()
         {
-            return new BankClientException(5, "Credentials are invalid.");
+            return new BankClientException(5, "Неверное имя пользователя и/или пароль.");
         }
 
         public static BankClientException ThrowEmailNotConfirmed()
         {
-            return new BankClientException(6, "Email is not confirmed.");
+            return new BankClientException(6, "Электронный адрес не подтвержден.");
         }
 
         public static BankClientException ThrowAutofacError(string message)
@@ -42,22 +42,22 @@ namespace Core
         }
         public static BankClientException ThrowAuthorizationError()
         {
-            return new BankClientException(8, "Authorization has been denied for this request.");
+            return new BankClientException(8, "Отказано в доступе.");
         }
 
         public static BankClientException ThrowUserNotRegistered()
         {
-            return new BankClientException(9, "User is not registered.");
+            return new BankClientException(9, "Пользователь не зарегистрирован.");
         }
 
         public static BankClientException ThrowUserLockout()
         {
-            return new BankClientException(10, "User is lockout.");
+            return new BankClientException(10, "Пользователь заблокирован. Попробуйте позднее.");
         }
 
         public static BankClientException ThrowCannotSetStatus()
         {
-            return new BankClientException(11, "Can't set status for this credit request.");
+            return new BankClientException(11, "Невозможно установить статус для этой заявки.");
         }
 
         public static BankClientException ThrowNotPayment()
@@ -68,6 +68,11 @@ namespace Core
         public static BankClientException ThrowUserCreditNotFound()
         {
             return new BankClientException(13, "Кредита с таким номером договора не существует.");
+        }
+
+        public static BankClientException ThrowNotHaveMoney()
+        {
+            return new BankClientException(14, "Недостаточно средств банка для проведения операции.");
         }
     }
 }

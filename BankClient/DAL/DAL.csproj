@@ -106,6 +106,7 @@
     <Compile Include="Entities\AppUser.cs" />
     <Compile Include="Interfaces\IBillRepository.cs" />
     <Compile Include="Interfaces\ICreditPaymentPlanItemRepository.cs" />
+    <Compile Include="Interfaces\ICreditRequestStatusRepository.cs" />
     <Compile Include="Interfaces\ICustomerCreditRepository.cs" />
     <Compile Include="Interfaces\ICustomerDepositRepository.cs" />
     <Compile Include="Interfaces\ICustomerRepository.cs" />
@@ -212,6 +213,7 @@
     <Compile Include="Repositories\BillRepository.cs" />
     <Compile Include="Repositories\CreditPaymentPlanItemRepository.cs" />
     <Compile Include="Repositories\CreditRepository.cs" />
+    <Compile Include="Repositories\CreditRequestStatusRepository.cs" />
     <Compile Include="Repositories\CustomerCreditRepository.cs" />
     <Compile Include="Repositories\CustomerDepositRepository.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />

@@ -38,6 +38,10 @@ namespace BLL.Services
                 CreditRequestId = creditRequestId
             };
             var bankBill = Uow.BillRepository.GetByNumber(ConfigurationManager.AppSettings.Get("BankBillNumber"));
+            if (bankBill.Sum - creditRequest.Sum < 0)
+            {
+                throw BankClientException.ThrowNotHaveMoney();
+            }
             bankBill.Sum -= creditRequest.Sum;
 
             var paymentPlan = new CalculationCreditService().CalculatePaymentPlan(credit.CreditSum,

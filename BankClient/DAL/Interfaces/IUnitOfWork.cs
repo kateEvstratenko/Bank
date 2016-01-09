@@ -8,6 +8,7 @@ namespace DAL.Interfaces
         ICustomerRepository CustomerRepository { get; }
         ITokenRepository TokenRepository { get; }
         ICreditRequestRepository CreditRequestRepository { get; }
+        ICreditRequestStatusRepository CreditRequestStatusRepository { get; }
         ICreditRepository CreditRepository { get; }
         IDepositRepository DepositRepository { get; }
         ICustomerCreditRepository CustomerCreditRepository { get; }
