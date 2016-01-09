@@ -22,7 +22,7 @@ namespace BLL.Services
             var domainDeposit = Mapper.Map<DomainDeposit>(Uow.DepositRepository.Get(customerDeposit.DepositId));
             Validate(customerDeposit, domainDeposit, monthCount);
 
-            customerDeposit.StartDate = DateTime.Now;
+            customerDeposit.StartDate = GlobalValues.BankDateTime;
             customerDeposit.EndDate = customerDeposit.StartDate.AddMonths(monthCount);
             var customer = customerDeposit.Customer;//_iUnitOfWork.CustomerRepository.GetCustomerByUserId(userId);
             var customerDb = Uow.CustomerRepository.GetAll()
