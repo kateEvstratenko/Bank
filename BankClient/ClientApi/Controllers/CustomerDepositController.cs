@@ -39,5 +39,25 @@ namespace ClientApi.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        [Route("GetContract")]
+        [CheckToken]
+        public IHttpActionResult GetContract(string contractNumber)
+        {
+            try
+            {
+                var baseLocalhostUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
+                var contract = _customerDepositService.GetContract(contractNumber, baseLocalhostUrl);
+                return Ok(contract);
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
     }
 }

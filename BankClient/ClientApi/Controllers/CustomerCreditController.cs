@@ -38,5 +38,43 @@ namespace ClientApi.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        [HttpGet]
+        [Route("GetByContractNumber")]
+        public IHttpActionResult GetByContractNumber(string contractNumber)
+        {
+            try
+            {
+                var customerCredit = _customerCreditService.GetByContractNumber(contractNumber);
+                return Ok(customerCredit);
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("GetContract")]
+        public IHttpActionResult GetContract(string contractNumber)
+        {
+            try
+            {
+                var baseLocalhostUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
+                var contract = _customerCreditService.GetContract(contractNumber, baseLocalhostUrl);
+                return Ok(contract);
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
     }
 }
