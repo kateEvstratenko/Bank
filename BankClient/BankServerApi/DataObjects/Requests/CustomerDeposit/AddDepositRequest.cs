@@ -34,5 +34,10 @@ namespace BankServerApi.DataObjects.Requests.CustomerDeposit
         [Required]
         [Display(Name = "Клиент")]
         public CustomerBindingModel Customer { get; set; }
+
+        [Required]
+        [Display(Name = "Адрес электронной почты")]
+        [EmailAddress(ErrorMessage = "Неверный формат адреса электронной почты")]
+        public string Email { get; set; }
     }
 }

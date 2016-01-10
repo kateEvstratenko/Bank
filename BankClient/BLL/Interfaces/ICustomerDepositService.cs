@@ -6,7 +6,7 @@ namespace BLL.Interfaces
 {
     public interface ICustomerDepositService
     {
-        void Add(DomainCustomerDeposit customerDeposit, int monthCount);
+        void Add(DomainCustomerDeposit customerDeposit, int monthCount, string email);
         void Delete(int id);
         void Update(DomainCustomerDeposit deposit);
         DomainCustomerDeposit Get(int id);

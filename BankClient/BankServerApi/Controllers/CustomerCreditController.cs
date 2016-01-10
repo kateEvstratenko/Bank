@@ -8,7 +8,7 @@ using Core;
 namespace BankServerApi.Controllers
 {
     [RoutePrefix("api/CustomerCredit")]
-    [CheckAppToken]
+//    [CheckAppToken]
     public class CustomerCreditController : ApiController
     {
         private readonly ICustomerCreditService _customerCreditService;

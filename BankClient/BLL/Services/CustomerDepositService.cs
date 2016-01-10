@@ -16,8 +16,13 @@ namespace BLL.Services
 {
     public class CustomerDepositService : BaseService, ICustomerDepositService
     {
-        public CustomerDepositService(IUnitOfWork uow) : base(uow) { }
-        public void Add(DomainCustomerDeposit customerDeposit, int monthCount)
+        private readonly ICustomerService _iCustomerService;
+        public CustomerDepositService(IUnitOfWork uow, ICustomerService iCustomerService) : base(uow)
+        {
+            _iCustomerService = iCustomerService;
+        }
+
+        public void Add(DomainCustomerDeposit customerDeposit, int monthCount, string email)
         {
             var domainDeposit = Mapper.Map<DomainDeposit>(Uow.DepositRepository.Get(customerDeposit.DepositId));
             Validate(customerDeposit, domainDeposit, monthCount);
@@ -29,9 +34,12 @@ namespace BLL.Services
                 .FirstOrDefault(c => c.IdentificationNumber == customerDeposit.Customer.IdentificationNumber);
             if (customerDb == null)
             {
-                customerDb = Mapper.Map<Customer>(customer);
-                Uow.CustomerRepository.Add(customerDb);
-                Uow.SaveChanges();
+                var id = _iCustomerService.Register(customer, email);
+                customerDeposit.CustomerId = id;
+            }
+            else
+            {
+                customerDeposit.CustomerId = customerDb.Id;
             }
 
             customerDeposit.StartDate = GlobalValues.BankDateTime;

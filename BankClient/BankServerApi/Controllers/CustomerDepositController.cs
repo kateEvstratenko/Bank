@@ -70,7 +70,7 @@ namespace BankServerApi.Controllers
             try
             {
                 var domainCustomerDeposit = Mapper.Map<DomainCustomerDeposit>(request);
-                _customerDepositService.Add(domainCustomerDeposit, request.MonthCount);
+                _customerDepositService.Add(domainCustomerDeposit, request.MonthCount, request.Email);
                 return Ok();
             }
             catch (BankClientException ex)
