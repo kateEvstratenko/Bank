@@ -26,7 +26,7 @@ namespace BLL.Services
             _iCustomerService = iCustomerService;
         }
 
-        public void Add(DomainCreditRequest creditRequest, byte[] militaryId, byte[] incomeCertificate, string email, string baseUrl, string baseLocalhostUrl)
+        public string Add(DomainCreditRequest creditRequest, byte[] militaryId, byte[] incomeCertificate, string email, string baseUrl, string baseLocalhostUrl)
         {
             creditRequest.Credit = Mapper.Map<DomainCredit>(_iUnitOfWork.CreditRepository.Get(creditRequest.CreditId));
             Validate(creditRequest);
@@ -61,6 +61,7 @@ namespace BLL.Services
             _iUnitOfWork.SaveChanges();
 
             new CreditRequestDocService().FillConcreteContract(creditRequest);
+            return GetContract(creditRequestDal.Id, baseLocalhostUrl);
         }
 
         public CustomPagedList<DomainCreditRequest> GetUnconfirmed(IdentityRole role, int pageNumber, int pageSize)
@@ -155,9 +156,9 @@ namespace BLL.Services
             _iUnitOfWork.SaveChanges();
         }
 
-        public string GetContract(int id, string baseUrl)
+        public string GetContract(int id, string baseLocalhostUrl)
         {
-            return string.Format("{0}/Content/CreditRequestContracts/{1}.docx", baseUrl, id);
+            return string.Format("{0}/Content/CreditRequestContracts/{1}.docx", baseLocalhostUrl, id);
         }
 
         private void Validate(DomainCreditRequest creditRequest)

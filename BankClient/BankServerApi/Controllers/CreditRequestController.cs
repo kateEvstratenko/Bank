@@ -38,10 +38,10 @@ namespace BankServerApi.Controllers
                 var baseLocalhostUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
                 var baseUrl = System.Web.Hosting.HostingEnvironment.MapPath("~/");
                 var militaryArr = request.MilitaryId != null ? Convert.FromBase64String(request.MilitaryId) : null;
-                _iCreditRequestService.Add(Mapper.Map<DomainCreditRequest>(request), 
+                var docPath = _iCreditRequestService.Add(Mapper.Map<DomainCreditRequest>(request), 
                     militaryArr, Convert.FromBase64String(request.IncomeCertificate),
                     request.Email, baseUrl, baseLocalhostUrl);
-                return Ok();
+                return Ok(docPath);
             }
             catch (BankClientException ex)
             {
