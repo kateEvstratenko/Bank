@@ -29,7 +29,7 @@ using Microsoft.Owin.Security.OAuth;
 
 namespace ClientApi.Controllers
 {
-//    [Authorize]
+    //    [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
@@ -430,19 +430,23 @@ namespace ClientApi.Controllers
                 var customer =
                     _iUnitOfWork.CustomerRepository.GetAll()
                         .FirstOrDefault(c => c.IdentificationNumber == request.IdentificationNumber);
-                if (customer != null)
+
+                if (customer == null)
                 {
-                    if (request.Code != customer.SecretCode)
-                    {
-                        return BadRequest("Неверный секретный код.");
-                    }
+                    throw BankClientException.ThrowIdentificationNumberNotFound();
                 }
-                else
+
+                if (request.Code != customer.SecretCode)
                 {
-                    customer = Mapper.Map<Customer>(request);
-                    _iUnitOfWork.CustomerRepository.Add(customer);
-                    _iUnitOfWork.SaveChanges();
+                    throw BankClientException.ThrowSuperSecretCodeIsIncorrect();
                 }
+
+                //                else
+                //                {
+                //                    customer = Mapper.Map<Customer>(request);
+                //                    _iUnitOfWork.CustomerRepository.Add(customer);
+                //                    _iUnitOfWork.SaveChanges();
+                //                }
 
                 user.CustomerId = customer.Id;
                 var result = await UserManager.CreateAsync(user, request.Password);
@@ -509,39 +513,39 @@ namespace ClientApi.Controllers
             return Ok();
         }
 
-//        [AllowAnonymous]
-//        [HttpGet]
-//        [Route("ConfirmEmail")]
-//        public async Task<bool> ConfirmEmail(string token, string email)
-//        {
-//            var user = UserManager.FindById(token);
-//            if (user == null)
-//            {
-//                return false;
-//            }
-//            if (user.Email != email)
-//            {
-//                return false;
-//            }
-//            user.EmailConfirmed = true;
-//            await UserManager.UpdateAsync(user);
-//            return true;
-//        }
-//
-//        [AllowAnonymous]
-//        [HttpGet]
-//        [Route("ConfirmChangeEmail")]
-//        public async Task<bool> ConfirmChangeEmail(string token, string email)
-//        {
-//            var user = UserManager.FindById(token);
-//            if (user == null)
-//            {
-//                return false;
-//            }
-//            user.Email = email;
-//            await UserManager.UpdateAsync(user);
-//            return true;
-//        }
+        //        [AllowAnonymous]
+        //        [HttpGet]
+        //        [Route("ConfirmEmail")]
+        //        public async Task<bool> ConfirmEmail(string token, string email)
+        //        {
+        //            var user = UserManager.FindById(token);
+        //            if (user == null)
+        //            {
+        //                return false;
+        //            }
+        //            if (user.Email != email)
+        //            {
+        //                return false;
+        //            }
+        //            user.EmailConfirmed = true;
+        //            await UserManager.UpdateAsync(user);
+        //            return true;
+        //        }
+        //
+        //        [AllowAnonymous]
+        //        [HttpGet]
+        //        [Route("ConfirmChangeEmail")]
+        //        public async Task<bool> ConfirmChangeEmail(string token, string email)
+        //        {
+        //            var user = UserManager.FindById(token);
+        //            if (user == null)
+        //            {
+        //                return false;
+        //            }
+        //            user.Email = email;
+        //            await UserManager.UpdateAsync(user);
+        //            return true;
+        //        }
 
         protected override void Dispose(bool disposing)
         {

@@ -58,32 +58,32 @@ namespace ClientApi.Models
         [EmailAddress(ErrorMessage = "Неверный формат адреса электронной почты")]
         public string Email { get; set; }
 
-        [Required]
-        [Display(Name = "Имя")]
-        public string Firstname { get; set; }
-
-        [Required]
-        [Display(Name = "Фамилия")]
-        public string Lastname { get; set; }
-
-        [Display(Name = "Отчество")]
-        public string Patronymic { get; set; }
-
-        [Required]
-        [Display(Name = "Дата рождения")]
-        public DateTime DateOfBirth { get; set; }
-
-        [Required]
-        [Display(Name = "Тип документа, удостоверяющего личность")]
-        public DocumentType DocumentType { get; set; }
+//        [Required]
+//        [Display(Name = "Имя")]
+//        public string Firstname { get; set; }
+//
+//        [Required]
+//        [Display(Name = "Фамилия")]
+//        public string Lastname { get; set; }
+//
+//        [Display(Name = "Отчество")]
+//        public string Patronymic { get; set; }
+//
+//        [Required]
+//        [Display(Name = "Дата рождения")]
+//        public DateTime DateOfBirth { get; set; }
+//
+//        [Required]
+//        [Display(Name = "Тип документа, удостоверяющего личность")]
+//        public DocumentType DocumentType { get; set; }
 
         [Required]
         [Display(Name = "Идентификационный номер")]
         public string IdentificationNumber { get; set; }
 
-        [Required]
-        [Display(Name = "Адрес")]
-        public RegistreUserAddressViewModel Address { get; set; }
+//        [Required]
+//        [Display(Name = "Адрес")]
+//        public RegistreUserAddressViewModel Address { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "{0} должен содержать не менее {2} символов.", MinimumLength = 6)]
@@ -96,7 +96,7 @@ namespace ClientApi.Models
         [Compare("Password", ErrorMessage = "Пароли не совпадают.")]
         public string ConfirmPassword { get; set; }
 
-//        [Required]
+        [Required]
         [Display(Name = "Суперсекретный код")]
         public string Code { get; set; }
     }

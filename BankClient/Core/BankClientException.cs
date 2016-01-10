@@ -94,5 +94,15 @@ namespace Core
         {
             return new BankClientException(18, "Количество месяцев не может быть больше максимального.");
         }
+
+        public static BankClientException ThrowIdentificationNumberNotFound()
+        {
+            return new BankClientException(19, "Клиент с данным идентификационным номером не найден.");
+        }
+
+        public static BankClientException ThrowSuperSecretCodeIsIncorrect()
+        {
+            return new BankClientException(20, "Неверный суперсекретный код.");
+        }
     }
 }

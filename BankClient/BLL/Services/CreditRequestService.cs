@@ -60,6 +60,7 @@ namespace BLL.Services
             _iUnitOfWork.CreditRequestRepository.Add(creditRequestDal);
             _iUnitOfWork.SaveChanges();
 
+            creditRequest.Id = creditRequestDal.Id;
             new CreditRequestDocService().FillConcreteContract(creditRequest);
             return GetContract(creditRequestDal.Id, baseLocalhostUrl);
         }
