@@ -13,6 +13,7 @@ namespace ClientApi
         {
             Mapper.CreateMap<DomainCreditPaymentPlanItem, CreditPaymentPlanViewModel>();
             Mapper.CreateMap<DomainCustomerCredit, ShortCustomerCredit>();
+            Mapper.CreateMap<DomainCustomerDeposit, ShortCustomerDeposit>();
             Mapper.CreateMap<DomainCredit, ShortCredit>();
             Mapper.CreateMap<DomainDeposit, ShortDeposit>();
             Mapper.CreateMap<DomainCustomer, ShortCustomer>();

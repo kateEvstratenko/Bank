@@ -67,7 +67,7 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
 
         [BindRequired]
         [Display(Name = "ИД кредита")]
-        [Range(0, int.MaxValue, ErrorMessage = "Пожалуйста, введите значение.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Пожалуйста, введите значение.")]
         [DefaultValue(-1)]
         public int CreditId { get; set; }
 
