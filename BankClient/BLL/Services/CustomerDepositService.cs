@@ -123,6 +123,17 @@ namespace BLL.Services
             return domainDeposits;
         }
 
+        public DomainCustomerDeposit GetByContractNumber(string contractNumber)
+        {
+            var userDeposit = Uow.CustomerDepositRepository.GetByContractNumber(contractNumber);
+            if (userDeposit == null)
+            {
+                throw BankClientException.ThrowUserDepositNotFound();
+            }
+            return Mapper.Map<DomainCustomerDeposit>(userDeposit);
+        }
+
+
         public string GetContract(string contractNumber, string baseUrl)
         {
             return string.Format("{0}/Content/DepositContracts/{1}.docx", baseUrl, contractNumber);
