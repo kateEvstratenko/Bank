@@ -10,13 +10,13 @@ namespace BLL.Services
         {
             if (sum < minSum)
             {
-                modelState.Add("Sum", new ModelState() { Errors = { "Сумма не может быть меньше минимальной." } });
+                modelState.Add("request.Sum", new ModelState() { Errors = { "Сумма не может быть меньше минимальной." } });
                 //                throw BankClientException.ThrowSumLessThanMin();
             }
 
             if (sum > maxSum)
             {
-                modelState.Add("Sum", new ModelState() { Errors = { "Сумма не может быть больше максимальной." } });
+                modelState.Add("request.Sum", new ModelState() { Errors = { "Сумма не может быть больше максимальной." } });
                 //                throw BankClientException.ThrowSumMoreThanMax();
             }
         }
@@ -25,13 +25,13 @@ namespace BLL.Services
         {
             if (monthCount < minMonthPeriod)
             {
-                modelState.Add("MonthCount", new ModelState() { Errors = { "Количество месяцев не может быть меньше минимального." } });
+                modelState.Add("request.MonthCount", new ModelState() { Errors = { "Количество месяцев не может быть меньше минимального." } });
                 //                throw BankClientException.ThrowMonthLessThanMin();
             }
 
             if (monthCount > maxMonthPeriod)
             {
-                modelState.Add("MonthCount", new ModelState() { Errors = { "Количество месяцев не может быть больше максимального." } });
+                modelState.Add("request.MonthCount", new ModelState() { Errors = { "Количество месяцев не может быть больше максимального." } });
             }
         }
     }

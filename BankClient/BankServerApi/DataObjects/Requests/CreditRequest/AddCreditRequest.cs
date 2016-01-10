@@ -12,13 +12,13 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
     {
         [Required]
         [Display(Name = "Цель кредита")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов")]
         public string CreditGoal { get; set; }
 
         [BindRequired]
         [Display(Name = "Сумма")]
         [Range(1, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше 0.")]
         [DefaultValue(0)]
-//        [LessThan("MaxSum", "Сумма должна быть меньше максимальной.")]
         public double Sum { get; set; }
 
         [BindRequired]
@@ -36,7 +36,7 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
         [BindRequired]
         [Display(Name = "Заработная плата")]
         [Range(1, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше 0.")]
-        [DefaultValue(-1)]
+        [DefaultValue(0)]
         public double IncomeSum { get; set; }
 
         [BindRequired]
@@ -72,13 +72,14 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
         public int CreditId { get; set; }
 
         //Customer
-        [Required]
+//        [Required]
         [Display(Name = "Клиент")]
         public CustomerBindingModel Customer { get; set; }
 
         [Required]
         [Display(Name = "Адрес электронной почты")]
         [EmailAddress(ErrorMessage = "Неверный формат адреса электронной почты")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов")]
         public string Email { get; set; }
         //        public DateTime DateOfBirth { get; set; }
         //        public DocumentType DocumentType { get; set; }
@@ -92,20 +93,23 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
     {
         [Required]
         [Display(Name = "Имя")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов")]
         public string Firstname { get; set; }
 
         [Required]
         [Display(Name = "Фамилия")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов")]
         public string Lastname { get; set; }
 
 //        [Required]
         [Display(Name = "Отчество")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов")]
         public string Patronymic { get; set; }
 
         [BindRequired]
         [Display(Name = "Дата рождения")]
         [DataType(DataType.Date)]
-        [Range(typeof(DateTime), "1-Jan-1990", "1-Jan-2016")]
+        [Range(typeof(DateTime), "1-Jan-1900", "1-Jan-2016", ErrorMessage = "Введите дату с 1900 года по 2016")]
         public DateTime DateOfBirth { get; set; }
 
         [BindRequired]
@@ -114,13 +118,15 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
 
         [Required]
         [Display(Name = "Номер документа")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов")]
         public string DocumentNumber { get; set; }
 
         [Required]
         [Display(Name = "Идентификационный номер")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов")]
         public string IdentificationNumber { get; set; }
 
-        [Required]
+//        [Required]
         [Display(Name = "Адрес")]
         public AddressBindingModel Address { get; set; }
     }
@@ -129,18 +135,22 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
     {
         [Required]
         [Display(Name = "Страна")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов")]
         public string Country { get; set; }
 
         [Required]
         [Display(Name = "Город")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов")]
         public string City { get; set; }
 
         [Required]
         [Display(Name = "Улица")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов")]
         public string Street { get; set; }
 
         [Required]
         [Display(Name = "Дом")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов")]
         public string House { get; set; }
 
         [Display(Name = "Квартира")]
