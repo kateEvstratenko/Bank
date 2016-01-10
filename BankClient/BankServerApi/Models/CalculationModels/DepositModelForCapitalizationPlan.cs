@@ -23,7 +23,7 @@ namespace BankServerApi.Models.CalculationModels
         [Display(Name = "Период, мес")]
         [Range(1, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше 0.")]
         [DefaultValue(0)]
-        public int MonthPeriod { get; set; }
+        public int MonthCount { get; set; }
 
         [BindRequired]
         [DataType(DataType.Date)]

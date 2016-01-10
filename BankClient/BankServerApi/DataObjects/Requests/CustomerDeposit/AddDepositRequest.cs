@@ -38,13 +38,14 @@ namespace BankServerApi.DataObjects.Requests.CustomerDeposit
         [DefaultValue(-1)]
         public int DepositId { get; set; }
 
-        [Required]
+//        [Required]
         [Display(Name = "Клиент")]
         public CustomerBindingModel Customer { get; set; }
 
         [Required]
         [Display(Name = "Адрес электронной почты")]
         [EmailAddress(ErrorMessage = "Неверный формат адреса электронной почты")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string Email { get; set; }
     }
 }

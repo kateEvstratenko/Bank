@@ -21,14 +21,14 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
         [Display(Name = "ИД заявки на кредит")]
         public int CreditRequestId { get; set; }
 
-        [Required(ErrorMessage = "Пожалуйста, введите значение.")]
+        [BindRequired]
         [Display(Name = "Статус")]
         [DefaultValue(-1)]
         [Range(0, int.MaxValue, ErrorMessage = "Пожалуйста, введите значение.")]
         public CreditRequestStatusInfo CreditRequestStatusInfo { get; set; }
 
         [Display(Name = "Сообщение")]
-        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string Message { get; set; }
     }
 }

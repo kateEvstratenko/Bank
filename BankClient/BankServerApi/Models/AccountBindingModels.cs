@@ -22,20 +22,20 @@ namespace BankServerApi.Models
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Текущий пароль")]
-        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string OldPassword { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "{0} должен содержать не менее {2} символов.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Новый пароль")]
-        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Подтверждение пароля")]
         [Compare("NewPassword", ErrorMessage = "Пароли не совпадают.")]
-        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -43,27 +43,27 @@ namespace BankServerApi.Models
     {
         [Required]
         [Display(Name = "Имя пользователя")]
-        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string UserName { get; set; }
 
         [Required]
         [Display(Name = "Адрес электронной почты")]   
         [EmailAddress(ErrorMessage = "Неверный формат адреса электронной почты")]
-        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string Email { get; set; }
 
         [Required]
         [Display(Name = "Имя")]
-        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string Firstname { get; set; }
 
         [Required]
         [Display(Name = "Фамилия")]
-        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string Lastname { get; set; }
 
         [Display(Name = "Отчество")]
-        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string Patronymic { get; set; }
 
         [BindRequired]

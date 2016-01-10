@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Web.ModelBinding;
 
 namespace BankServerApi.DataObjects.Requests.Payment
 {
@@ -6,11 +8,13 @@ namespace BankServerApi.DataObjects.Requests.Payment
     {
         [Required]
         [Display(Name = "Номер договора")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string ContractNumber { get; set; }
 
-        [Required]
+        [BindRequired]
         [Display(Name = "Сумма")]
-        [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}.")]
+        [Range(1, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше 0.")]
+        [DefaultValue(0)]
         public double Sum { get; set; }
     }
 }
