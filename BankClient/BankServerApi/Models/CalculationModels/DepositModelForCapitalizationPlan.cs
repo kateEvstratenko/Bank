@@ -1,27 +1,34 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Web.ModelBinding;
 
 namespace BankServerApi.Models.CalculationModels
 {
     public class DepositModelForCapitalizationPlan
     {
-        [Required]
-        [Display(Name = "Сумма")]
-        [Range(0, int.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}")]
+        [BindRequired]
+        [Display(Name = "Начальная сумма")]
+        [Range(1, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше 0.")]
+        [DefaultValue(0)]
         public double Sum { get; set; }
 
-        [Required]
+        [BindRequired]
         [Display(Name = "Процентная ставка")]
-        [Range(0, int.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}")]
+        [Range(1, 100, ErrorMessage = "Пожалуйста, введите значение в пределах 1-100.")]
+        [DefaultValue(-1)]
         public double PercentRate { get; set; }
 
-        [Required]
+        [BindRequired]
         [Display(Name = "Период, мес")]
-        [Range(1, int.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}")]
+        [Range(1, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше 0.")]
+        [DefaultValue(0)]
         public int MonthPeriod { get; set; }
 
-        [Required, DataType(DataType.Date)]
+        [BindRequired]
+        [DataType(DataType.Date)]
         [Display(Name = "Дата начала")]
+        [Range(typeof(DateTime), "1-Jan-2016", "1-Jan-2100", ErrorMessage = "Пожалуйста, введите дату с 2016 года по 1 января 2100 года.")]
         public DateTime StartDate { get; set; }
     }
 }
