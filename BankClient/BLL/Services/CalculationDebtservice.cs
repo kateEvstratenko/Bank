@@ -35,8 +35,8 @@ namespace BLL.Services
                     overduePercentSum += (item.PercentSum - paidPercentSum) * _fineForPercentDebt;
 
                     item.Debt = item.Debt ?? new Debt();
-                    item.Debt.MainSum += overdueMainSum - paidDelayMainSum;
-                    item.Debt.PercentSum += overduePercentSum - paidDelayPercentSum;
+                    item.Debt.MainSum += Math.Max(overdueMainSum - paidDelayMainSum, 0);
+                    item.Debt.PercentSum += Math.Max(overduePercentSum - paidDelayPercentSum, 0);
                 }
             }
             Uow.SaveChanges();

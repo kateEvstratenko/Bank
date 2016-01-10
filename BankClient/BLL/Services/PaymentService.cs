@@ -31,17 +31,15 @@ namespace BLL.Services
                 throw BankClientException.ThrowNotPayment();
             }
 
-//            var sourceBill = customerCredit.Bill;
             var destinationBill = _iUnitOfWork.BillRepository
                 .GetByNumber(ConfigurationManager.AppSettings.Get("BankBillNumber"));
             destinationBill.Sum += sum;
             var payment = CalculatePayment(currentPaymentPlan, sum);
-//            payment.SourceBillId = sourceBill.Id;
             payment.DestinationBillId = destinationBill.Id;
 
             _iUnitOfWork.CreditPaymentRepository.Add(payment);
 
-            currentPaymentPlan.IsPaid = isPaid(currentPaymentPlan, payment);
+            currentPaymentPlan.IsPaid = isPaid(currentPaymentPlan);
 
             _iUnitOfWork.SaveChanges();
 
@@ -52,20 +50,24 @@ namespace BLL.Services
             var mainSum = 0.0;
             var mainDebtSum = 0.0;
             var percentSum = 0.0;
-            var percentDebtSum = 0.0;
+            var percentDebtSum = 0.0; 
 
-            CalculateSum(plannedPayment.MainSum, out mainSum, ref sum);
+            var remainderMainSum = plannedPayment.MainSum - plannedPayment.CreditPayments.Sum(x => x.MainSum);
+            CalculateSum(remainderMainSum, out mainSum, ref sum);
 
             if (plannedPayment.Debt != null)
             {
-                CalculateSum(plannedPayment.Debt.MainSum, out mainDebtSum, ref sum);
+                var remainderMainDebtSum = plannedPayment.Debt.MainSum - plannedPayment.CreditPayments.Sum(x => x.DelayMainSum);
+                CalculateSum(remainderMainDebtSum, out mainDebtSum, ref sum);
             }
 
-            CalculateSum(plannedPayment.PercentSum, out percentSum, ref sum);
+            var remainderPercentSum = plannedPayment.PercentSum - plannedPayment.CreditPayments.Sum(x => x.PercentSum);
+            CalculateSum(remainderPercentSum, out percentSum, ref sum);
 
             if (plannedPayment.Debt != null)
             {
-                CalculateSum(plannedPayment.Debt.PercentSum, out percentDebtSum, ref sum);
+                var remainderPercentDebtSum = plannedPayment.Debt.PercentSum - plannedPayment.CreditPayments.Sum(x => x.DelayPercentSum);
+                CalculateSum(remainderPercentDebtSum, out percentDebtSum, ref sum);
             }
 
             return new CreditPayment()
@@ -80,16 +82,16 @@ namespace BLL.Services
             };
         }
 
-        private bool isPaid(CreditPaymentPlanItem plannedPayment, CreditPayment realPayment)
+        private bool isPaid(CreditPaymentPlanItem plannedPayment)
         {
-            var isPaidMainSum = plannedPayment.MainSum == realPayment.MainSum &&
-                    plannedPayment.PercentSum == realPayment.PercentSum;
+            var isPaidMainSum = plannedPayment.MainSum <= plannedPayment.CreditPayments.Sum(x => x.MainSum) &&
+                    plannedPayment.PercentSum == plannedPayment.CreditPayments.Sum(x => x.PercentSum);
             var isPaidDebtSum = true;
 
             if (plannedPayment.Debt != null)
             {
-                isPaidDebtSum = plannedPayment.Debt.MainSum == realPayment.DelayMainSum &&
-                    plannedPayment.Debt.PercentSum == realPayment.DelayPercentSum;
+                isPaidDebtSum = plannedPayment.Debt.MainSum == plannedPayment.CreditPayments.Sum(x => x.DelayMainSum) &&
+                    plannedPayment.Debt.PercentSum == plannedPayment.CreditPayments.Sum(x => x.DelayPercentSum);
             }
 
             return isPaidMainSum && isPaidDebtSum;
@@ -103,7 +105,7 @@ namespace BLL.Services
 
         private double UnsignedSub(double a, double b)
         {
-            return a - b > 0 ? a - b : 0;
+            return Math.Max(a - b, 0);
         }
     }
 }

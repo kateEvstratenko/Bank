@@ -57,7 +57,7 @@ namespace BLL.Services
             var firstMainDept = CalculateFirstMainDebt(paymentSum, percentRate, monthPeriod);
 
             var firstCreditPayment = new DomainCreditPaymentPlanItem(firstMainDept, paymentSum - firstMainDept,
-                Currency.Blr, startDate);
+                Currency.Blr, startDate.AddMonths(1));
             payments.Add(firstCreditPayment);
 
             for (var i = 0; i < monthPeriod - 1; i++)
