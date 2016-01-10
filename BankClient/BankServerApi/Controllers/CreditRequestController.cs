@@ -35,13 +35,25 @@ namespace BankServerApi.Controllers
         {
             try
             {
+//                if (!ModelState.IsValid)
+//                {
+//                    return BadRequest(ModelState);
+//                }
+
                 var baseLocalhostUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
                 var baseUrl = System.Web.Hosting.HostingEnvironment.MapPath("~/");
                 var militaryArr = request.MilitaryId != null ? Convert.FromBase64String(request.MilitaryId) : null;
-                var docPath = _iCreditRequestService.Add(Mapper.Map<DomainCreditRequest>(request), 
+                
+                var creditRequestResult = _iCreditRequestService.Add(Mapper.Map<DomainCreditRequest>(request), 
                     militaryArr, Convert.FromBase64String(request.IncomeCertificate),
-                    request.Email, baseUrl, baseLocalhostUrl);
-                return Ok(docPath);
+                    request.Email, baseUrl, baseLocalhostUrl, ModelState);
+
+                if (creditRequestResult.ModelState != null && !creditRequestResult.ModelState.IsValid)
+                {
+                    return BadRequest(creditRequestResult.ModelState);
+                }
+                
+                return Ok(creditRequestResult.DocPath);
             }
             catch (BankClientException ex)
             {

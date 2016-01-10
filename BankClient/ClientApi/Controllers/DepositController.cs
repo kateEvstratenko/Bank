@@ -7,7 +7,8 @@ using Core;
 
 namespace ClientApi.Controllers
 {
-//    [CheckToken]
+    //    [CheckToken]
+    [RoutePrefix("api/Deposit")]
     public class DepositController : ApiController
     {
         private readonly IDepositService _depositService;
@@ -19,7 +20,7 @@ namespace ClientApi.Controllers
         }
 
         // GET api/deposit
-//        [Route("Get")]
+        //        [Route("Get")]
         public IHttpActionResult Get([FromUri]int? page = null)
         {
             try
@@ -58,7 +59,7 @@ namespace ClientApi.Controllers
         }
 
         // GET api/deposit/5
-//        [Route("GetById")]
+        //        [Route("GetById")]
         public IHttpActionResult Get(int id)
         {
             try

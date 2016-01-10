@@ -86,7 +86,7 @@ namespace ClientApi.Models
 //        public RegistreUserAddressViewModel Address { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "{0} должен содержать не менее {2} символов.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} должен содержать не менее {2} символов.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public string Password { get; set; }

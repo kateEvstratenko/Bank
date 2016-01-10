@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using System.Web.Http.ModelBinding;
+using System.Web.Http.Results;
 using AutoMapper;
 using BLL.Classes;
 using BLL.Helpers;
@@ -18,18 +20,29 @@ namespace BLL.Services
         private readonly IUnitOfWork _iUnitOfWork;
         private readonly IImageService _iImageService;
         private readonly ICustomerService _iCustomerService;
+        private readonly IValidationService _iValidationService;
 
-        public CreditRequestService(IUnitOfWork iUnitOfWork, IImageService iImageService, ICustomerService iCustomerService)
+        public CreditRequestService(IUnitOfWork iUnitOfWork, IImageService iImageService, 
+            ICustomerService iCustomerService, IValidationService iValidationService)
         {
             _iUnitOfWork = iUnitOfWork;
             _iImageService = iImageService;
             _iCustomerService = iCustomerService;
+            _iValidationService = iValidationService;
         }
 
-        public string Add(DomainCreditRequest creditRequest, byte[] militaryId, byte[] incomeCertificate, string email, string baseUrl, string baseLocalhostUrl)
+        public CreditRequestResult Add(DomainCreditRequest creditRequest, byte[] militaryId, byte[] incomeCertificate, string email, string baseUrl, string baseLocalhostUrl, ModelStateDictionary modelState)
         {
             creditRequest.Credit = Mapper.Map<DomainCredit>(_iUnitOfWork.CreditRepository.Get(creditRequest.CreditId));
-            Validate(creditRequest);
+            _iValidationService.ValidateSum(creditRequest.Sum, creditRequest.Credit.MinSum, creditRequest.Credit.MaxSum, modelState);
+            _iValidationService.ValidateMonthCount(creditRequest.MonthCount, creditRequest.Credit.MinMonthPeriod, creditRequest.Credit.MaxMonthPeriod, modelState);
+            if (!modelState.IsValid)
+            {
+                return new CreditRequestResult
+                {
+                    ModelState = modelState
+                };
+            }
 
             var customer = creditRequest.Customer;//_iUnitOfWork.CustomerRepository.GetCustomerByUserId(userId);
             var customerDb = _iUnitOfWork.CustomerRepository.GetAll()
@@ -62,7 +75,11 @@ namespace BLL.Services
 
             creditRequest.Id = creditRequestDal.Id;
             new CreditRequestDocService().FillConcreteContract(creditRequest);
-            return GetContract(creditRequestDal.Id, baseLocalhostUrl);
+            return new CreditRequestResult()
+            {
+                ModelState = null,
+                DocPath = GetContract(creditRequestDal.Id, baseLocalhostUrl)
+            };
         }
 
         public CustomPagedList<DomainCreditRequest> GetUnconfirmed(IdentityRole role, int pageNumber, int pageSize)
@@ -161,28 +178,5 @@ namespace BLL.Services
         {
             return string.Format("{0}/Content/CreditRequestContracts/{1}.docx", baseLocalhostUrl, id);
         }
-
-        private void Validate(DomainCreditRequest creditRequest)
-        {
-            if (creditRequest.Sum < creditRequest.Credit.MinSum)
-            {
-                throw BankClientException.ThrowSumLessThanMin();
-            }
-
-            if (creditRequest.Sum > creditRequest.Credit.MaxSum)
-            {
-                throw BankClientException.ThrowSumMoreThanMax();
-            }
-
-            if (creditRequest.MonthCount < creditRequest.Credit.MinMonthPeriod)
-            {
-                throw BankClientException.ThrowMonthLessThanMin();
-            }
-
-            if (creditRequest.MonthCount > creditRequest.Credit.MaxMonthPeriod)
-            {
-                throw BankClientException.ThrowMonthMoreThanMax();
-            }
-        }
-    }
+   }
 }

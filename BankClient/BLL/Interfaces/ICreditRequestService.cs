@@ -1,3 +1,4 @@
+using System.Web.Http.ModelBinding;
 using BLL.Classes;
 using BLL.Models;
 using Core.Enums;
@@ -7,7 +8,7 @@ namespace BLL.Interfaces
 {
     public interface ICreditRequestService
     {
-        string Add(DomainCreditRequest creditRequest, byte[] militaryId, byte[] incomeCertificate, string email, string baseUrl, string baseLocalhostUrl);
+        CreditRequestResult Add(DomainCreditRequest creditRequest, byte[] militaryId, byte[] incomeCertificate, string email, string baseUrl, string baseLocalhostUrl, ModelStateDictionary modelState);
         CustomPagedList<DomainCreditRequest> GetUnconfirmed(IdentityRole role, int pageNumber, int pageSize);
         CustomPagedList<DomainCreditRequest> GetConfirmed(string appUserId, IdentityRole chiefRole, int pageNumber, int pageSize);
         CustomPagedList<DomainCreditRequest> GetUnconfirmedByChief(IdentityRole role, int pageNumber, int pageSize);

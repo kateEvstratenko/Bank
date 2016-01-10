@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
+    <Compile Include="Classes\CreditRequestResult.cs" />
     <Compile Include="Classes\CustomPagedList.cs" />
     <Compile Include="Classes\ShortModels.cs" />
     <Compile Include="Helpers\EnumerableHelper.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Interfaces\ICustomerService.cs" />
     <Compile Include="Interfaces\IDepositService.cs" />
     <Compile Include="Interfaces\IEncryptorService.cs" />
+    <Compile Include="Interfaces\IValidationService.cs" />
     <Compile Include="Models\DomainAddress.cs" />
     <Compile Include="Models\DomainAppUser.cs" />
     <Compile Include="Models\DomainBankClient.cs" />
@@ -151,6 +153,7 @@
     <Compile Include="Services\RandomHelper.cs" />
     <Compile Include="Services\UserManagerFactory.cs" />
     <Compile Include="Services\AuthManagerService.cs" />
+    <Compile Include="Services\ValidationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

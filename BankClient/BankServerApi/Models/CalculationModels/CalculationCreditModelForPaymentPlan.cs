@@ -6,7 +6,7 @@ namespace BankServerApi.Models.CalculationModels
 {
     public class CalculationCreditModelForPaymentPlan
     {
-         [Required]
+        [Required]
         [Display(Name = "Сумма")]
         [Range(0, int.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}")]
         public double Sum { get; set; }
@@ -14,7 +14,7 @@ namespace BankServerApi.Models.CalculationModels
         [Required]
         [Display(Name = "Период, мес")]
         [Range(1, int.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}")]
-        public int MonthPeriod { get; set; }
+        public int MonthCount { get; set; }
 
         [Required]
         [Display(Name = "ИД кредита")]

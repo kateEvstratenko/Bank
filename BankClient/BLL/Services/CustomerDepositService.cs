@@ -66,6 +66,7 @@ namespace BLL.Services
             bankBill.Sum += customerDeposit.InitialSum;
 
             var dbDeposit = Mapper.Map<CustomerDeposit>(customerDeposit);
+            dbDeposit.Customer = null;
             Uow.CustomerDepositRepository.Add(dbDeposit);
             Uow.SaveChanges();
             

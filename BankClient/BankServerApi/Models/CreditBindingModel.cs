@@ -20,6 +20,7 @@ namespace BankServerApi.Models
 
         [Required]
         [Display(Name = "Процентная ставка")]
+        [Range(1, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}.")]
         public double PercentRate { get; set; }
 
         [Required]
@@ -30,17 +31,18 @@ namespace BankServerApi.Models
         [Required]
         [Display(Name = "Максимальная сумма")]
         [Range(1, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}.")]
-        [GreaterThan("MinSum", "Максимальная сумма должна быть меньше минимальной.")]
+        [GreaterThan("MinSum", "Максимальная сумма должна быть больше минимальной.")]
         public double MaxSum { get; set; }
 
         [Required]
         [Display(Name = "Минимальный период, мес")]
-        [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}.")]
+        [Range(1, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}.")]
         public int MinMonthPeriod { get; set; }
 
         [Required]
         [Display(Name = "Максимальный период, мес")]
-        [GreaterThan("MinMonthPeriod", "Максимальный период должен быть меньше минимального.")]
+        [Range(1, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}.")]
+        [GreaterThan("MinMonthPeriod", "Максимальный период должен быть больше минимального.")]
         public int MaxMonthPeriod { get; set; }
 
         [Required]

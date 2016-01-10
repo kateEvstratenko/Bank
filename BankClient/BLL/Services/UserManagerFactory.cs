@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using DAL;
 using DAL.Entities;
 using Microsoft.AspNet.Identity;
@@ -19,8 +22,8 @@ namespace BLL.Services
                 {
                     RequiredLength = 8,
                     RequireDigit = true,
-                    RequireLowercase = true, 
-                    RequireUppercase = true
+                    RequireLowercase = true,
+                    RequireUppercase = true,
                 }
             };
         }
@@ -41,7 +44,7 @@ namespace BLL.Services
                     {
                         if (_instance == null)
                         {
-                           return  _instance = new AppUserManagerFactory();
+                            return _instance = new AppUserManagerFactory();
                         }
                     }
                 }

@@ -16,11 +16,12 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
         [Required]
         [Display(Name = "Сумма")]
         [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}.")]
+//        [LessThan("MaxSum", "Сумма должна быть меньше максимальной.")]
         public double Sum { get; set; }
 
         [Required]
         [Display(Name = "Период, мес")]
-        [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}.")]
+        [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}.")]      
         public int MonthCount { get; set; }
 
         [Required]
