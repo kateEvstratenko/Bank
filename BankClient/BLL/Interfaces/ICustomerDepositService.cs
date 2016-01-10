@@ -14,5 +14,6 @@ namespace BLL.Interfaces
         CustomPagedList<DomainCustomerDeposit> GetAll(int customerId, int pageNumber, int pageSize);
         CustomPagedList<DomainCustomerDeposit> GetAllByUser(string userId, int pageNumber, int pageSize);
         string GetContract(string contractNumber, string baseUrl);
+        DomainCustomerDeposit GetByContractNumber(string contractNumber);
     }
 }

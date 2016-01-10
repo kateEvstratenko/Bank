@@ -104,5 +104,10 @@ namespace Core
         {
             return new BankClientException(20, "Неверный суперсекретный код.");
         }
+
+        public static BankClientException ThrowUserDepositNotFound()
+        {
+            return new BankClientException(21, "Депозита с таким номером договора не существует.");
+        }
     }
 }

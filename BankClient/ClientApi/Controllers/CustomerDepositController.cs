@@ -58,5 +58,24 @@ namespace ClientApi.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        [HttpGet]
+        [Route("GetByContractNumber")]
+        public IHttpActionResult GetByContractNumber(string contractNumber)
+        {
+            try
+            {
+                var customerDeposit = _customerDepositService.GetByContractNumber(contractNumber);
+                return Ok(customerDeposit);
+            }
+            catch (BankClientException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
     }
 }
