@@ -9,10 +9,12 @@ namespace ClientApi.Models
     {
         [Required]
         [Display(Name = "Имя пользователя")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string UserName { get; set; }
 
         [Required]
         [Display(Name = "Пароль")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string Password { get; set; }
     }
 

@@ -13,14 +13,15 @@ namespace ClientApi.Controllers
     public class CalculationCreditController : ApiController
     {
         private readonly ICalculationCreditService calculationCreditService;
-
         private readonly ICreditService creditService;
+        private readonly IValidationService validationService;
 
-        public CalculationCreditController(ICalculationCreditService iCalculationCreditService, ICreditService iCreditService)
-            :base()
+        public CalculationCreditController(ICalculationCreditService iCalculationCreditService, ICreditService iCreditService, IValidationService iValidationService)
+            : base()
         {
             calculationCreditService = iCalculationCreditService;
             creditService = iCreditService;
+            validationService = iValidationService;
         }
 
         // GET /api/calculationcredit/paymentsplan?sum=SUM&creditid=ID&monthperiod=MONTH_COUNT&startdate=11-01-2015
@@ -30,8 +31,15 @@ namespace ClientApi.Controllers
             try
             {
                 var credit = creditService.Get(query.CreditId);
+                validationService.ValidateSum(query.Sum, credit.MinSum, credit.MaxSum, ModelState);
+                validationService.ValidateMonthCount(query.MonthCount, credit.MinMonthPeriod, credit.MaxMonthPeriod, ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
                 var payments = calculationCreditService
-                    .CalculatePaymentPlan(query.Sum, credit.PercentRate, query.MonthPeriod, query.StartDate);
+                    .CalculatePaymentPlan(query.Sum, credit.PercentRate, query.MonthCount, query.StartDate);
                 var viewPayments =
                     Mapper.Map<IEnumerable<DomainCreditPaymentPlanItem>, List<CreditPaymentPlanViewModel>>(payments);
                 return Ok(viewPayments);
@@ -53,8 +61,15 @@ namespace ClientApi.Controllers
             try
             {
                 var credit = creditService.Get(query.CreditId);
+                validationService.ValidateSum(query.Sum, credit.MinSum, credit.MaxSum, ModelState);
+                validationService.ValidateMonthCount(query.MonthCount, credit.MinMonthPeriod, credit.MaxMonthPeriod, ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
                 var solvency = calculationCreditService.CalculateSolvencyRate(query.Sum, credit.PercentRate,
-                    query.MonthPeriod,
+                    query.MonthCount,
                     query.IncomeSum, query.OtherCreditPayments, query.UtilitiesPayments, query.OtherPayments);
                 return Ok(solvency);
             }
@@ -75,7 +90,12 @@ namespace ClientApi.Controllers
             try
             {
                 var credit = creditService.Get(query.CreditId);
-                var maxSum = calculationCreditService.CalculateMaxCreditSum(credit.PercentRate, query.MonthPeriod,
+                validationService.ValidateMonthCount(query.MonthCount, credit.MinMonthPeriod, credit.MaxMonthPeriod, ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                var maxSum = calculationCreditService.CalculateMaxCreditSum(credit.PercentRate, query.MonthCount,
                     query.IncomeSum, query.OtherCreditPayments, query.UtilitiesPayments, query.OtherPayments);
                 return Ok(maxSum);
             }
@@ -96,8 +116,15 @@ namespace ClientApi.Controllers
             try
             {
                 var credit = creditService.Get(query.CreditId);
+                validationService.ValidateSum(query.Sum, credit.MinSum, credit.MaxSum, ModelState);
+                validationService.ValidateMonthCount(query.MonthCount, credit.MinMonthPeriod, credit.MaxMonthPeriod, ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
                 var incomeSum = calculationCreditService.CalculateIncomeForCredit(query.Sum, credit.PercentRate,
-                    query.MonthPeriod,
+                    query.MonthCount,
                     query.OtherCreditPayments, query.UtilitiesPayments, query.OtherPayments);
                 return Ok(incomeSum);
             }

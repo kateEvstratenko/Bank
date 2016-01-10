@@ -27,7 +27,15 @@ namespace ClientApi.Controllers
         {
             try
             {
-                var plan = calculationDepositService.CalculateCapitalizationPlan(query.Sum, query.PercentRate, query.MonthPeriod, query.StartDate).ToList();
+                //                var credit = creditService.Get(query.CreditId);
+                //                validationService.ValidateSum(query.Sum, credit.MinSum, credit.MaxSum, ModelState);
+                //                validationService.ValidateMonthCount(query.MonthCount, credit.MinMonthPeriod, credit.MaxMonthPeriod, ModelState);
+                //                if (!ModelState.IsValid)
+                //                {
+                //                    return BadRequest(ModelState);
+                //                }
+
+                var plan = calculationDepositService.CalculateCapitalizationPlan(query.Sum, query.PercentRate, query.MonthCount, query.StartDate).ToList();
                 return Ok(plan);
             }
             catch (BankClientException ex)

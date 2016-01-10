@@ -18,18 +18,20 @@ namespace ClientApi.Models
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Текущий пароль")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "Поле {0} должно содержать не менее {2} символов.", MinimumLength = 8)]
+        [StringLength(100, ErrorMessage = "{0} должен содержать не менее {2} символов.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Новый пароль")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string NewPassword { get; set; }
 
-        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Подтверждение пароля")]
         [Compare("NewPassword", ErrorMessage = "Пароли не совпадают.")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -38,6 +40,7 @@ namespace ClientApi.Models
         [Required]
         [Display(Name = "Новый адрес электронной почты")]
         [EmailAddress(ErrorMessage = "Невалидный адрес электронной почты.")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string NewEmail { get; set; }
 
         [Required]
@@ -50,12 +53,14 @@ namespace ClientApi.Models
     public class RegisterBindingModel
     {
         [Required]
-        [Display(Name = "Имя пользователя")]   
+        [Display(Name = "Имя пользователя")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string UserName { get; set; }
 
         [Required]
         [Display(Name = "Адрес электронной почты")]
         [EmailAddress(ErrorMessage = "Неверный формат адреса электронной почты")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string Email { get; set; }
 
 //        [Required]
@@ -79,6 +84,7 @@ namespace ClientApi.Models
 
         [Required]
         [Display(Name = "Идентификационный номер")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string IdentificationNumber { get; set; }
 
 //        [Required]
@@ -98,6 +104,7 @@ namespace ClientApi.Models
 
         [Required]
         [Display(Name = "Суперсекретный код")]
+        [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
         public string Code { get; set; }
     }
 
