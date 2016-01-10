@@ -39,6 +39,9 @@ namespace ClientApi
             builder.RegisterType<CustomerDepositService>().As<ICustomerDepositService>();
             builder.RegisterType<BillService>().As<IBillService>();
             builder.RegisterType<CustomerService>().As<ICustomerService>();
+            builder.RegisterType<PaymentService>().As<IPaymentService>();
+            builder.RegisterType<CalculationDepositPercentService>().As<ICalculationDepositPercentService>();
+            builder.RegisterType<CalculationDepositService>().As<ICalculationDepositService>();
             builder.RegisterType<ValidationService>().As<IValidationService>();
             //            builder.RegisterType<DailyCalculateService>().AsSelf().SingleInstance();
 
@@ -47,15 +50,17 @@ namespace ClientApi
             builder.RegisterType<DepositRepository>().As<IDepositRepository>();
             builder.RegisterType<TokenRepository>().As<ITokenRepository>();
             builder.RegisterType<CreditRequestRepository>().As<ICreditRequestRepository>();
+            builder.RegisterType<CreditRequestRepository>().As<ICreditRequestRepository>();
             builder.RegisterType<CreditRequestStatusRepository>().As<ICreditRequestStatusRepository>();
-            builder.RegisterType<CreditPaymentPlanItemRepository>().As<ICreditPaymentPlanItemRepository>();
             builder.RegisterType<CustomerRepository>().As<ICustomerRepository>();
             builder.RegisterType<CustomerCreditRepository>().As<ICustomerCreditRepository>();
             builder.RegisterType<CustomerDepositRepository>().As<ICustomerDepositRepository>();
             builder.RegisterType<BillRepository>().As<IBillRepository>();
+            builder.RegisterType<CreditPaymentRepository>().As<ICreditPaymentRepository>();
+            builder.RegisterType<GlobalValuesRepository>().As<IGlobalValuesRepository>();
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
-            builder.RegisterType<BankContext>().AsSelf(); ;
+            builder.RegisterType<BankContext>().AsSelf();
 
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Web.ModelBinding;
 using BankServerApi.CustomAttributes;
 using BLL.Models;
 using Core.Enums;
@@ -13,39 +14,47 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
         [Display(Name = "Цель кредита")]
         public string CreditGoal { get; set; }
 
-        [Required]
+        [BindRequired]
         [Display(Name = "Сумма")]
-        [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}.")]
+        [Range(1, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше 0.")]
+        [DefaultValue(0)]
 //        [LessThan("MaxSum", "Сумма должна быть меньше максимальной.")]
         public double Sum { get; set; }
 
-        [Required]
+        [BindRequired]
         [Display(Name = "Период, мес")]
-        [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}.")]      
+        [Range(1, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше 0.")]
+        [DefaultValue(0)]
         public int MonthCount { get; set; }
 
-        [Required]
+        [BindRequired]
         [Display(Name = "Валюта")]
+        [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, выберите валюту.")]
+//        [DefaultValue()]
         public Currency Currency { get; set; }
 
-        [Required]
+        [BindRequired]
         [Display(Name = "Заработная плата")]
-        [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}.")]        
+        [Range(1, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше 0.")]
+        [DefaultValue(-1)]
         public double IncomeSum { get; set; }
 
-        [Required]
+        [BindRequired]
         [Display(Name = "Ежемесячные выплаты по другим кредитам")]
-        [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}.")]   
+        [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение не менее 0.")]
+        [DefaultValue(-1)]
         public double OtherCreditPayments { get; set; }
 
-        [Required]
+        [BindRequired]
         [Display(Name = "Ежемесячные выплаты по коммунальным платежам")]
-        [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}.")]   
+        [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение не менее 0.")]
+        [DefaultValue(-1)]
         public double UtilitiesPayments { get; set; }
 
-        [Required]
+        [BindRequired]
         [Display(Name = "Прочие платежи")]
-        [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}.")]   
+        [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение не менее 0.")]
+        [DefaultValue(-1)]
         public double OtherPayments { get; set; }
 
 //        [Required]
@@ -56,9 +65,10 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
         [Display(Name = "Копия справки о доходах")]
         public string IncomeCertificate { get; set; }
 
-        [Required(ErrorMessage = "Требуется поле")]
+        [BindRequired]
         [Display(Name = "ИД кредита")]
-        [DefaultValue(0)]
+        [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение.")]
+        [DefaultValue(-1)]
         public int CreditId { get; set; }
 
         //Customer
@@ -92,12 +102,15 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
         [Display(Name = "Отчество")]
         public string Patronymic { get; set; }
 
-        [Required]
+        [BindRequired]
         [Display(Name = "Дата рождения")]
         [DataType(DataType.Date)]
+//        [DateTimeRangeValidator]
+//        [Range(new DateTime(1999,1,1), DateTime., ErrorMessage = "Пожалуйста, введите значение.")]
+//        [DefaultValue(-1)]
         public DateTime DateOfBirth { get; set; }
 
-        [Required]
+        [BindRequired]
         [Display(Name = "Тип документа, удостоверяющего личность")]
         public DocumentType DocumentType { get; set; }
 

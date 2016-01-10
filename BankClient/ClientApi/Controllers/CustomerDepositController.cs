@@ -41,7 +41,6 @@ namespace ClientApi.Controllers
         }
 
         [Route("GetContract")]
-        [CheckToken]
         public IHttpActionResult GetContract(string contractNumber)
         {
             try
