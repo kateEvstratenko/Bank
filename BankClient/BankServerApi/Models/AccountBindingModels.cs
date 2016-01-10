@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.ModelBinding;
 using Core.Enums;
 using DAL.Entities;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -56,8 +57,9 @@ namespace BankServerApi.Models
         [Display(Name = "Отчество")]       
         public string Patronymic { get; set; }
 
-        [Required]
+        [BindRequired]
         [Display(Name = "Роль")]
+        [Range(1, int.MaxValue, ErrorMessage = "Пожалуйста, введите значение.")]
         public AppRoles Role { get; set; }
 
         [Required]

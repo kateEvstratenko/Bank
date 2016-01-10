@@ -67,7 +67,7 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
 
         [BindRequired]
         [Display(Name = "ИД кредита")]
-        [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Пожалуйста, введите значение.")]
         [DefaultValue(-1)]
         public int CreditId { get; set; }
 
@@ -105,9 +105,7 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
         [BindRequired]
         [Display(Name = "Дата рождения")]
         [DataType(DataType.Date)]
-//        [DateTimeRangeValidator]
-//        [Range(new DateTime(1999,1,1), DateTime., ErrorMessage = "Пожалуйста, введите значение.")]
-//        [DefaultValue(-1)]
+        [Range(typeof(DateTime), "1-Jan-1990", "1-Jan-2016")]
         public DateTime DateOfBirth { get; set; }
 
         [BindRequired]

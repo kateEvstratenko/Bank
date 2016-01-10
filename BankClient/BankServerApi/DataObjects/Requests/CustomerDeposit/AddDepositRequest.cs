@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Web.ModelBinding;
 using BankServerApi.CustomAttributes;
 using BankServerApi.DataObjects.Requests.CreditRequest;
 using Core.Enums;
@@ -8,13 +10,15 @@ namespace BankServerApi.DataObjects.Requests.CustomerDeposit
 {
     public class AddDepositRequest
     {
-        [Required]
+        [BindRequired]
         [Display(Name = "Сумма")]
-        [Range(1, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}.")]
+        [Range(1, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше 0.")]
+        [DefaultValue(0)]
         public double InitialSum { get; set; }
 
-        [Required]
+        [BindRequired]
         [Display(Name = "Валюта")]
+        [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, выберите валюту.")]
         public Currency Currency { get; set; }
 
 //        [Required]
@@ -22,13 +26,16 @@ namespace BankServerApi.DataObjects.Requests.CustomerDeposit
 //        [DataType(DataType.Date)]
 //        public DateTime StartDate { get; set; }
 
-        [Required]
+        [BindRequired]
         [Display(Name = "Период, мес")]
-        [Range(0, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше, чем {1}.")]
+        [Range(1, double.MaxValue, ErrorMessage = "Пожалуйста, введите значение больше 0.")]
+        [DefaultValue(0)]
         public int MonthCount { get; set; }
 
-        [Required]
+        [BindRequired]
         [Display(Name = "ИД депозита")]
+        [Range(0, int.MaxValue, ErrorMessage = "Пожалуйста, введите значение.")]
+        [DefaultValue(-1)]
         public int DepositId { get; set; }
 
         [Required]
