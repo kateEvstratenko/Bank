@@ -56,7 +56,10 @@ namespace BLL.Services
             var tokenParts = ParseToken(decryptedToken);
             var tokenObject = CheckTokenParts(tokenParts);
             var databaseToken = _iUnitOfWork.TokenRepository.GetByGuid(tokenObject.Guid);
-            _iUnitOfWork.TokenRepository.Delete(databaseToken.Id);
+            if (databaseToken != null)
+            {
+                _iUnitOfWork.TokenRepository.Delete(databaseToken.Id);
+            }
             _iUnitOfWork.SaveChanges();
         }
 

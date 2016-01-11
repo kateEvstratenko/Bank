@@ -85,6 +85,7 @@ namespace ClientApi.Models
         [Required]
         [Display(Name = "Идентификационный номер")]
         [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
+        [RegularExpression(@"^\d{7}\w\d{3}\w{2}\d$", ErrorMessage = "Поле должно иметь формат: 0000000A000AA0.")]
         public string IdentificationNumber { get; set; }
 
 //        [Required]

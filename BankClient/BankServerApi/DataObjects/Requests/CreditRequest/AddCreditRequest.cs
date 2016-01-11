@@ -120,13 +120,13 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
         [Required]
         [Display(Name = "Номер документа")]
         [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
-        [RegularExpression(@"^\w{2}\d{7}$", ErrorMessage = "Неверный формат.")]
+        [RegularExpression(@"^\w{2}\d{7}$", ErrorMessage = "Поле должно иметь формат: AA0000000.")]
         public string DocumentNumber { get; set; }
 
         [Required]
         [Display(Name = "Идентификационный номер")]
         [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
-        [RegularExpression(@"^\d{7}\w\d{3}\w{2}\d$", ErrorMessage = "Неверный формат.")]
+        [RegularExpression(@"^\d{7}\w\d{3}\w{2}\d$", ErrorMessage = "Поле должно иметь формат: 0000000A000AA0.")]
         public string IdentificationNumber { get; set; }
 
 //        [Required]
