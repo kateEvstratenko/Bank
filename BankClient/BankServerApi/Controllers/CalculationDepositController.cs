@@ -24,7 +24,8 @@ namespace BankServerApi.Controllers
 
         // GET /api/calculationdeposit/capitalizationplan?sum=SUM&percentrate=PERCENT_RATE&monthperiod=MONTH_COUNT&startdate=11-01-2015
         [Route("api/calculationdeposit/capitalizationplan")]
-        public IHttpActionResult GetCapitalizationPlan([FromUri]DepositModelForCapitalizationPlan query)
+        [HttpPost]
+        public IHttpActionResult GetCapitalizationPlan(DepositModelForCapitalizationPlan query)
         {
             try
             {

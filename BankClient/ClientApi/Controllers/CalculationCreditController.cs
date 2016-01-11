@@ -26,7 +26,8 @@ namespace ClientApi.Controllers
 
         // GET /api/calculationcredit/paymentsplan?sum=SUM&creditid=ID&monthperiod=MONTH_COUNT&startdate=11-01-2015
         [Route("api/calculationcredit/paymentsplan")]
-        public IHttpActionResult GetPaymentPlan([FromUri]CalculationCreditModelForPaymentPlan query)
+        [HttpPost]
+        public IHttpActionResult GetPaymentPlan(CalculationCreditModelForPaymentPlan query)
         {
             try
             {
@@ -56,7 +57,8 @@ namespace ClientApi.Controllers
 
         // GET /api/calculationcredit/solvencyrate?sum=SUM&creditid=ID&monthperiod=MONTH_COUNT&incomesum=INCOME&utilitiespayments=UTILSUM&otherpayments=OTHERSUM
         [Route("api/calculationcredit/solvencyrate")]
-        public IHttpActionResult GetSolvencyRate([FromUri]CalculationCreditModel query)
+        [HttpPost]
+        public IHttpActionResult GetSolvencyRate(CalculationCreditModel query)
         {
             try
             {
@@ -85,7 +87,8 @@ namespace ClientApi.Controllers
 
         // GET /api/calculationcredit/maxsum?creditid=ID&monthperiod=MONTH_COUNT&incomesum=INCOME&utilitiespayments=UTILSUM&otherpayments=OTHERSUM
         [Route("api/calculationcredit/maxsum")]
-        public IHttpActionResult GetMaxCreditSum([FromUri]CalculationMaxCreditSumModel query)
+        [HttpPost]
+        public IHttpActionResult GetMaxCreditSum(CalculationMaxCreditSumModel query)
         {
             try
             {
@@ -111,7 +114,8 @@ namespace ClientApi.Controllers
 
         // GET /api/calculationcredit/income?sum=SUM&creditid=ID&monthperiod=MONTH_COUNT&utilitiespayments=UTILSUM&otherpayments=OTHERSUM
         [Route("api/calculationcredit/income")]
-        public IHttpActionResult GetIncomeSum([FromUri]CalculationIncomeSumModel query)
+        [HttpPost]
+        public IHttpActionResult GetIncomeSum(CalculationIncomeSumModel query)
         {
             try
             {
