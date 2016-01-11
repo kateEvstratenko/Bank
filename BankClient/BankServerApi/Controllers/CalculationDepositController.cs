@@ -11,11 +11,15 @@ namespace BankServerApi.Controllers
     public class CalculationDepositController : ApiController
     {
         private readonly ICalculationDepositService calculationDepositService;
+        private readonly IDepositService depositService;
+        private readonly IValidationService validationService;
 
-        public CalculationDepositController(ICalculationDepositService iCalculationDepositService)
+        public CalculationDepositController(ICalculationDepositService iCalculationDepositService, IDepositService depositService, IValidationService validationService)
             :base()
         {
             calculationDepositService = iCalculationDepositService;
+            this.depositService = depositService;
+            this.validationService = validationService;
         }
 
         // GET /api/calculationdeposit/capitalizationplan?sum=SUM&percentrate=PERCENT_RATE&monthperiod=MONTH_COUNT&startdate=11-01-2015
@@ -24,13 +28,13 @@ namespace BankServerApi.Controllers
         {
             try
             {
-//                var credit = creditService.Get(query.CreditId);
-//                validationService.ValidateSum(query.Sum, credit.MinSum, credit.MaxSum, ModelState);
-//                validationService.ValidateMonthCount(query.MonthCount, credit.MinMonthPeriod, credit.MaxMonthPeriod, ModelState);
-//                if (!ModelState.IsValid)
-//                {
-//                    return BadRequest(ModelState);
-//                }
+                var deposit = depositService.Get(query.DepositId);
+                validationService.ValidateSum(query.Sum, deposit.MinSum, deposit.MaxSum, ModelState);
+                validationService.ValidateMonthCount(query.MonthCount, deposit.MinMonthPeriod, deposit.MaxMonthPeriod, ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
                 var plan = calculationDepositService.CalculateCapitalizationPlan(query.Sum, query.PercentRate, query.MonthCount, query.StartDate).ToList();
                 return Ok(plan);

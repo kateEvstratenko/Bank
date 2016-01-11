@@ -30,5 +30,11 @@ namespace ClientApi.Models.CalculationModels
         [Display(Name = "Дата начала")]
         [Range(typeof(DateTime), "1-Jan-2016", "1-Jan-2100", ErrorMessage = "Пожалуйста, введите дату с 2016 года по 1 января 2100 года.")]
         public DateTime StartDate { get; set; }
+
+        [BindRequired]
+        [Display(Name = "ИД депозита")]
+        [Range(0, int.MaxValue, ErrorMessage = "Пожалуйста, введите значение.")]
+        [DefaultValue(-1)]
+        public int DepositId { get; set; }
     }
 }
