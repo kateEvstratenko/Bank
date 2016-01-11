@@ -23,7 +23,7 @@ namespace BankServerApi.CustomAttributes
             {
                 var date = (DateTime)value;
                 var currentDate = GlobalValues.BankDateTime;
-                var minDate = new DateTime(1990, 1, 1);
+                var minDate = new DateTime(1900, 1, 1);
                 if (date > currentDate || date < minDate)
                 {
                     var errorMessage = String.Format("Дата должна быть в пределах {0:dd.MM.yyyy} и {1:dd.MM.yyyy}.",
