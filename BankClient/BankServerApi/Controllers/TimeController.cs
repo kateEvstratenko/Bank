@@ -5,7 +5,7 @@ using Core;
 
 namespace BankServerApi.Controllers
 {
-    [CheckAppToken]
+//    [CheckAppToken]
     public class TimeController : ApiController
     {
         public IHttpActionResult Get()

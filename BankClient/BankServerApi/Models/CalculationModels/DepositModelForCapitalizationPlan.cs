@@ -33,7 +33,7 @@ namespace BankServerApi.Models.CalculationModels
 
         [BindRequired]
         [Display(Name = "ИД депозита")]
-        [Range(0, int.MaxValue, ErrorMessage = "Пожалуйста, введите значение.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Пожалуйста, введите значение.")]
         [DefaultValue(-1)]
         public int DepositId { get; set; }
     }
