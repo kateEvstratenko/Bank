@@ -12,14 +12,16 @@ namespace BLL.Services
 
         public DailyCalculateService()
         {
-            var dateNow = GlobalValues.BankDateTime;
+//            var dateNow = GlobalValues.BankDateTime;
             using (var scope = CustomDependencyResolver.Resolver.BeginScope())
             {
                 var uow = scope.GetService(typeof(IUnitOfWork)) as IUnitOfWork;
                 if (uow != null)
                 {
-                    if (!uow.GlobalValuesRepository.GetAll().Any())
+                    var dbTime = uow.GlobalValuesRepository.GetAll().FirstOrDefault();
+                    if (dbTime == null)
                     {
+                        var dateNow = DateTime.Now;
                         uow.GlobalValuesRepository.Add(new DAL.Entities.GlobalValues()
                         {
                             BankDateTime = dateNow
@@ -27,11 +29,15 @@ namespace BLL.Services
                         uow.SaveChanges();
                         GlobalValues.BankDateTime = dateNow;
                     }
+                    else
+                    {
+                        GlobalValues.BankDateTime = dbTime.BankDateTime;   
+                    }
                 }
             }
 
-            var mitnight = dateNow.AddMinutes(1);
-            var dueTime = (mitnight - dateNow).Ticks;
+            var mitnight = GlobalValues.BankDateTime.AddMinutes(1);
+            var dueTime = (mitnight - GlobalValues.BankDateTime).Ticks;
             _timer = new Timer(Check, null, new TimeSpan(dueTime), TimeSpan.FromMinutes(1));
         }
 
