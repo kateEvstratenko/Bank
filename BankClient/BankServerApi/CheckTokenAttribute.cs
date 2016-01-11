@@ -15,7 +15,7 @@ namespace BankServerApi
 {
     public class CheckAppTokenAttribute : ActionFilterAttribute
     {
-//        public int Order { get; set; }
+        //        public int Order { get; set; }
         public AppRoles[] Roles { get; set; }
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
@@ -48,34 +48,34 @@ namespace BankServerApi
 
             catch (TokenExpiredException)
             {
-//                var logService = actionContext.Request.GetDependencyScope().GetService(typeof(ILogService)) as ILogService;
-//                if (logService == null)
-//                {
-//                    throw BankClientException.ThrowAutofacError("LogService is null");
-//                }
-//                logService.Log("Token expired", "CheckToken", LogType.Warning);
-                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.OK, ResponseBase.TokenExpired());
+                //                var logService = actionContext.Request.GetDependencyScope().GetService(typeof(ILogService)) as ILogService;
+                //                if (logService == null)
+                //                {
+                //                    throw BankClientException.ThrowAutofacError("LogService is null");
+                //                }
+                //                logService.Log("Token expired", "CheckToken", LogType.Warning);
+                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized, ResponseBase.TokenExpired());
             }
             catch (BankClientException ex)
             {
-//                var logService = actionContext.Request.GetDependencyScope().GetService(typeof(ILogService)) as ILogService;
-//                if (logService == null)
-//                {
-//                    throw BankClientException.ThrowAutofacError("LogService is null");
-//                }
-//                logService.Log(ex.ToString(), "CheckToken", LogType.Error);
-                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.OK, ResponseBase.Unsuccessful(ex));
+                //                var logService = actionContext.Request.GetDependencyScope().GetService(typeof(ILogService)) as ILogService;
+                //                if (logService == null)
+                //                {
+                //                    throw BankClientException.ThrowAutofacError("LogService is null");
+                //                }
+                //                logService.Log(ex.ToString(), "CheckToken", LogType.Error);
+                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized, ResponseBase.Unsuccessful(ex));
             }
 
             catch (Exception ex)
             {
-//                var logService = actionContext.Request.GetDependencyScope().GetService(typeof(ILogService)) as ILogService;
-//                if (logService == null)
-//                {
-//                    throw BankClientException.ThrowAutofacError("LogService is null");
-//                }
-//                logService.Log(ex.ToString(), "CheckToken", LogType.Error);
-                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.OK, ResponseBase.Unsuccessful(ex));
+                //                var logService = actionContext.Request.GetDependencyScope().GetService(typeof(ILogService)) as ILogService;
+                //                if (logService == null)
+                //                {
+                //                    throw BankClientException.ThrowAutofacError("LogService is null");
+                //                }
+                //                logService.Log(ex.ToString(), "CheckToken", LogType.Error);
+                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized, ResponseBase.Unsuccessful(ex));
             }
         }
     }

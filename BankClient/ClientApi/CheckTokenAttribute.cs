@@ -39,7 +39,7 @@ namespace ClientApi
 //                    throw BankClientException.ThrowAutofacError("LogService is null");
 //                }
 //                logService.Log("Token expired", "CheckToken", LogType.Warning);
-                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.OK, ResponseBase.TokenExpired());
+                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized, ResponseBase.TokenExpired());
             }
             catch (BankClientException ex)
             {
@@ -49,7 +49,7 @@ namespace ClientApi
 //                    throw BankClientException.ThrowAutofacError("LogService is null");
 //                }
 //                logService.Log(ex.ToString(), "CheckToken", LogType.Error);
-                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.OK, ResponseBase.Unsuccessful(ex));
+                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized, ResponseBase.Unsuccessful(ex));
             }
 
             catch (Exception ex)
@@ -60,7 +60,7 @@ namespace ClientApi
 //                    throw BankClientException.ThrowAutofacError("LogService is null");
 //                }
 //                logService.Log(ex.ToString(), "CheckToken", LogType.Error);
-                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.OK, ResponseBase.Unsuccessful(ex));
+                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized, ResponseBase.Unsuccessful(ex));
             }
         }
     }
