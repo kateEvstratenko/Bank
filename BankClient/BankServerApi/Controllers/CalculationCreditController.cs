@@ -58,21 +58,21 @@ namespace BankServerApi.Controllers
         // GET /api/calculationcredit/solvencyrate?sum=SUM&creditid=ID&monthperiod=MONTH_COUNT&incomesum=INCOME&utilitiespayments=UTILSUM&otherpayments=OTHERSUM
         [Route("api/calculationcredit/solvencyrate")]
         [HttpPost]
-        public IHttpActionResult GetSolvencyRate(CalculationCreditModel query)
+        public IHttpActionResult GetSolvencyRate(CalculationCreditModel request)
         {
             try
             {
-                var credit = creditService.Get(query.CreditId);
-                validationService.ValidateSum(query.Sum, credit.MinSum, credit.MaxSum, ModelState);
-                validationService.ValidateMonthCount(query.MonthCount, credit.MinMonthPeriod, credit.MaxMonthPeriod, ModelState);
+                var credit = creditService.Get(request.CreditId);
+                validationService.ValidateSum(request.Sum, credit.MinSum, credit.MaxSum, ModelState);
+                validationService.ValidateMonthCount(request.MonthCount, credit.MinMonthPeriod, credit.MaxMonthPeriod, ModelState);
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
                 }
 
-                var solvency = calculationCreditService.CalculateSolvencyRate(query.Sum, credit.PercentRate,
-                    query.MonthCount,
-                    query.IncomeSum, query.OtherCreditPayments, query.UtilitiesPayments, query.OtherPayments);
+                var solvency = calculationCreditService.CalculateSolvencyRate(request.Sum, credit.PercentRate,
+                    request.MonthCount,
+                    request.IncomeSum, request.OtherCreditPayments, request.UtilitiesPayments, request.OtherPayments);
                 return Ok(solvency);
             }
             catch (BankClientException ex)
@@ -115,21 +115,21 @@ namespace BankServerApi.Controllers
         // GET /api/calculationcredit/income?sum=SUM&creditid=ID&monthperiod=MONTH_COUNT&utilitiespayments=UTILSUM&otherpayments=OTHERSUM
         [Route("api/calculationcredit/income")]
         [HttpPost]
-        public IHttpActionResult GetIncomeSum(CalculationIncomeSumModel query)
+        public IHttpActionResult GetIncomeSum(CalculationIncomeSumModel request)
         {
             try
             {
-                var credit = creditService.Get(query.CreditId);
-                validationService.ValidateSum(query.Sum, credit.MinSum, credit.MaxSum, ModelState);
-                validationService.ValidateMonthCount(query.MonthCount, credit.MinMonthPeriod, credit.MaxMonthPeriod, ModelState);
+                var credit = creditService.Get(request.CreditId);
+                validationService.ValidateSum(request.Sum, credit.MinSum, credit.MaxSum, ModelState);
+                validationService.ValidateMonthCount(request.MonthCount, credit.MinMonthPeriod, credit.MaxMonthPeriod, ModelState);
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
                 }
 
-                var incomeSum = calculationCreditService.CalculateIncomeForCredit(query.Sum, credit.PercentRate,
-                    query.MonthCount,
-                    query.OtherCreditPayments, query.UtilitiesPayments, query.OtherPayments);
+                var incomeSum = calculationCreditService.CalculateIncomeForCredit(request.Sum, credit.PercentRate,
+                    request.MonthCount,
+                    request.OtherCreditPayments, request.UtilitiesPayments, request.OtherPayments);
                 return Ok(incomeSum);
             }
             catch (BankClientException ex)

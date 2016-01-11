@@ -28,19 +28,19 @@ namespace ClientApi.Controllers
         // GET /api/calculationdeposit/capitalizationplan?sum=SUM&percentrate=PERCENT_RATE&monthperiod=MONTH_COUNT&startdate=11-01-2015
         [Route("api/calculationdeposit/capitalizationplan")]
         [HttpPost]
-        public IHttpActionResult GetCapitalizationPlan(DepositModelForCapitalizationPlan query)
+        public IHttpActionResult GetCapitalizationPlan(DepositModelForCapitalizationPlan request)
         {
             try
             {
-                var deposit = depositService.Get(query.DepositId);
-                validationService.ValidateSum(query.Sum, deposit.MinSum, deposit.MaxSum, ModelState);
-                validationService.ValidateMonthCount(query.MonthCount, deposit.MinMonthPeriod, deposit.MaxMonthPeriod, ModelState);
+                var deposit = depositService.Get(request.DepositId);
+                validationService.ValidateSum(request.Sum, deposit.MinSum, deposit.MaxSum, ModelState);
+                validationService.ValidateMonthCount(request.MonthCount, deposit.MinMonthPeriod, deposit.MaxMonthPeriod, ModelState);
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
                 }
 
-                var plan = calculationDepositService.CalculateCapitalizationPlan(query.Sum, query.PercentRate, query.MonthCount, query.StartDate).ToList();
+                var plan = calculationDepositService.CalculateCapitalizationPlan(request.Sum, request.PercentRate, request.MonthCount, request.StartDate).ToList();
                 return Ok(plan);
             }
             catch (BankClientException ex)

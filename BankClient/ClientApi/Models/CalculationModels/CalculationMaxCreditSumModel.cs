@@ -15,7 +15,7 @@ namespace ClientApi.Models.CalculationModels
         [BindRequired]
         [Display(Name = "ИД кредита")]
         [Range(1, int.MaxValue, ErrorMessage = "Пожалуйста, введите значение.")]
-        [DefaultValue(-1)]
+        [DefaultValue(0)]
         public int CreditId { get; set; }
 
         [BindRequired]
