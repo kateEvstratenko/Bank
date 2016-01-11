@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Http;
+using System.Web.Http.Results;
 using AutoMapper;
 using BLL.Classes;
 using BLL.Helpers;
@@ -26,8 +27,8 @@ namespace ClientApi.Controllers
                 var tokenObj = new ParsedTokenHelper().GetParsedToken(Request.Properties);
                 const int pageSize = 10;
                 var pageNumber = page ?? 1;
-                return Ok(Mapper.Map<CustomPagedList<ShortCustomerCredit>>(
-                    _customerCreditService.GetAllByUser(tokenObj.UserId, pageNumber, pageSize)));
+                var result = _customerCreditService.GetAllByUser(tokenObj.UserId, pageNumber, pageSize);
+                return Ok(result);
             }
             catch (BankClientException ex)
             {

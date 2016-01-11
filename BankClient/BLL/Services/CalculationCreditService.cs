@@ -89,7 +89,7 @@ namespace BLL.Services
             var netIncomeSum = incomeSum - utilitiesPayments - otherPayments;
             var maxMonthlyPayment = netIncomeSum * ProjectConstants.MaxSolvencyRate - otherCreditPayments;
             var maxCreditSum = maxMonthlyPayment / CalculateAnnuityRate(percentRate, monthPeriod);
-            return maxCreditSum;
+            return maxCreditSum > 0 ? maxCreditSum : 0;
         }
 
         public double CalculateIncomeForCredit(double sum, double percentRate, int monthPeriod,
@@ -97,7 +97,7 @@ namespace BLL.Services
         {
             var paymentSum = CalculatePaymentSum(sum, percentRate, monthPeriod);
             var incomeSum = (paymentSum + otherCreditPayments) / ProjectConstants.MaxSolvencyRate + utilitiesPayments + otherPayments;
-            return incomeSum;
+            return incomeSum  > 0 ? incomeSum : 0;
         }
     }
 }

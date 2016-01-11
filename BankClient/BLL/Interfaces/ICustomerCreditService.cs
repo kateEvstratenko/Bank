@@ -12,7 +12,7 @@ namespace BLL.Interfaces
         DomainCustomerCredit Get(int id);
         CustomPagedList<DomainCustomerCredit> GetAll(int pageNumber, int pageSize);
         CustomPagedList<DomainCustomerCredit> GetAll(int customerId, int pageNumber, int pageSize);
-        CustomPagedList<DomainCustomerCredit> GetAllByUser(string userId, int pageNumber, int pageSize);
+        CustomPagedList<ShortCustomerCredit> GetAllByUser(string userId, int pageNumber, int pageSize);
 
         DomainCustomerCredit GetByContractNumber(string contractNumber);
         string GetContract(string contractNumber, string baseUrl);

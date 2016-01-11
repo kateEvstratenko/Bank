@@ -14,7 +14,8 @@ namespace BLL.Classes
         public bool IsClosed { get; set; }
         public int CustomerId { get; set; }
         public int CreditId { get; set; }
-        public int BillId { get; set; } 
+        public int BillId { get; set; }
+        public double RemainSum { get; set; }
     }
 
     public class ShortCustomerDeposit

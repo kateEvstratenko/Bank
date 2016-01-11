@@ -237,6 +237,7 @@
     <Compile Include="Controllers\TimeController.cs" />
     <Compile Include="CustomAttributes\GreaterThanAttribute.cs" />
     <Compile Include="CustomAttributes\InvalidModelStateAttribute.cs" />
+    <Compile Include="CustomAttributes\DateRangeAttribute.cs" />
     <Compile Include="CustomAttributes\SumRangeAttribute.cs" />
     <Compile Include="DataObjects\Requests\CreditRequest\AddCreditRequest.cs" />
     <Compile Include="DataObjects\Requests\CreditRequest\SetStatusRequest.cs" />

@@ -87,7 +87,7 @@ namespace BLL.Services
             return domainCredits;
         }
 
-        public CustomPagedList<DomainCustomerCredit> GetAllByUser(string userId, int pageNumber, int pageSize)
+        public CustomPagedList<ShortCustomerCredit> GetAllByUser(string userId, int pageNumber, int pageSize)
         {
             var user = Uow.AppUserRepository.GetAll().FirstOrDefault(u => u.Id == userId);
             if (user == null)
@@ -95,7 +95,7 @@ namespace BLL.Services
                 throw BankClientException.ThrowUserNotRegistered();
             }
             var credits = Uow.CustomerCreditRepository.GetAll().Where(cc => cc.CustomerId == user.CustomerId);
-            var domainCredits = Mapper.Map<CustomPagedList<DomainCustomerCredit>>(credits.ToCustomPagedList(pageNumber, pageSize));
+            var domainCredits = Mapper.Map<CustomPagedList<ShortCustomerCredit>>(credits.ToCustomPagedList(pageNumber, pageSize));
             return domainCredits;
         }
 

@@ -1,9 +1,11 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using BLL.Classes;
 using BLL.Models;
 using ClientApi.Models;
 using ClientApi.Models.CalculationModels;
 using DAL.Entities;
+using WebGrease.Css.Extensions;
 
 namespace ClientApi
 {
@@ -18,6 +20,26 @@ namespace ClientApi
             Mapper.CreateMap<DomainDeposit, ShortDeposit>();
             Mapper.CreateMap<DomainCustomer, ShortCustomer>();
             Mapper.CreateMap<DomainAddress, ShortAddress>();
+            Mapper.CreateMap<CustomerCredit, ShortCustomerCredit>().AfterMap((source, dest) =>
+            {
+                var allSum = source.CreditPaymentPlanItems.Where(p => !p.IsPaid)
+                    .Sum(x => x.MainSum + x.PercentSum);
+                var allPaymentsByMainSum = source.CreditPaymentPlanItems
+                    .Select(x => x.CreditPayments.Where(y => y != null)
+                        .Sum(p => p.MainSum + p.PercentSum)).Sum();
+                var allDebt = source.CreditPaymentPlanItems.Select(x => x.Debt).Sum(x =>
+                {
+                    if (x != null)
+                    {
+                        return x.MainSum + x.PercentSum;
+                    }
+                    return 0;
+                });
+                var allPaymentsByDebts = source.CreditPaymentPlanItems
+                    .Select(x => x.CreditPayments.Where(y => y != null)
+                        .Sum(p => p.DelayMainSum + p.DelayPercentSum)).Sum();
+                dest.RemainSum = allSum + allDebt - allPaymentsByMainSum - allPaymentsByDebts;
+            });
 
             Mapper.CreateMap<CustomPagedList<CustomerCredit>, CustomPagedList<DomainCustomerCredit>>();
             Mapper.CreateMap<CustomPagedList<DomainCustomerCredit>, CustomPagedList<ShortCustomerCredit>>();
@@ -33,6 +55,8 @@ namespace ClientApi
 
             Mapper.CreateMap<CustomPagedList<CreditRequest>, CustomPagedList<DomainCreditRequest>>();
             Mapper.CreateMap<CustomPagedList<DomainCreditRequest>, CustomPagedList<ShortCreditRequest>>();
+            
+            Mapper.CreateMap<CustomPagedList<CustomerCredit>, CustomPagedList<ShortCustomerCredit>>();
 
             Mapper.CreateMap<Credit, ShortCredit>().ReverseMap();
             Mapper.CreateMap<Deposit, ShortDeposit>().ReverseMap();

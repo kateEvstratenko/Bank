@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 using System.Web.ModelBinding;
 using BankServerApi.CustomAttributes;
 using BLL.Models;
@@ -109,7 +110,7 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
         [BindRequired]
         [Display(Name = "Дата рождения")]
         [DataType(DataType.Date)]
-        [Range(typeof(DateTime), "1-Jan-1900", "1-Jan-2016", ErrorMessage = "Введите дату с 1900 года по 2016")]
+        [DateRangeAttribute]
         public DateTime DateOfBirth { get; set; }
 
         [BindRequired]
@@ -119,11 +120,13 @@ namespace BankServerApi.DataObjects.Requests.CreditRequest
         [Required]
         [Display(Name = "Номер документа")]
         [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
+        [RegularExpression(@"^\w{2}\d{7}$", ErrorMessage = "Неверный формат.")]
         public string DocumentNumber { get; set; }
 
         [Required]
         [Display(Name = "Идентификационный номер")]
         [MaxLength(100, ErrorMessage = "Превышена максимально допустимая длина 100 символов.")]
+        [RegularExpression(@"^\d{7}\w\d{3}\w{2}\d$", ErrorMessage = "Неверный формат.")]
         public string IdentificationNumber { get; set; }
 
 //        [Required]
