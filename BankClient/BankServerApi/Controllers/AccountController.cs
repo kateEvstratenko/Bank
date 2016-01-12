@@ -394,6 +394,7 @@ namespace BankServerApi.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
+        [CheckAppToken(Roles = new AppRoles[] { AppRoles.Admin})]
         public async Task<IHttpActionResult> Register(RegisterEmployeeModel request)
         {
             try

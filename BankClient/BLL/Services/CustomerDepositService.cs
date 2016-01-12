@@ -59,7 +59,7 @@ namespace BLL.Services
             customerDeposit.Bill = new DomainBill
             {
                 Number = GenerateBillNumber(),
-                CustomerId = customerDb.Id,
+                CustomerId = customerDeposit.CustomerId,
                 Sum = customerDeposit.InitialSum
             };
 
