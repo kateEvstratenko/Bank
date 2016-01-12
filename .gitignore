@@ -13,3 +13,5 @@ bin/
 obj/
 BankClient/packages/
 !packages/repositories.config
+*.docx
+*.png
