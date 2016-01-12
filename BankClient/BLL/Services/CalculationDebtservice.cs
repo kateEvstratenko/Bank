@@ -31,8 +31,8 @@ namespace BLL.Services
                     var paidDelayMainSum = item.CreditPayments.Sum(x => x.DelayMainSum);
                     var paidDelayPercentSum = item.CreditPayments.Sum(x => x.DelayPercentSum);
 
-                    overdueMainSum += (item.MainSum - paidMainSum) * _fineForMainDebt;
-                    overduePercentSum += (item.PercentSum - paidPercentSum) * _fineForPercentDebt;
+                    overdueMainSum += Math.Round((item.MainSum - paidMainSum) * _fineForMainDebt);
+                    overduePercentSum += Math.Round((item.PercentSum - paidPercentSum) * _fineForPercentDebt);
 
                     item.Debt = item.Debt ?? new Debt();
                     item.Debt.MainSum += Math.Max(overdueMainSum - paidDelayMainSum, 0);

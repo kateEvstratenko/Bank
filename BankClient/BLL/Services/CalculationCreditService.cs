@@ -22,19 +22,19 @@ namespace BLL.Services
         private double CalculatePaymentSum(double sum, double percentRate, int monthPeriod)
         {
             var annuityRate = CalculateAnnuityRate(percentRate, monthPeriod);
-            return sum * annuityRate;
+            return Math.Round(sum * annuityRate);
         }
 
         private double CalculateFirstMainDebt(double paymentSum, double percentRate, int monthPeriod)
         {
             var factor = GetFactor(percentRate, monthPeriod);
-            return paymentSum / factor;
+            return Math.Round(paymentSum / factor);
         }
 
         private double CalculateNextMainDebt(double prevSum, double percentRate)
         {
             var monthlyPercentRateCoefficient = GetMonthlyPercentRateCoefficient(percentRate);
-            return prevSum * monthlyPercentRateCoefficient;
+            return Math.Round(prevSum * monthlyPercentRateCoefficient);
         }
 
         private double GetMonthlyPercentRateCoefficient(double percentRate)
