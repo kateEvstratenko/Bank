@@ -34,7 +34,7 @@ namespace BLL.Services
         public CreditRequestResult Add(DomainCreditRequest creditRequest, byte[] militaryId, byte[] incomeCertificate, string email, string baseUrl, string baseLocalhostUrl, ModelStateDictionary modelState)
         {
             creditRequest.Credit = Mapper.Map<DomainCredit>(_iUnitOfWork.CreditRepository.Get(creditRequest.CreditId));
-            _iValidationService.ValidateSum(creditRequest.Sum, creditRequest.Credit.MinSum, creditRequest.Credit.MaxSum, modelState);
+            _iValidationService.ValidateSum(creditRequest.Sum, creditRequest.Credit.MinSum, creditRequest.Credit.MaxSum, modelState, false);
             _iValidationService.ValidateMonthCount(creditRequest.MonthCount, creditRequest.Credit.MinMonthPeriod, creditRequest.Credit.MaxMonthPeriod, modelState);
             if (!modelState.IsValid)
             {

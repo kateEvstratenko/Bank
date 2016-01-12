@@ -6,17 +6,17 @@ namespace BLL.Services
     public class ValidationService : IValidationService
     {
 
-        public void ValidateSum(double sum, double minSum, double maxSum, ModelStateDictionary modelState)
+        public void ValidateSum(double sum, double minSum, double maxSum, ModelStateDictionary modelState, bool isInitial = false)
         {
             if (sum < minSum)
             {
-                modelState.Add("request.Sum", new ModelState() { Errors = { "Сумма не может быть меньше минимальной." } });
-                //                throw BankClientException.ThrowSumLessThanMin();
+                modelState.Add(isInitial ? "request.InitialSum" : "request.Sum",
+                    new ModelState() {Errors = {"Сумма не может быть меньше минимальной."}});
             }
 
             if (sum > maxSum)
             {
-                modelState.Add("request.Sum", new ModelState() { Errors = { "Сумма не может быть больше максимальной." } });
+                modelState.Add(isInitial ? "request.InitialSum" : "request.Sum", new ModelState() { Errors = { "Сумма не может быть больше максимальной." } });
                 //                throw BankClientException.ThrowSumMoreThanMax();
             }
         }

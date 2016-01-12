@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Web.Http.ModelBinding;
 using BLL.Classes;
 using BLL.Models;
 
@@ -6,7 +7,7 @@ namespace BLL.Interfaces
 {
     public interface ICustomerDepositService
     {
-        void Add(DomainCustomerDeposit customerDeposit, int monthCount, string email);
+        CustomerDepositResult Add(DomainCustomerDeposit customerDeposit, int monthCount, string email, string baseLocalhostUrl, ModelStateDictionary modelState);
         void Delete(int id);
         void Update(DomainCustomerDeposit deposit);
         DomainCustomerDeposit Get(int id);

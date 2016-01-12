@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Web.Http.ModelBinding;
 using AutoMapper;
 using BLL.Classes;
 using BLL.Helpers;
@@ -17,18 +18,29 @@ namespace BLL.Services
     public class CustomerDepositService : BaseService, ICustomerDepositService
     {
         private readonly ICustomerService _iCustomerService;
-        public CustomerDepositService(IUnitOfWork uow, ICustomerService iCustomerService) : base(uow)
+        private readonly IValidationService _iValidationService;
+        public CustomerDepositService(IUnitOfWork uow, ICustomerService iCustomerService, IValidationService iValidationService) : base(uow)
         {
             _iCustomerService = iCustomerService;
+            _iValidationService = iValidationService;
         }
 
-        public void Add(DomainCustomerDeposit customerDeposit, int monthCount, string email)
+        public CustomerDepositResult Add(DomainCustomerDeposit customerDeposit, int monthCount, string email, string baseLocalhostUrl, ModelStateDictionary modelState)
         {
             var domainDeposit = Mapper.Map<DomainDeposit>(Uow.DepositRepository.Get(customerDeposit.DepositId));
-            Validate(customerDeposit, domainDeposit, monthCount);
+            _iValidationService.ValidateSum(customerDeposit.InitialSum, domainDeposit.MinSum, domainDeposit.MaxSum, modelState, true);
+            _iValidationService.ValidateMonthCount(monthCount, domainDeposit.MinMonthPeriod, domainDeposit.MaxMonthPeriod, modelState);
 
             customerDeposit.StartDate = GlobalValues.BankDateTime;
             customerDeposit.EndDate = customerDeposit.StartDate.AddMonths(monthCount);
+            if (!modelState.IsValid)
+            {
+                return new CustomerDepositResult
+                {
+                    ModelState = modelState
+                };
+            }
+            
             var customer = customerDeposit.Customer;//_iUnitOfWork.CustomerRepository.GetCustomerByUserId(userId);
             var customerDb = Uow.CustomerRepository.GetAll()
                 .FirstOrDefault(c => c.IdentificationNumber == customerDeposit.Customer.IdentificationNumber);
@@ -74,6 +86,11 @@ namespace BLL.Services
 //            deposit = Mapper.Map<DomainCustomerDeposit>(Uow.DepositRepository.Get(dbDeposit.Id));
             customerDeposit.Deposit = Mapper.Map<DomainDeposit>(Uow.DepositRepository.Get(customerDeposit.DepositId));
             new DepositDocService().FillConcreteContract(customerDeposit);
+            return new CustomerDepositResult()
+            {
+                ModelState = null,
+                DocPath = GetContract(dbDeposit.ContractNumber, baseLocalhostUrl)
+            };
         }
 
         public void Delete(int id)
@@ -117,7 +134,7 @@ namespace BLL.Services
             {
                 throw BankClientException.ThrowUserNotRegistered();
             }
-            var deposits = Uow.CustomerDepositRepository.GetAll();
+            var deposits = Uow.CustomerDepositRepository.GetAll().Where(d => d.CustomerId == user.CustomerId);
             var domainDeposits = Mapper.Map<CustomPagedList<DomainCustomerDeposit>>(deposits.ToCustomPagedList(pageNumber, pageSize));
 
             return domainDeposits;

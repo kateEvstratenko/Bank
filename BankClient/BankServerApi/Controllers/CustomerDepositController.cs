@@ -69,9 +69,14 @@ namespace BankServerApi.Controllers
         {
             try
             {
+                var baseLocalhostUrl = String.Format("{0}://{1}", Request.RequestUri.Scheme, Request.RequestUri.Authority);
                 var domainCustomerDeposit = Mapper.Map<DomainCustomerDeposit>(request);
-                _customerDepositService.Add(domainCustomerDeposit, request.MonthCount, request.Email);
-                return Ok();
+                var result = _customerDepositService.Add(domainCustomerDeposit, request.MonthCount, request.Email, baseLocalhostUrl, ModelState);
+                if (result.ModelState != null && !result.ModelState.IsValid)
+                {
+                    return BadRequest(result.ModelState);
+                }
+                return Ok(result.DocPath);
             }
             catch (BankClientException ex)
             {
